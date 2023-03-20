@@ -1,70 +1,304 @@
 import { PrismaClient } from "../../prisma/client";
-import { ICreateBuilding } from "./squaduled.interface";
+import {
+  ICreateBooking,
+  ICreateBuilding,
+  ICreateFacility,
+  ICreateRoom,
+  ICreateUser,
+  IDeleteBooking,
+  IDeleteFacility,
+  IDeleteRoom,
+  IHello,
+  IUpdateBooking,
+  IUpdateFacility,
+  IUpdateOfficeHour1,
+  IUpdateOfficeHour2,
+  IUpdateRoom,
+  IUpdateUser,
+} from "./squaduled.interface";
 
 export const prisma = new PrismaClient();
 
-// BUILDING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// BUILDING +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createBuilding = (args: ICreateBuilding) =>
-  prisma.triviaCategory.create({
+  prisma.building.create({
     data: {
       name: args.name,
     },
   });
 
-export const getAllBuilding = () => prisma.triviaCategory.findMany();
 
 
-// FACILITY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-export const createFacility = () => {};
+export const getAllBuilding = () => prisma.building.findMany();
 
-export const getAllFacility = () => prisma.triviaCategory.findMany();
+// FACILITY +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const createFacility = (args: ICreateFacility) =>
+  prisma.facility.create({
+    data: {
+      name: args.name,
+    },
+  });
 
-export const updateFacilityHandler = () => {};
+export const getAllFacility = () => prisma.facility.findMany();
 
-export const deleteFacilityHandler = () => {};
+export const updateFacility = (args: IUpdateFacility) =>
+  prisma.facility.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      name: args.name,
+    },
+  });
 
-// ROOM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-export const createRoom = () => {};
+export const deleteFacility = (args: IDeleteFacility) =>
+  prisma.facility.delete({
+    where: {
+      id: args.id,
+    },
+  });
 
-export const getAllRoom = () => prisma.triviaCategory.findMany();
+// ROOM +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const createRoom = (args: ICreateRoom) =>
+  prisma.room.create({
+    data: {
+      name: args.name,
+      floor: args.floor,
+      capacityMax: args.capacity,
+      building: {
+        connect: {
+          id: args.buildingId,
+        },
+      },
+      facilities: {
+        connect: args.facilities.map((facility) => {
+          return {
+            id: facility.id,
+          };
+        }),
+      },
+    },
+    include: {
+      facilities: true,
+    },
+  });
 
-export const updateRoomHandler = () => {};
+export const getAllRoom = () => prisma.room.findMany();
 
-export const deleteRoomHandler = () => {};
+export const getRoomByBuildingId = (args: { buildingId: number }) =>
+  prisma.room.findMany({
+    where: {
+      buildingId: args.buildingId,
+    },
+  });
 
-// OFFICE HOUR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+export const updateRoom = (args: IUpdateRoom) =>
+  prisma.room.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      name: args.name ?? undefined,
+      floor: args.floor ?? undefined,
+      capacityMax: args.capacity ?? undefined,
+      building: {
+        connect: {
+          id: args.buildingId ?? undefined,
+        },
+      },
+      facilities: {
+        connect: args.facilities.map((facility) => {
+          return {
+            id: facility.id ?? undefined,
+          };
+        }),
+      },
+    },
+    include: {
+      facilities: true,
+    },
+  });
+export const deleteRoom = (args: IDeleteRoom) =>
+  prisma.room.delete({
+    where: {
+      id: args.id,
+    },
+  });
 
-export const getAllOfficeHour = () => prisma.triviaCategory.findMany();
+// OFFICE HOUR 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-export const updateOfficeHour = () => {};
+export const getAllOfficeHour1 = () => prisma.officeHour1.findMany();
 
-// BOOKING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-export const createBooking = () => {};
+export const updateOfficeHour1 = (args: IUpdateOfficeHour1) =>
+  prisma.officeHour1.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      day: args.day,
+      isOpen: args.open,
+      openTime: args.openTime,
+      closeTime: args.closeTime,
+    },
+  });
 
-export const getAllBooking = () => prisma.triviaCategory.findMany();
+// OFFICE HOUR 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-export const updateBookingHandler = () => {};
+export const getAllOfficeHour2 = () => prisma.officeHour2.findMany();
 
-export const deleteBookingHandler = () => {};
+export const updateOfficeHour2 = (args: IUpdateOfficeHour2) =>
+  prisma.officeHour2.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      isOpenMonday: args.isOpenMonday ?? undefined,
+      openingTimeMonday: args.openingTimeMonday ?? undefined,
+      closingTimeMonday: args.closingTimeMonday ?? undefined,
+      isOpenTuesday: args.isOpenTuesday ?? undefined,
+      openingTimeTuesday: args.openingTimeTuesday ?? undefined,
+      closingTimeTuesday: args.closingTimeTuesday ?? undefined,
+      isOpenWednesday: args.isOpenWednesday ?? undefined,
+      openingTimeWednesday: args.openingTimeWednesday ?? undefined,
+      closingTimeWednesday: args.closingTimeWednesday ?? undefined,
+      isOpenThursday: args.isOpenThursday ?? undefined,
+      openingTimeThursday: args.openingTimeThursday ?? undefined,
+      closingTimeThursday: args.closingTimeThursday ?? undefined,
+      isOpenFriday: args.isOpenFriday ?? undefined,
+      openingTimeFriday: args.openingTimeFriday ?? undefined,
+      closingTimeFriday: args.closingTimeFriday ?? undefined,
+      isOpenSaturday: args.isOpenSaturday ?? undefined,
+      openingTimeSaturday: args.openingTimeSaturday ?? undefined,
+      closingTimeSaturday: args.closingTimeSaturday ?? undefined,
+      isOpenSunday: args.isOpenSunday ?? undefined,
+      openingTimeSunday: args.openingTimeSunday ?? undefined,
+      closingTimeSunday: args.closingTimeSunday ?? undefined,
+    },
+  });
 
-// USER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-export const createUser = () => {};
+// BOOKING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const createBooking = (args: ICreateBooking) =>
+  prisma.booking.create({
+    data: {
+      startDatetime: args.startDatetime,
+      endDatetime: args.endDatetime,
+      room: {
+        connect: {
+          id: args.roomId,
+        },
+      },
+      user: {
+        connect: {
+          id: args.userId,
+        },
+      },
+    },
+  });
 
-export const getAllUser = () => prisma.triviaCategory.findMany();
+export const getAllBooking = () => prisma.booking.findMany();
 
-export const updateUserHandler = () => {};
+export const updateBooking = (args: IUpdateBooking) =>
+  prisma.booking.update({
+    where: {
+      userId: args.userId,
+    },
+    data: {
+      startDatetime: args.startDatetime ?? undefined,
+      endDatetime: args.endDatetime ?? undefined,
+      roomId: args.roomId ?? undefined,
+    },
+  });
 
-export const deleteUserHandler = () => {};
+export const deleteBooking = (args: IDeleteBooking) =>
+  prisma.booking.delete({
+    where: {
+      id: args.id,
+    },
+  });
 
-// export const updateCategory = (args: { id: number; name: string }) =>
-//   prisma.triviaCategory.update({
-//     where: {
-//       id: args.id,
-//     },
-//     data: {
-//       name: args.name,
-//     },
-//   });
+// USER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const createUser = (args: ICreateUser) =>
+  prisma.user.create({
+    data: {
+      officerId: args.officerId,
+      firstName: args.firstName,
+      lastName: args.lastName,
+      phone: args.phone,
+      email: args.email,
+      userName: args.userName,
+      password: args.password,
+      role: args.role,
+    },
+  });
+
+export const getAllUser = () => prisma.user.findMany();
+
+export const updateUser = (args: IUpdateUser) =>
+  prisma.user.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      firstName: args.firstName ?? undefined,
+      lastName: args.lastName ?? undefined,
+      phone: args.phone ?? undefined,
+      email: args.email ?? undefined,
+      userName: args.userName ?? undefined,
+      password: args.password ?? undefined,
+      role: args.role ?? undefined,
+    },
+  });
+
+export const deleteUser = (args: IDeleteBooking) =>
+  prisma.user.delete({
+    where: {
+      id: args.id,
+    },
+  });
+
+// VALIDATE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+export const logIn = (args: IDeleteBooking) =>
+  prisma.user.delete({
+    where: {
+      id: args.id,
+    },
+  });
+
+
+
+export const checkAvailableRoom = (args: IDeleteBooking) =>
+  prisma.user.delete({
+    where: {
+      id: args.id,
+    },
+  });
+
+  
+  export const checkIsOfficeHour = (args: {
+    day: string;
+    start: Date;
+    end: Date;
+  }) => {
+    //todo: check from database
+    let result = {
+      result: true,
+    };
+
+    return result;
+  };
+
+  export  const hello = async (args: IHello) => {
+    let executed = new Date();
+    let id = new Date().getTime();
+    let result = {
+      id: id,
+      name: args.name,
+      executed: executed
+    }
+
+    return result;
+  }
 
 // QUIZ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

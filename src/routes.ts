@@ -1,27 +1,29 @@
 import {
-  createBuildingHandler,
-  getAllBuildingHandler,
-  createFacilityHandler,
-  getAllFacilityHandler,
-  updateFacilityHandler,
-  deleteFacilityHandler,
-  createRoomHandler,
-  getAllRoomHandler,
-  createBookingHandler,
-  getAllBookingHandler,
-  getAllUserHandler,
-  logInHandler,
-  checkIsOfficeHourHandler,
   checkAvailableRoomHandler,
-  getAllOfficeHourHandler,
-  updateOfficeHourHandler,
+  checkIsOfficeHourHandler,
+  createBookingHandler,
+  createBuildingHandler,
+  createFacilityHandler,
+  createRoomHandler,
+  deleteFacilityHandler,
+  deleteRoomHandler,
+  getAllBookingHandler,
+  getAllBuildingHandler,
+  getAllFacilityHandler,
+  getAllOfficeHour1Handler,
+  getAllOfficeHour2Handler,
+  getAllRoomHandler,
+  getAllUserHandler,
+  getRoomByBuildingIdHandler,
+  helloHandler,
+  logInHandler,
+  updateFacilityHandler,
+  updateOfficeHour1Handler,
+  updateOfficeHour2Handler,
   updateRoomHandler,
-  deleteRoomHandler
-} from "./squaduled/squaduled.handler";
-
+} from "./squadule/squaduled.handler";
 
 export const AppRoutes = [
-  
   //todo: create route for project squaduled
   {
     path: "/squaduled/createBuilding",
@@ -46,7 +48,7 @@ export const AppRoutes = [
   {
     path: "/squaduled/updateFacility",
     method: "post",
-    action:updateFacilityHandler,
+    action: updateFacilityHandler,
   },
   {
     path: "/squaduled/deleteFacility",
@@ -64,6 +66,11 @@ export const AppRoutes = [
     action: getAllRoomHandler,
   },
   {
+    path: "/squaduled/getRoomByBuildingId",
+    method: "post",
+    action: getRoomByBuildingIdHandler,
+  },
+  {
     path: "/squaduled/updateRoom",
     method: "post",
     action: updateRoomHandler,
@@ -74,14 +81,24 @@ export const AppRoutes = [
     action: deleteRoomHandler,
   },
   {
-    path: "/squaduled/getAllOfficeHour",
+    path: "/squaduled/getAllOfficeHour1",
     method: "post",
-    action: getAllOfficeHourHandler,
+    action: getAllOfficeHour1Handler,
   },
   {
-    path: "/squaduled/updateOfficeHour",
+    path: "/squaduled/updateOfficeHour1",
     method: "post",
-    action:updateOfficeHourHandler,
+    action: updateOfficeHour1Handler,
+  },
+  {
+    path: "/squaduled/getAllOfficeHour2",
+    method: "post",
+    action: getAllOfficeHour2Handler,
+  },
+  {
+    path: "/squaduled/updateOfficeHour2",
+    method: "post",
+    action: updateOfficeHour2Handler,
   },
   {
     path: "/squaduled/createBooking",
@@ -113,4 +130,9 @@ export const AppRoutes = [
     method: "post",
     action: checkAvailableRoomHandler,
   },
+  {
+    path:'/squaduled/hello',
+    method: 'post',
+    action : helloHandler
+  }
 ];

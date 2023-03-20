@@ -1,12 +1,44 @@
 import { Request, Response } from "express";
-import { createBuilding, getAllBooking, getAllBuilding, getAllFacility, getAllOfficeHour, getAllRoom, getAllUser } from "./squaduled.resolver";
+import {
+  CreateBuildingCodec,
+  CreateFacilityCodec,
+  CreateRoomCodec,
+  DeleteFacilityCodec,
+  DeleteRoomCodec,
+  getRoomByBuildingIdCodec,
+  HelloCodec,
+  UpdateFacilityCodec,
+  UpdateRoomCodec,
+} from "./squaduled.interface";
+import {
+  createBuilding,
+  createFacility,
+  createRoom,
+  deleteFacility,
+  deleteRoom,
+  getAllBooking,
+  getAllBuilding,
+  getAllFacility,
+  getAllOfficeHour1,
+  getAllOfficeHour2,
+  getAllRoom,
+  getAllUser,
+  getRoomByBuildingId,
+  updateFacility,
+  updateRoom,
+  checkIsOfficeHour,
+  hello
+} from "./squaduled.resolver";
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createBuildingHandler = async (req: Request, res: Response) => {
-  const args = req?.body;
+  const body = req?.body;
   try {
-    const result = await createBuilding({
-      name: args.name,
-    }); 
-    res.status(200).json(result);
+    if (CreateBuildingCodec.decode(body)._tag === "Right") {
+      const result = await createBuilding(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
   } catch (e) {
     res.status(500).json({
       error: String(e),
@@ -22,8 +54,44 @@ export const getAllBuildingHandler = async (req: Request, res: Response) => {
       error: String(e),
     });
   }
+}; //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+export const createFacilityHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (CreateFacilityCodec.decode(body)._tag === "Right") {
+      const result = await createFacility(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
 };
-export const createFacilityHandler = async (req: Request, res: Response) => {};
+
+export const checkIsOfficeHourHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (CreateFacilityCodec.decode(body)._tag === "Right") {
+
+      //check is office hour
+      const result = await checkIsOfficeHour(req.body);
+
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+
 export const getAllFacilityHandler = async (req: Request, res: Response) => {
   try {
     const result = await getAllFacility();
@@ -34,9 +102,54 @@ export const getAllFacilityHandler = async (req: Request, res: Response) => {
     });
   }
 };
-export const updateFacilityHandler = async (req: Request, res: Response) => {};
-export const deleteFacilityHandler = async (req: Request, res: Response) => {};
-export const createRoomHandler = async (req: Request, res: Response) => {};
+export const updateFacilityHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (UpdateFacilityCodec.decode(body)._tag === "Right") {
+      const result = await updateFacility(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+export const deleteFacilityHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (DeleteFacilityCodec.decode(body)._tag === "Right") {
+      const result = await deleteFacility(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+export const createRoomHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (CreateRoomCodec.decode(body)._tag === "Right") {
+      const result = await createRoom(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
 export const getAllRoomHandler = async (req: Request, res: Response) => {
   try {
     const result = await getAllRoom();
@@ -47,11 +160,59 @@ export const getAllRoomHandler = async (req: Request, res: Response) => {
     });
   }
 };
-export const updateRoomHandler = async (req: Request, res: Response) => {};
-export const deleteRoomHandler = async (req: Request, res: Response) => {};
-export const getAllOfficeHourHandler = async (req: Request, res: Response) => {
+
+export const getRoomByBuildingIdHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
   try {
-    const result = await getAllOfficeHour();
+    if (getRoomByBuildingIdCodec.decode(body)._tag === "Right") {
+      const result = await getRoomByBuildingId(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+export const updateRoomHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (UpdateRoomCodec.decode(body)._tag === "Right") {
+      const result = await updateRoom(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+export const deleteRoomHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (DeleteRoomCodec.decode(body)._tag === "Right") {
+      const result = await deleteRoom(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+export const getAllOfficeHour1Handler = async (req: Request, res: Response) => {
+  try {
+    const result = await getAllOfficeHour1();
     res.status(200).json(result);
   } catch (e) {
     res.status(500).json({
@@ -59,10 +220,30 @@ export const getAllOfficeHourHandler = async (req: Request, res: Response) => {
     });
   }
 };
-export const updateOfficeHourHandler = async (
+export const updateOfficeHour1Handler = async (
   req: Request,
   res: Response
 ) => {};
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+export const getAllOfficeHour2Handler = async (req: Request, res: Response) => {
+  try {
+    const result = await getAllOfficeHour2();
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+export const updateOfficeHour2Handler = async (
+  req: Request,
+  res: Response
+) => {};
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 export const createBookingHandler = async (req: Request, res: Response) => {};
 export const getAllBookingHandler = async (req: Request, res: Response) => {
   try {
@@ -74,6 +255,9 @@ export const getAllBookingHandler = async (req: Request, res: Response) => {
     });
   }
 };
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 export const getAllUserHandler = async (req: Request, res: Response) => {
   try {
     const result = await getAllUser();
@@ -84,11 +268,9 @@ export const getAllUserHandler = async (req: Request, res: Response) => {
     });
   }
 };
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const logInHandler = async (req: Request, res: Response) => {};
-export const checkIsOfficeHourHandler = async (
-  req: Request,
-  res: Response
-) => {};
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const checkAvailableRoomHandler = async (
   req: Request,
   res: Response
@@ -103,7 +285,7 @@ export const checkAvailableRoomHandler = async (
 //   try {
 //     const result = await createCategory({
 //       name: args.name,
-//     }); 
+//     });
 //     res.status(200).json(result);
 //   } catch (e) {
 //     res.status(500).json({
@@ -166,7 +348,7 @@ export const checkAvailableRoomHandler = async (
 // export const submitQuestionHandler = async (req: Request, res: Response) => {
 //   const body = req?.body;
 //   try {
-//     const result = await submitQuestion(body); 
+//     const result = await submitQuestion(body);
 //     res.status(200).json(result);
 //   } catch (e) {
 //     res.status(500).json({
@@ -178,7 +360,7 @@ export const checkAvailableRoomHandler = async (
 // export const getResultsHandler = async (req: Request, res: Response) => {
 //   const body = req?.body;
 //   try {
-//     const result = await getResults(body); 
+//     const result = await getResults(body);
 //     res.status(200).json(result);
 //   } catch (e) {
 //     res.status(500).json({
@@ -186,3 +368,19 @@ export const checkAvailableRoomHandler = async (
 //     });
 //   }
 // };
+
+export const helloHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (HelloCodec.decode(body)._tag === "Right") {
+      const result = await hello(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};

@@ -41,7 +41,7 @@ export type Room = {
   name: string
   buildingId: number
   floor: string
-  capacityMax: string
+  capacityMax: number
   createdAt: Date
   updatedAt: Date
 }
@@ -52,7 +52,7 @@ export type Room = {
  */
 export type User = {
   id: number
-  officerId: string
+  officerId: number
   firstName: string
   lastName: string
   phone: string
@@ -85,25 +85,25 @@ export type OfficeHour1 = {
 export type OfficeHour2 = {
   id: number
   isOpenMonday: boolean
-  opentingTimeMonday: number
+  openingTimeMonday: number
   closingTimeMonday: number
   isOpenTuesday: boolean
-  opentingTimeTuesday: number
+  openingTimeTuesday: number
   closingTimeTuesday: number
   isOpenWednesday: boolean
-  opentingTimeWednesday: number
+  openingTimeWednesday: number
   closingTimeWednesday: number
   isOpenThursday: boolean
-  opentingTimeThursday: number
+  openingTimeThursday: number
   closingTimeThursday: number
   isOpenFriday: boolean
-  opentingTimeFriday: number
+  openingTimeFriday: number
   closingTimeFriday: number
   isOpenSaturday: boolean
-  opentingTimeSaturday: number
+  openingTimeSaturday: number
   closingTimeSaturday: number
   isOpenSunday: boolean
-  opentingTimeSunday: number
+  openingTimeSunday: number
   closingTimeSunday: number
   createdAt: Date
   updatedAt: Date
@@ -3104,11 +3104,13 @@ export namespace Prisma {
   export type RoomAvgAggregateOutputType = {
     id: number | null
     buildingId: number | null
+    capacityMax: number | null
   }
 
   export type RoomSumAggregateOutputType = {
     id: number | null
     buildingId: number | null
+    capacityMax: number | null
   }
 
   export type RoomMinAggregateOutputType = {
@@ -3116,7 +3118,7 @@ export namespace Prisma {
     name: string | null
     buildingId: number | null
     floor: string | null
-    capacityMax: string | null
+    capacityMax: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3126,7 +3128,7 @@ export namespace Prisma {
     name: string | null
     buildingId: number | null
     floor: string | null
-    capacityMax: string | null
+    capacityMax: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3146,11 +3148,13 @@ export namespace Prisma {
   export type RoomAvgAggregateInputType = {
     id?: true
     buildingId?: true
+    capacityMax?: true
   }
 
   export type RoomSumAggregateInputType = {
     id?: true
     buildingId?: true
+    capacityMax?: true
   }
 
   export type RoomMinAggregateInputType = {
@@ -3276,7 +3280,7 @@ export namespace Prisma {
     name: string
     buildingId: number
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt: Date
     updatedAt: Date
     _count: RoomCountAggregateOutputType | null
@@ -4146,15 +4150,17 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     id: number | null
+    officerId: number | null
   }
 
   export type UserSumAggregateOutputType = {
     id: number | null
+    officerId: number | null
   }
 
   export type UserMinAggregateOutputType = {
     id: number | null
-    officerId: string | null
+    officerId: number | null
     firstName: string | null
     lastName: string | null
     phone: string | null
@@ -4168,7 +4174,7 @@ export namespace Prisma {
 
   export type UserMaxAggregateOutputType = {
     id: number | null
-    officerId: string | null
+    officerId: number | null
     firstName: string | null
     lastName: string | null
     phone: string | null
@@ -4198,10 +4204,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateInputType = {
     id?: true
+    officerId?: true
   }
 
   export type UserSumAggregateInputType = {
     id?: true
+    officerId?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -4336,7 +4344,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: number
-    officerId: string
+    officerId: number
     firstName: string
     lastName: string
     phone: string
@@ -6124,62 +6132,62 @@ export namespace Prisma {
 
   export type OfficeHour2AvgAggregateOutputType = {
     id: number | null
-    opentingTimeMonday: number | null
+    openingTimeMonday: number | null
     closingTimeMonday: number | null
-    opentingTimeTuesday: number | null
+    openingTimeTuesday: number | null
     closingTimeTuesday: number | null
-    opentingTimeWednesday: number | null
+    openingTimeWednesday: number | null
     closingTimeWednesday: number | null
-    opentingTimeThursday: number | null
+    openingTimeThursday: number | null
     closingTimeThursday: number | null
-    opentingTimeFriday: number | null
+    openingTimeFriday: number | null
     closingTimeFriday: number | null
-    opentingTimeSaturday: number | null
+    openingTimeSaturday: number | null
     closingTimeSaturday: number | null
-    opentingTimeSunday: number | null
+    openingTimeSunday: number | null
     closingTimeSunday: number | null
   }
 
   export type OfficeHour2SumAggregateOutputType = {
     id: number | null
-    opentingTimeMonday: number | null
+    openingTimeMonday: number | null
     closingTimeMonday: number | null
-    opentingTimeTuesday: number | null
+    openingTimeTuesday: number | null
     closingTimeTuesday: number | null
-    opentingTimeWednesday: number | null
+    openingTimeWednesday: number | null
     closingTimeWednesday: number | null
-    opentingTimeThursday: number | null
+    openingTimeThursday: number | null
     closingTimeThursday: number | null
-    opentingTimeFriday: number | null
+    openingTimeFriday: number | null
     closingTimeFriday: number | null
-    opentingTimeSaturday: number | null
+    openingTimeSaturday: number | null
     closingTimeSaturday: number | null
-    opentingTimeSunday: number | null
+    openingTimeSunday: number | null
     closingTimeSunday: number | null
   }
 
   export type OfficeHour2MinAggregateOutputType = {
     id: number | null
     isOpenMonday: boolean | null
-    opentingTimeMonday: number | null
+    openingTimeMonday: number | null
     closingTimeMonday: number | null
     isOpenTuesday: boolean | null
-    opentingTimeTuesday: number | null
+    openingTimeTuesday: number | null
     closingTimeTuesday: number | null
     isOpenWednesday: boolean | null
-    opentingTimeWednesday: number | null
+    openingTimeWednesday: number | null
     closingTimeWednesday: number | null
     isOpenThursday: boolean | null
-    opentingTimeThursday: number | null
+    openingTimeThursday: number | null
     closingTimeThursday: number | null
     isOpenFriday: boolean | null
-    opentingTimeFriday: number | null
+    openingTimeFriday: number | null
     closingTimeFriday: number | null
     isOpenSaturday: boolean | null
-    opentingTimeSaturday: number | null
+    openingTimeSaturday: number | null
     closingTimeSaturday: number | null
     isOpenSunday: boolean | null
-    opentingTimeSunday: number | null
+    openingTimeSunday: number | null
     closingTimeSunday: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6188,25 +6196,25 @@ export namespace Prisma {
   export type OfficeHour2MaxAggregateOutputType = {
     id: number | null
     isOpenMonday: boolean | null
-    opentingTimeMonday: number | null
+    openingTimeMonday: number | null
     closingTimeMonday: number | null
     isOpenTuesday: boolean | null
-    opentingTimeTuesday: number | null
+    openingTimeTuesday: number | null
     closingTimeTuesday: number | null
     isOpenWednesday: boolean | null
-    opentingTimeWednesday: number | null
+    openingTimeWednesday: number | null
     closingTimeWednesday: number | null
     isOpenThursday: boolean | null
-    opentingTimeThursday: number | null
+    openingTimeThursday: number | null
     closingTimeThursday: number | null
     isOpenFriday: boolean | null
-    opentingTimeFriday: number | null
+    openingTimeFriday: number | null
     closingTimeFriday: number | null
     isOpenSaturday: boolean | null
-    opentingTimeSaturday: number | null
+    openingTimeSaturday: number | null
     closingTimeSaturday: number | null
     isOpenSunday: boolean | null
-    opentingTimeSunday: number | null
+    openingTimeSunday: number | null
     closingTimeSunday: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6215,25 +6223,25 @@ export namespace Prisma {
   export type OfficeHour2CountAggregateOutputType = {
     id: number
     isOpenMonday: number
-    opentingTimeMonday: number
+    openingTimeMonday: number
     closingTimeMonday: number
     isOpenTuesday: number
-    opentingTimeTuesday: number
+    openingTimeTuesday: number
     closingTimeTuesday: number
     isOpenWednesday: number
-    opentingTimeWednesday: number
+    openingTimeWednesday: number
     closingTimeWednesday: number
     isOpenThursday: number
-    opentingTimeThursday: number
+    openingTimeThursday: number
     closingTimeThursday: number
     isOpenFriday: number
-    opentingTimeFriday: number
+    openingTimeFriday: number
     closingTimeFriday: number
     isOpenSaturday: number
-    opentingTimeSaturday: number
+    openingTimeSaturday: number
     closingTimeSaturday: number
     isOpenSunday: number
-    opentingTimeSunday: number
+    openingTimeSunday: number
     closingTimeSunday: number
     createdAt: number
     updatedAt: number
@@ -6243,62 +6251,62 @@ export namespace Prisma {
 
   export type OfficeHour2AvgAggregateInputType = {
     id?: true
-    opentingTimeMonday?: true
+    openingTimeMonday?: true
     closingTimeMonday?: true
-    opentingTimeTuesday?: true
+    openingTimeTuesday?: true
     closingTimeTuesday?: true
-    opentingTimeWednesday?: true
+    openingTimeWednesday?: true
     closingTimeWednesday?: true
-    opentingTimeThursday?: true
+    openingTimeThursday?: true
     closingTimeThursday?: true
-    opentingTimeFriday?: true
+    openingTimeFriday?: true
     closingTimeFriday?: true
-    opentingTimeSaturday?: true
+    openingTimeSaturday?: true
     closingTimeSaturday?: true
-    opentingTimeSunday?: true
+    openingTimeSunday?: true
     closingTimeSunday?: true
   }
 
   export type OfficeHour2SumAggregateInputType = {
     id?: true
-    opentingTimeMonday?: true
+    openingTimeMonday?: true
     closingTimeMonday?: true
-    opentingTimeTuesday?: true
+    openingTimeTuesday?: true
     closingTimeTuesday?: true
-    opentingTimeWednesday?: true
+    openingTimeWednesday?: true
     closingTimeWednesday?: true
-    opentingTimeThursday?: true
+    openingTimeThursday?: true
     closingTimeThursday?: true
-    opentingTimeFriday?: true
+    openingTimeFriday?: true
     closingTimeFriday?: true
-    opentingTimeSaturday?: true
+    openingTimeSaturday?: true
     closingTimeSaturday?: true
-    opentingTimeSunday?: true
+    openingTimeSunday?: true
     closingTimeSunday?: true
   }
 
   export type OfficeHour2MinAggregateInputType = {
     id?: true
     isOpenMonday?: true
-    opentingTimeMonday?: true
+    openingTimeMonday?: true
     closingTimeMonday?: true
     isOpenTuesday?: true
-    opentingTimeTuesday?: true
+    openingTimeTuesday?: true
     closingTimeTuesday?: true
     isOpenWednesday?: true
-    opentingTimeWednesday?: true
+    openingTimeWednesday?: true
     closingTimeWednesday?: true
     isOpenThursday?: true
-    opentingTimeThursday?: true
+    openingTimeThursday?: true
     closingTimeThursday?: true
     isOpenFriday?: true
-    opentingTimeFriday?: true
+    openingTimeFriday?: true
     closingTimeFriday?: true
     isOpenSaturday?: true
-    opentingTimeSaturday?: true
+    openingTimeSaturday?: true
     closingTimeSaturday?: true
     isOpenSunday?: true
-    opentingTimeSunday?: true
+    openingTimeSunday?: true
     closingTimeSunday?: true
     createdAt?: true
     updatedAt?: true
@@ -6307,25 +6315,25 @@ export namespace Prisma {
   export type OfficeHour2MaxAggregateInputType = {
     id?: true
     isOpenMonday?: true
-    opentingTimeMonday?: true
+    openingTimeMonday?: true
     closingTimeMonday?: true
     isOpenTuesday?: true
-    opentingTimeTuesday?: true
+    openingTimeTuesday?: true
     closingTimeTuesday?: true
     isOpenWednesday?: true
-    opentingTimeWednesday?: true
+    openingTimeWednesday?: true
     closingTimeWednesday?: true
     isOpenThursday?: true
-    opentingTimeThursday?: true
+    openingTimeThursday?: true
     closingTimeThursday?: true
     isOpenFriday?: true
-    opentingTimeFriday?: true
+    openingTimeFriday?: true
     closingTimeFriday?: true
     isOpenSaturday?: true
-    opentingTimeSaturday?: true
+    openingTimeSaturday?: true
     closingTimeSaturday?: true
     isOpenSunday?: true
-    opentingTimeSunday?: true
+    openingTimeSunday?: true
     closingTimeSunday?: true
     createdAt?: true
     updatedAt?: true
@@ -6334,25 +6342,25 @@ export namespace Prisma {
   export type OfficeHour2CountAggregateInputType = {
     id?: true
     isOpenMonday?: true
-    opentingTimeMonday?: true
+    openingTimeMonday?: true
     closingTimeMonday?: true
     isOpenTuesday?: true
-    opentingTimeTuesday?: true
+    openingTimeTuesday?: true
     closingTimeTuesday?: true
     isOpenWednesday?: true
-    opentingTimeWednesday?: true
+    openingTimeWednesday?: true
     closingTimeWednesday?: true
     isOpenThursday?: true
-    opentingTimeThursday?: true
+    openingTimeThursday?: true
     closingTimeThursday?: true
     isOpenFriday?: true
-    opentingTimeFriday?: true
+    openingTimeFriday?: true
     closingTimeFriday?: true
     isOpenSaturday?: true
-    opentingTimeSaturday?: true
+    openingTimeSaturday?: true
     closingTimeSaturday?: true
     isOpenSunday?: true
-    opentingTimeSunday?: true
+    openingTimeSunday?: true
     closingTimeSunday?: true
     createdAt?: true
     updatedAt?: true
@@ -6449,25 +6457,25 @@ export namespace Prisma {
   export type OfficeHour2GroupByOutputType = {
     id: number
     isOpenMonday: boolean
-    opentingTimeMonday: number
+    openingTimeMonday: number
     closingTimeMonday: number
     isOpenTuesday: boolean
-    opentingTimeTuesday: number
+    openingTimeTuesday: number
     closingTimeTuesday: number
     isOpenWednesday: boolean
-    opentingTimeWednesday: number
+    openingTimeWednesday: number
     closingTimeWednesday: number
     isOpenThursday: boolean
-    opentingTimeThursday: number
+    openingTimeThursday: number
     closingTimeThursday: number
     isOpenFriday: boolean
-    opentingTimeFriday: number
+    openingTimeFriday: number
     closingTimeFriday: number
     isOpenSaturday: boolean
-    opentingTimeSaturday: number
+    openingTimeSaturday: number
     closingTimeSaturday: number
     isOpenSunday: boolean
-    opentingTimeSunday: number
+    openingTimeSunday: number
     closingTimeSunday: number
     createdAt: Date
     updatedAt: Date
@@ -6495,25 +6503,25 @@ export namespace Prisma {
   export type OfficeHour2Select = {
     id?: boolean
     isOpenMonday?: boolean
-    opentingTimeMonday?: boolean
+    openingTimeMonday?: boolean
     closingTimeMonday?: boolean
     isOpenTuesday?: boolean
-    opentingTimeTuesday?: boolean
+    openingTimeTuesday?: boolean
     closingTimeTuesday?: boolean
     isOpenWednesday?: boolean
-    opentingTimeWednesday?: boolean
+    openingTimeWednesday?: boolean
     closingTimeWednesday?: boolean
     isOpenThursday?: boolean
-    opentingTimeThursday?: boolean
+    openingTimeThursday?: boolean
     closingTimeThursday?: boolean
     isOpenFriday?: boolean
-    opentingTimeFriday?: boolean
+    openingTimeFriday?: boolean
     closingTimeFriday?: boolean
     isOpenSaturday?: boolean
-    opentingTimeSaturday?: boolean
+    openingTimeSaturday?: boolean
     closingTimeSaturday?: boolean
     isOpenSunday?: boolean
-    opentingTimeSunday?: boolean
+    openingTimeSunday?: boolean
     closingTimeSunday?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8284,25 +8292,25 @@ export namespace Prisma {
   export const OfficeHour2ScalarFieldEnum: {
     id: 'id',
     isOpenMonday: 'isOpenMonday',
-    opentingTimeMonday: 'opentingTimeMonday',
+    openingTimeMonday: 'openingTimeMonday',
     closingTimeMonday: 'closingTimeMonday',
     isOpenTuesday: 'isOpenTuesday',
-    opentingTimeTuesday: 'opentingTimeTuesday',
+    openingTimeTuesday: 'openingTimeTuesday',
     closingTimeTuesday: 'closingTimeTuesday',
     isOpenWednesday: 'isOpenWednesday',
-    opentingTimeWednesday: 'opentingTimeWednesday',
+    openingTimeWednesday: 'openingTimeWednesday',
     closingTimeWednesday: 'closingTimeWednesday',
     isOpenThursday: 'isOpenThursday',
-    opentingTimeThursday: 'opentingTimeThursday',
+    openingTimeThursday: 'openingTimeThursday',
     closingTimeThursday: 'closingTimeThursday',
     isOpenFriday: 'isOpenFriday',
-    opentingTimeFriday: 'opentingTimeFriday',
+    openingTimeFriday: 'openingTimeFriday',
     closingTimeFriday: 'closingTimeFriday',
     isOpenSaturday: 'isOpenSaturday',
-    opentingTimeSaturday: 'opentingTimeSaturday',
+    openingTimeSaturday: 'openingTimeSaturday',
     closingTimeSaturday: 'closingTimeSaturday',
     isOpenSunday: 'isOpenSunday',
-    opentingTimeSunday: 'opentingTimeSunday',
+    openingTimeSunday: 'openingTimeSunday',
     closingTimeSunday: 'closingTimeSunday',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -8473,7 +8481,7 @@ export namespace Prisma {
     building?: XOR<BuildingRelationFilter, BuildingWhereInput> | null
     buildingId?: IntFilter | number
     floor?: StringFilter | string
-    capacityMax?: StringFilter | string
+    capacityMax?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     facilities?: FacilityListRelationFilter
@@ -8521,7 +8529,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter | string
     buildingId?: IntWithAggregatesFilter | number
     floor?: StringWithAggregatesFilter | string
-    capacityMax?: StringWithAggregatesFilter | string
+    capacityMax?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -8531,7 +8539,7 @@ export namespace Prisma {
     OR?: Enumerable<UserWhereInput>
     NOT?: Enumerable<UserWhereInput>
     id?: IntFilter | number
-    officerId?: StringFilter | string
+    officerId?: IntFilter | number
     firstName?: StringFilter | string
     lastName?: StringFilter | string
     phone?: StringFilter | string
@@ -8561,7 +8569,7 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = {
     id?: number
-    officerId?: string
+    officerId?: number
     phone?: string
     email?: string
     userName?: string
@@ -8591,7 +8599,7 @@ export namespace Prisma {
     OR?: Enumerable<UserScalarWhereWithAggregatesInput>
     NOT?: Enumerable<UserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    officerId?: StringWithAggregatesFilter | string
+    officerId?: IntWithAggregatesFilter | number
     firstName?: StringWithAggregatesFilter | string
     lastName?: StringWithAggregatesFilter | string
     phone?: StringWithAggregatesFilter | string
@@ -8665,25 +8673,25 @@ export namespace Prisma {
     NOT?: Enumerable<OfficeHour2WhereInput>
     id?: IntFilter | number
     isOpenMonday?: BoolFilter | boolean
-    opentingTimeMonday?: IntFilter | number
+    openingTimeMonday?: IntFilter | number
     closingTimeMonday?: IntFilter | number
     isOpenTuesday?: BoolFilter | boolean
-    opentingTimeTuesday?: IntFilter | number
+    openingTimeTuesday?: IntFilter | number
     closingTimeTuesday?: IntFilter | number
     isOpenWednesday?: BoolFilter | boolean
-    opentingTimeWednesday?: IntFilter | number
+    openingTimeWednesday?: IntFilter | number
     closingTimeWednesday?: IntFilter | number
     isOpenThursday?: BoolFilter | boolean
-    opentingTimeThursday?: IntFilter | number
+    openingTimeThursday?: IntFilter | number
     closingTimeThursday?: IntFilter | number
     isOpenFriday?: BoolFilter | boolean
-    opentingTimeFriday?: IntFilter | number
+    openingTimeFriday?: IntFilter | number
     closingTimeFriday?: IntFilter | number
     isOpenSaturday?: BoolFilter | boolean
-    opentingTimeSaturday?: IntFilter | number
+    openingTimeSaturday?: IntFilter | number
     closingTimeSaturday?: IntFilter | number
     isOpenSunday?: BoolFilter | boolean
-    opentingTimeSunday?: IntFilter | number
+    openingTimeSunday?: IntFilter | number
     closingTimeSunday?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
@@ -8692,25 +8700,25 @@ export namespace Prisma {
   export type OfficeHour2OrderByWithRelationInput = {
     id?: SortOrder
     isOpenMonday?: SortOrder
-    opentingTimeMonday?: SortOrder
+    openingTimeMonday?: SortOrder
     closingTimeMonday?: SortOrder
     isOpenTuesday?: SortOrder
-    opentingTimeTuesday?: SortOrder
+    openingTimeTuesday?: SortOrder
     closingTimeTuesday?: SortOrder
     isOpenWednesday?: SortOrder
-    opentingTimeWednesday?: SortOrder
+    openingTimeWednesday?: SortOrder
     closingTimeWednesday?: SortOrder
     isOpenThursday?: SortOrder
-    opentingTimeThursday?: SortOrder
+    openingTimeThursday?: SortOrder
     closingTimeThursday?: SortOrder
     isOpenFriday?: SortOrder
-    opentingTimeFriday?: SortOrder
+    openingTimeFriday?: SortOrder
     closingTimeFriday?: SortOrder
     isOpenSaturday?: SortOrder
-    opentingTimeSaturday?: SortOrder
+    openingTimeSaturday?: SortOrder
     closingTimeSaturday?: SortOrder
     isOpenSunday?: SortOrder
-    opentingTimeSunday?: SortOrder
+    openingTimeSunday?: SortOrder
     closingTimeSunday?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8723,25 +8731,25 @@ export namespace Prisma {
   export type OfficeHour2OrderByWithAggregationInput = {
     id?: SortOrder
     isOpenMonday?: SortOrder
-    opentingTimeMonday?: SortOrder
+    openingTimeMonday?: SortOrder
     closingTimeMonday?: SortOrder
     isOpenTuesday?: SortOrder
-    opentingTimeTuesday?: SortOrder
+    openingTimeTuesday?: SortOrder
     closingTimeTuesday?: SortOrder
     isOpenWednesday?: SortOrder
-    opentingTimeWednesday?: SortOrder
+    openingTimeWednesday?: SortOrder
     closingTimeWednesday?: SortOrder
     isOpenThursday?: SortOrder
-    opentingTimeThursday?: SortOrder
+    openingTimeThursday?: SortOrder
     closingTimeThursday?: SortOrder
     isOpenFriday?: SortOrder
-    opentingTimeFriday?: SortOrder
+    openingTimeFriday?: SortOrder
     closingTimeFriday?: SortOrder
     isOpenSaturday?: SortOrder
-    opentingTimeSaturday?: SortOrder
+    openingTimeSaturday?: SortOrder
     closingTimeSaturday?: SortOrder
     isOpenSunday?: SortOrder
-    opentingTimeSunday?: SortOrder
+    openingTimeSunday?: SortOrder
     closingTimeSunday?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8758,25 +8766,25 @@ export namespace Prisma {
     NOT?: Enumerable<OfficeHour2ScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     isOpenMonday?: BoolWithAggregatesFilter | boolean
-    opentingTimeMonday?: IntWithAggregatesFilter | number
+    openingTimeMonday?: IntWithAggregatesFilter | number
     closingTimeMonday?: IntWithAggregatesFilter | number
     isOpenTuesday?: BoolWithAggregatesFilter | boolean
-    opentingTimeTuesday?: IntWithAggregatesFilter | number
+    openingTimeTuesday?: IntWithAggregatesFilter | number
     closingTimeTuesday?: IntWithAggregatesFilter | number
     isOpenWednesday?: BoolWithAggregatesFilter | boolean
-    opentingTimeWednesday?: IntWithAggregatesFilter | number
+    openingTimeWednesday?: IntWithAggregatesFilter | number
     closingTimeWednesday?: IntWithAggregatesFilter | number
     isOpenThursday?: BoolWithAggregatesFilter | boolean
-    opentingTimeThursday?: IntWithAggregatesFilter | number
+    openingTimeThursday?: IntWithAggregatesFilter | number
     closingTimeThursday?: IntWithAggregatesFilter | number
     isOpenFriday?: BoolWithAggregatesFilter | boolean
-    opentingTimeFriday?: IntWithAggregatesFilter | number
+    openingTimeFriday?: IntWithAggregatesFilter | number
     closingTimeFriday?: IntWithAggregatesFilter | number
     isOpenSaturday?: BoolWithAggregatesFilter | boolean
-    opentingTimeSaturday?: IntWithAggregatesFilter | number
+    openingTimeSaturday?: IntWithAggregatesFilter | number
     closingTimeSaturday?: IntWithAggregatesFilter | number
     isOpenSunday?: BoolWithAggregatesFilter | boolean
-    opentingTimeSunday?: IntWithAggregatesFilter | number
+    openingTimeSunday?: IntWithAggregatesFilter | number
     closingTimeSunday?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
@@ -8946,7 +8954,7 @@ export namespace Prisma {
     name: string
     building?: BuildingCreateNestedOneWithoutRoomInput
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
     facilities?: FacilityCreateNestedManyWithoutRoomInput
@@ -8958,7 +8966,7 @@ export namespace Prisma {
     name: string
     buildingId: number
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
     facilities?: FacilityUncheckedCreateNestedManyWithoutRoomInput
@@ -8969,7 +8977,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     building?: BuildingUpdateOneWithoutRoomNestedInput
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     facilities?: FacilityUpdateManyWithoutRoomNestedInput
@@ -8981,7 +8989,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     buildingId?: IntFieldUpdateOperationsInput | number
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     facilities?: FacilityUncheckedUpdateManyWithoutRoomNestedInput
@@ -8993,7 +9001,7 @@ export namespace Prisma {
     name: string
     buildingId: number
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9001,7 +9009,7 @@ export namespace Prisma {
   export type RoomUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9011,13 +9019,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     buildingId?: IntFieldUpdateOperationsInput | number
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateInput = {
-    officerId: string
+    officerId: number
     firstName: string
     lastName: string
     phone: string
@@ -9032,7 +9040,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: number
-    officerId: string
+    officerId: number
     firstName: string
     lastName: string
     phone: string
@@ -9046,7 +9054,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateInput = {
-    officerId?: StringFieldUpdateOperationsInput | string
+    officerId?: IntFieldUpdateOperationsInput | number
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9061,7 +9069,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    officerId?: StringFieldUpdateOperationsInput | string
+    officerId?: IntFieldUpdateOperationsInput | number
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9076,7 +9084,7 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: number
-    officerId: string
+    officerId: number
     firstName: string
     lastName: string
     phone: string
@@ -9089,7 +9097,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateManyMutationInput = {
-    officerId?: StringFieldUpdateOperationsInput | string
+    officerId?: IntFieldUpdateOperationsInput | number
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9103,7 +9111,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    officerId?: StringFieldUpdateOperationsInput | string
+    officerId?: IntFieldUpdateOperationsInput | number
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9184,25 +9192,25 @@ export namespace Prisma {
 
   export type OfficeHour2CreateInput = {
     isOpenMonday: boolean
-    opentingTimeMonday: number
+    openingTimeMonday: number
     closingTimeMonday: number
     isOpenTuesday: boolean
-    opentingTimeTuesday: number
+    openingTimeTuesday: number
     closingTimeTuesday: number
     isOpenWednesday: boolean
-    opentingTimeWednesday: number
+    openingTimeWednesday: number
     closingTimeWednesday: number
     isOpenThursday: boolean
-    opentingTimeThursday: number
+    openingTimeThursday: number
     closingTimeThursday: number
     isOpenFriday: boolean
-    opentingTimeFriday: number
+    openingTimeFriday: number
     closingTimeFriday: number
     isOpenSaturday: boolean
-    opentingTimeSaturday: number
+    openingTimeSaturday: number
     closingTimeSaturday: number
     isOpenSunday: boolean
-    opentingTimeSunday: number
+    openingTimeSunday: number
     closingTimeSunday: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9211,25 +9219,25 @@ export namespace Prisma {
   export type OfficeHour2UncheckedCreateInput = {
     id?: number
     isOpenMonday: boolean
-    opentingTimeMonday: number
+    openingTimeMonday: number
     closingTimeMonday: number
     isOpenTuesday: boolean
-    opentingTimeTuesday: number
+    openingTimeTuesday: number
     closingTimeTuesday: number
     isOpenWednesday: boolean
-    opentingTimeWednesday: number
+    openingTimeWednesday: number
     closingTimeWednesday: number
     isOpenThursday: boolean
-    opentingTimeThursday: number
+    openingTimeThursday: number
     closingTimeThursday: number
     isOpenFriday: boolean
-    opentingTimeFriday: number
+    openingTimeFriday: number
     closingTimeFriday: number
     isOpenSaturday: boolean
-    opentingTimeSaturday: number
+    openingTimeSaturday: number
     closingTimeSaturday: number
     isOpenSunday: boolean
-    opentingTimeSunday: number
+    openingTimeSunday: number
     closingTimeSunday: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9237,25 +9245,25 @@ export namespace Prisma {
 
   export type OfficeHour2UpdateInput = {
     isOpenMonday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeMonday?: IntFieldUpdateOperationsInput | number
+    openingTimeMonday?: IntFieldUpdateOperationsInput | number
     closingTimeMonday?: IntFieldUpdateOperationsInput | number
     isOpenTuesday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeTuesday?: IntFieldUpdateOperationsInput | number
+    openingTimeTuesday?: IntFieldUpdateOperationsInput | number
     closingTimeTuesday?: IntFieldUpdateOperationsInput | number
     isOpenWednesday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeWednesday?: IntFieldUpdateOperationsInput | number
+    openingTimeWednesday?: IntFieldUpdateOperationsInput | number
     closingTimeWednesday?: IntFieldUpdateOperationsInput | number
     isOpenThursday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeThursday?: IntFieldUpdateOperationsInput | number
+    openingTimeThursday?: IntFieldUpdateOperationsInput | number
     closingTimeThursday?: IntFieldUpdateOperationsInput | number
     isOpenFriday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeFriday?: IntFieldUpdateOperationsInput | number
+    openingTimeFriday?: IntFieldUpdateOperationsInput | number
     closingTimeFriday?: IntFieldUpdateOperationsInput | number
     isOpenSaturday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeSaturday?: IntFieldUpdateOperationsInput | number
+    openingTimeSaturday?: IntFieldUpdateOperationsInput | number
     closingTimeSaturday?: IntFieldUpdateOperationsInput | number
     isOpenSunday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeSunday?: IntFieldUpdateOperationsInput | number
+    openingTimeSunday?: IntFieldUpdateOperationsInput | number
     closingTimeSunday?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9264,25 +9272,25 @@ export namespace Prisma {
   export type OfficeHour2UncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     isOpenMonday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeMonday?: IntFieldUpdateOperationsInput | number
+    openingTimeMonday?: IntFieldUpdateOperationsInput | number
     closingTimeMonday?: IntFieldUpdateOperationsInput | number
     isOpenTuesday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeTuesday?: IntFieldUpdateOperationsInput | number
+    openingTimeTuesday?: IntFieldUpdateOperationsInput | number
     closingTimeTuesday?: IntFieldUpdateOperationsInput | number
     isOpenWednesday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeWednesday?: IntFieldUpdateOperationsInput | number
+    openingTimeWednesday?: IntFieldUpdateOperationsInput | number
     closingTimeWednesday?: IntFieldUpdateOperationsInput | number
     isOpenThursday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeThursday?: IntFieldUpdateOperationsInput | number
+    openingTimeThursday?: IntFieldUpdateOperationsInput | number
     closingTimeThursday?: IntFieldUpdateOperationsInput | number
     isOpenFriday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeFriday?: IntFieldUpdateOperationsInput | number
+    openingTimeFriday?: IntFieldUpdateOperationsInput | number
     closingTimeFriday?: IntFieldUpdateOperationsInput | number
     isOpenSaturday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeSaturday?: IntFieldUpdateOperationsInput | number
+    openingTimeSaturday?: IntFieldUpdateOperationsInput | number
     closingTimeSaturday?: IntFieldUpdateOperationsInput | number
     isOpenSunday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeSunday?: IntFieldUpdateOperationsInput | number
+    openingTimeSunday?: IntFieldUpdateOperationsInput | number
     closingTimeSunday?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9291,25 +9299,25 @@ export namespace Prisma {
   export type OfficeHour2CreateManyInput = {
     id?: number
     isOpenMonday: boolean
-    opentingTimeMonday: number
+    openingTimeMonday: number
     closingTimeMonday: number
     isOpenTuesday: boolean
-    opentingTimeTuesday: number
+    openingTimeTuesday: number
     closingTimeTuesday: number
     isOpenWednesday: boolean
-    opentingTimeWednesday: number
+    openingTimeWednesday: number
     closingTimeWednesday: number
     isOpenThursday: boolean
-    opentingTimeThursday: number
+    openingTimeThursday: number
     closingTimeThursday: number
     isOpenFriday: boolean
-    opentingTimeFriday: number
+    openingTimeFriday: number
     closingTimeFriday: number
     isOpenSaturday: boolean
-    opentingTimeSaturday: number
+    openingTimeSaturday: number
     closingTimeSaturday: number
     isOpenSunday: boolean
-    opentingTimeSunday: number
+    openingTimeSunday: number
     closingTimeSunday: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9317,25 +9325,25 @@ export namespace Prisma {
 
   export type OfficeHour2UpdateManyMutationInput = {
     isOpenMonday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeMonday?: IntFieldUpdateOperationsInput | number
+    openingTimeMonday?: IntFieldUpdateOperationsInput | number
     closingTimeMonday?: IntFieldUpdateOperationsInput | number
     isOpenTuesday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeTuesday?: IntFieldUpdateOperationsInput | number
+    openingTimeTuesday?: IntFieldUpdateOperationsInput | number
     closingTimeTuesday?: IntFieldUpdateOperationsInput | number
     isOpenWednesday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeWednesday?: IntFieldUpdateOperationsInput | number
+    openingTimeWednesday?: IntFieldUpdateOperationsInput | number
     closingTimeWednesday?: IntFieldUpdateOperationsInput | number
     isOpenThursday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeThursday?: IntFieldUpdateOperationsInput | number
+    openingTimeThursday?: IntFieldUpdateOperationsInput | number
     closingTimeThursday?: IntFieldUpdateOperationsInput | number
     isOpenFriday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeFriday?: IntFieldUpdateOperationsInput | number
+    openingTimeFriday?: IntFieldUpdateOperationsInput | number
     closingTimeFriday?: IntFieldUpdateOperationsInput | number
     isOpenSaturday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeSaturday?: IntFieldUpdateOperationsInput | number
+    openingTimeSaturday?: IntFieldUpdateOperationsInput | number
     closingTimeSaturday?: IntFieldUpdateOperationsInput | number
     isOpenSunday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeSunday?: IntFieldUpdateOperationsInput | number
+    openingTimeSunday?: IntFieldUpdateOperationsInput | number
     closingTimeSunday?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9344,25 +9352,25 @@ export namespace Prisma {
   export type OfficeHour2UncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     isOpenMonday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeMonday?: IntFieldUpdateOperationsInput | number
+    openingTimeMonday?: IntFieldUpdateOperationsInput | number
     closingTimeMonday?: IntFieldUpdateOperationsInput | number
     isOpenTuesday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeTuesday?: IntFieldUpdateOperationsInput | number
+    openingTimeTuesday?: IntFieldUpdateOperationsInput | number
     closingTimeTuesday?: IntFieldUpdateOperationsInput | number
     isOpenWednesday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeWednesday?: IntFieldUpdateOperationsInput | number
+    openingTimeWednesday?: IntFieldUpdateOperationsInput | number
     closingTimeWednesday?: IntFieldUpdateOperationsInput | number
     isOpenThursday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeThursday?: IntFieldUpdateOperationsInput | number
+    openingTimeThursday?: IntFieldUpdateOperationsInput | number
     closingTimeThursday?: IntFieldUpdateOperationsInput | number
     isOpenFriday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeFriday?: IntFieldUpdateOperationsInput | number
+    openingTimeFriday?: IntFieldUpdateOperationsInput | number
     closingTimeFriday?: IntFieldUpdateOperationsInput | number
     isOpenSaturday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeSaturday?: IntFieldUpdateOperationsInput | number
+    openingTimeSaturday?: IntFieldUpdateOperationsInput | number
     closingTimeSaturday?: IntFieldUpdateOperationsInput | number
     isOpenSunday?: BoolFieldUpdateOperationsInput | boolean
-    opentingTimeSunday?: IntFieldUpdateOperationsInput | number
+    openingTimeSunday?: IntFieldUpdateOperationsInput | number
     closingTimeSunday?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9624,6 +9632,7 @@ export namespace Prisma {
   export type RoomAvgOrderByAggregateInput = {
     id?: SortOrder
     buildingId?: SortOrder
+    capacityMax?: SortOrder
   }
 
   export type RoomMaxOrderByAggregateInput = {
@@ -9649,6 +9658,7 @@ export namespace Prisma {
   export type RoomSumOrderByAggregateInput = {
     id?: SortOrder
     buildingId?: SortOrder
+    capacityMax?: SortOrder
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -9667,6 +9677,7 @@ export namespace Prisma {
 
   export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
+    officerId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -9699,6 +9710,7 @@ export namespace Prisma {
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
+    officerId?: SortOrder
   }
 
   export type BoolFilter = {
@@ -9759,25 +9771,25 @@ export namespace Prisma {
   export type OfficeHour2CountOrderByAggregateInput = {
     id?: SortOrder
     isOpenMonday?: SortOrder
-    opentingTimeMonday?: SortOrder
+    openingTimeMonday?: SortOrder
     closingTimeMonday?: SortOrder
     isOpenTuesday?: SortOrder
-    opentingTimeTuesday?: SortOrder
+    openingTimeTuesday?: SortOrder
     closingTimeTuesday?: SortOrder
     isOpenWednesday?: SortOrder
-    opentingTimeWednesday?: SortOrder
+    openingTimeWednesday?: SortOrder
     closingTimeWednesday?: SortOrder
     isOpenThursday?: SortOrder
-    opentingTimeThursday?: SortOrder
+    openingTimeThursday?: SortOrder
     closingTimeThursday?: SortOrder
     isOpenFriday?: SortOrder
-    opentingTimeFriday?: SortOrder
+    openingTimeFriday?: SortOrder
     closingTimeFriday?: SortOrder
     isOpenSaturday?: SortOrder
-    opentingTimeSaturday?: SortOrder
+    openingTimeSaturday?: SortOrder
     closingTimeSaturday?: SortOrder
     isOpenSunday?: SortOrder
-    opentingTimeSunday?: SortOrder
+    openingTimeSunday?: SortOrder
     closingTimeSunday?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9785,44 +9797,44 @@ export namespace Prisma {
 
   export type OfficeHour2AvgOrderByAggregateInput = {
     id?: SortOrder
-    opentingTimeMonday?: SortOrder
+    openingTimeMonday?: SortOrder
     closingTimeMonday?: SortOrder
-    opentingTimeTuesday?: SortOrder
+    openingTimeTuesday?: SortOrder
     closingTimeTuesday?: SortOrder
-    opentingTimeWednesday?: SortOrder
+    openingTimeWednesday?: SortOrder
     closingTimeWednesday?: SortOrder
-    opentingTimeThursday?: SortOrder
+    openingTimeThursday?: SortOrder
     closingTimeThursday?: SortOrder
-    opentingTimeFriday?: SortOrder
+    openingTimeFriday?: SortOrder
     closingTimeFriday?: SortOrder
-    opentingTimeSaturday?: SortOrder
+    openingTimeSaturday?: SortOrder
     closingTimeSaturday?: SortOrder
-    opentingTimeSunday?: SortOrder
+    openingTimeSunday?: SortOrder
     closingTimeSunday?: SortOrder
   }
 
   export type OfficeHour2MaxOrderByAggregateInput = {
     id?: SortOrder
     isOpenMonday?: SortOrder
-    opentingTimeMonday?: SortOrder
+    openingTimeMonday?: SortOrder
     closingTimeMonday?: SortOrder
     isOpenTuesday?: SortOrder
-    opentingTimeTuesday?: SortOrder
+    openingTimeTuesday?: SortOrder
     closingTimeTuesday?: SortOrder
     isOpenWednesday?: SortOrder
-    opentingTimeWednesday?: SortOrder
+    openingTimeWednesday?: SortOrder
     closingTimeWednesday?: SortOrder
     isOpenThursday?: SortOrder
-    opentingTimeThursday?: SortOrder
+    openingTimeThursday?: SortOrder
     closingTimeThursday?: SortOrder
     isOpenFriday?: SortOrder
-    opentingTimeFriday?: SortOrder
+    openingTimeFriday?: SortOrder
     closingTimeFriday?: SortOrder
     isOpenSaturday?: SortOrder
-    opentingTimeSaturday?: SortOrder
+    openingTimeSaturday?: SortOrder
     closingTimeSaturday?: SortOrder
     isOpenSunday?: SortOrder
-    opentingTimeSunday?: SortOrder
+    openingTimeSunday?: SortOrder
     closingTimeSunday?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9831,25 +9843,25 @@ export namespace Prisma {
   export type OfficeHour2MinOrderByAggregateInput = {
     id?: SortOrder
     isOpenMonday?: SortOrder
-    opentingTimeMonday?: SortOrder
+    openingTimeMonday?: SortOrder
     closingTimeMonday?: SortOrder
     isOpenTuesday?: SortOrder
-    opentingTimeTuesday?: SortOrder
+    openingTimeTuesday?: SortOrder
     closingTimeTuesday?: SortOrder
     isOpenWednesday?: SortOrder
-    opentingTimeWednesday?: SortOrder
+    openingTimeWednesday?: SortOrder
     closingTimeWednesday?: SortOrder
     isOpenThursday?: SortOrder
-    opentingTimeThursday?: SortOrder
+    openingTimeThursday?: SortOrder
     closingTimeThursday?: SortOrder
     isOpenFriday?: SortOrder
-    opentingTimeFriday?: SortOrder
+    openingTimeFriday?: SortOrder
     closingTimeFriday?: SortOrder
     isOpenSaturday?: SortOrder
-    opentingTimeSaturday?: SortOrder
+    openingTimeSaturday?: SortOrder
     closingTimeSaturday?: SortOrder
     isOpenSunday?: SortOrder
-    opentingTimeSunday?: SortOrder
+    openingTimeSunday?: SortOrder
     closingTimeSunday?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9857,19 +9869,19 @@ export namespace Prisma {
 
   export type OfficeHour2SumOrderByAggregateInput = {
     id?: SortOrder
-    opentingTimeMonday?: SortOrder
+    openingTimeMonday?: SortOrder
     closingTimeMonday?: SortOrder
-    opentingTimeTuesday?: SortOrder
+    openingTimeTuesday?: SortOrder
     closingTimeTuesday?: SortOrder
-    opentingTimeWednesday?: SortOrder
+    openingTimeWednesday?: SortOrder
     closingTimeWednesday?: SortOrder
-    opentingTimeThursday?: SortOrder
+    openingTimeThursday?: SortOrder
     closingTimeThursday?: SortOrder
-    opentingTimeFriday?: SortOrder
+    openingTimeFriday?: SortOrder
     closingTimeFriday?: SortOrder
-    opentingTimeSaturday?: SortOrder
+    openingTimeSaturday?: SortOrder
     closingTimeSaturday?: SortOrder
-    opentingTimeSunday?: SortOrder
+    openingTimeSunday?: SortOrder
     closingTimeSunday?: SortOrder
   }
 
@@ -10305,7 +10317,7 @@ export namespace Prisma {
   export type RoomCreateWithoutBuildingInput = {
     name: string
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
     facilities?: FacilityCreateNestedManyWithoutRoomInput
@@ -10316,7 +10328,7 @@ export namespace Prisma {
     id?: number
     name: string
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
     facilities?: FacilityUncheckedCreateNestedManyWithoutRoomInput
@@ -10357,7 +10369,7 @@ export namespace Prisma {
     name?: StringFilter | string
     buildingId?: IntFilter | number
     floor?: StringFilter | string
-    capacityMax?: StringFilter | string
+    capacityMax?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -10366,7 +10378,7 @@ export namespace Prisma {
     name: string
     building?: BuildingCreateNestedOneWithoutRoomInput
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
     booking?: BookingCreateNestedManyWithoutRoomInput
@@ -10377,7 +10389,7 @@ export namespace Prisma {
     name: string
     buildingId: number
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
     booking?: BookingUncheckedCreateNestedManyWithoutRoomInput
@@ -10587,7 +10599,7 @@ export namespace Prisma {
     name: string
     building?: BuildingCreateNestedOneWithoutRoomInput
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
     facilities?: FacilityCreateNestedManyWithoutRoomInput
@@ -10598,7 +10610,7 @@ export namespace Prisma {
     name: string
     buildingId: number
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
     facilities?: FacilityUncheckedCreateNestedManyWithoutRoomInput
@@ -10610,7 +10622,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutBookingInput = {
-    officerId: string
+    officerId: number
     firstName: string
     lastName: string
     phone: string
@@ -10624,7 +10636,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutBookingInput = {
     id?: number
-    officerId: string
+    officerId: number
     firstName: string
     lastName: string
     phone: string
@@ -10650,7 +10662,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     building?: BuildingUpdateOneWithoutRoomNestedInput
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     facilities?: FacilityUpdateManyWithoutRoomNestedInput
@@ -10661,7 +10673,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     buildingId?: IntFieldUpdateOperationsInput | number
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     facilities?: FacilityUncheckedUpdateManyWithoutRoomNestedInput
@@ -10673,7 +10685,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutBookingInput = {
-    officerId?: StringFieldUpdateOperationsInput | string
+    officerId?: IntFieldUpdateOperationsInput | number
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -10687,7 +10699,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutBookingInput = {
     id?: IntFieldUpdateOperationsInput | number
-    officerId?: StringFieldUpdateOperationsInput | string
+    officerId?: IntFieldUpdateOperationsInput | number
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -10703,7 +10715,7 @@ export namespace Prisma {
     id?: number
     name: string
     floor: string
-    capacityMax: string
+    capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10711,7 +10723,7 @@ export namespace Prisma {
   export type RoomUpdateWithoutBuildingInput = {
     name?: StringFieldUpdateOperationsInput | string
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     facilities?: FacilityUpdateManyWithoutRoomNestedInput
@@ -10722,7 +10734,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     facilities?: FacilityUncheckedUpdateManyWithoutRoomNestedInput
@@ -10733,7 +10745,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10742,7 +10754,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     building?: BuildingUpdateOneWithoutRoomNestedInput
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     booking?: BookingUpdateManyWithoutRoomNestedInput
@@ -10753,7 +10765,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     buildingId?: IntFieldUpdateOperationsInput | number
     floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     booking?: BookingUncheckedUpdateManyWithoutRoomNestedInput

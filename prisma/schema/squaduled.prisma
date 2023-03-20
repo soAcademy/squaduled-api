@@ -20,7 +20,7 @@ model Room {
   building    Building?  @relation(fields: [buildingId], references: [id])
   buildingId  Int
   floor       String
-  capacityMax String
+  capacityMax Int
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   facilities  Facility[]
@@ -29,7 +29,7 @@ model Room {
 
 model User {
   id        Int       @id @default(autoincrement())
-  officerId String    @unique
+  officerId Int       @unique
   firstName String
   lastName  String
   phone     String    @unique
@@ -53,30 +53,30 @@ model OfficeHour1 {
 }
 
 model OfficeHour2 {
-  id                    Int      @id @default(autoincrement())
-  isOpenMonday          Boolean
-  opentingTimeMonday    Int
-  closingTimeMonday     Int
-  isOpenTuesday         Boolean
-  opentingTimeTuesday   Int
-  closingTimeTuesday    Int
-  isOpenWednesday       Boolean
-  opentingTimeWednesday Int
-  closingTimeWednesday  Int
-  isOpenThursday        Boolean
-  opentingTimeThursday  Int
-  closingTimeThursday   Int
-  isOpenFriday          Boolean
-  opentingTimeFriday    Int
-  closingTimeFriday     Int
-  isOpenSaturday        Boolean
-  opentingTimeSaturday  Int
-  closingTimeSaturday   Int
-  isOpenSunday          Boolean
-  opentingTimeSunday    Int
-  closingTimeSunday     Int
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                   Int      @id @default(autoincrement())
+  isOpenMonday         Boolean
+  openingTimeMonday    Int
+  closingTimeMonday    Int
+  isOpenTuesday        Boolean
+  openingTimeTuesday   Int
+  closingTimeTuesday   Int
+  isOpenWednesday      Boolean
+  openingTimeWednesday Int
+  closingTimeWednesday Int
+  isOpenThursday       Boolean
+  openingTimeThursday  Int
+  closingTimeThursday  Int
+  isOpenFriday         Boolean
+  openingTimeFriday    Int
+  closingTimeFriday    Int
+  isOpenSaturday       Boolean
+  openingTimeSaturday  Int
+  closingTimeSaturday  Int
+  isOpenSunday         Boolean
+  openingTimeSunday    Int
+  closingTimeSunday    Int
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 }
 
 model Booking {
