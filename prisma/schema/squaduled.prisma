@@ -1,68 +1,92 @@
-// model TriviaCategory {
-//   id           Int           @id @default(autoincrement())
-//   name         String        @unique
-//   triviaQuizes TriviaQuiz[]
-//   createdAt    DateTime      @default(now())
-//   updatedAt    DateTime      @updatedAt
-//   rounds       TriviaRound[]
-// }
+model Building {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  room      Room[]
+}
 
-// model TriviaQuiz {
-//   id             Int               @id @default(autoincrement())
-//   quiz           String
-//   category       TriviaCategory?   @relation(fields: [categoryName], references: [name])
-//   categoryName   String
-//   createdAt      DateTime          @default(now())
-//   updatedAt      DateTime          @updatedAt
-//   choices        TriviaChoice[]
-//   answer         TriviaChoice      @relation("quizanswer", fields: [answerChoiceId], references: [id])
-//   answerChoiceId Int               @unique
-//   roundQuizes    TriviaRoundQuiz[]
-// }
+model Facility {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Room      Room[]
+}
 
-// model TriviaChoice {
-//   id          Int               @id @default(autoincrement())
-//   choice      String
-//   quiz        TriviaQuiz?       @relation(fields: [quizId], references: [id])
-//   quizId      Int?
-//   quizAnswers TriviaQuiz[]      @relation("quizanswer")
-//   createdAt   DateTime          @default(now())
-//   updatedAt   DateTime          @updatedAt
-//   roundQuizes TriviaRoundQuiz[]
-// }
+model Room {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
+  building    Building?  @relation(fields: [buildingId], references: [id])
+  buildingId  Int
+  floor       String
+  capacityMax String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  facilities  Facility[]
+  Booking     Booking[]
+}
 
-// model TriviaRound {
-//   id           Int               @id @default(autoincrement())
-//   user         String
-//   category     TriviaCategory?   @relation(fields: [categoryName], references: [name])
-//   categoryName String
-//   score        Int
-//   createdAt    DateTime          @default(now())
-//   updatedAt    DateTime          @updatedAt
-//   roundQuizes  TriviaRoundQuiz[]
-// }
+model User {
+  id        Int      @id @default(autoincrement())
+  officerId String   @unique
+  firstName String
+  lastName  String
+  phone     String
+  email     String
+  userName  String
+  password  String
+  roll      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Booking   Booking?
+}
 
-// {qid:1,cid:1},..
-// model TriviaRoundQuiz {
-//   id           Int           @id @default(autoincrement())
-//   round        TriviaRound?  @relation(fields: [roundId], references: [id])
-//   roundId      Int
-//   quiz         TriviaQuiz?   @relation(fields: [quizId], references: [id])
-//   quizId       Int
-//   userChoice   TriviaChoice? @relation(fields: [userChoiceId], references: [id])
-//   userChoiceId Int
-//   createdAt    DateTime      @default(now())
-//   updatedAt    DateTime      @updatedAt
-// }
+model OfficeHour1 {
+  id        Int      @id @default(autoincrement())
+  day       String
+  isOpen    Boolean
+  openTime  Int
+  closeTime Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
-// model BinKitchenOrderItem {
-//   id         Int              @id @default(autoincrement())
-//   menu       BinKitchenMenu   @relation(fields: [menuId], references: [id])
-//   menuId     Int
-//   order      BinKitchenOrder? @relation(fields: [orderId], references: [id])
-//   orderId    Int?
-//   quantity   Int
-//   totalPrice Float
-//   createdAt  DateTime         @default(now())
-//   updatedAt  DateTime         @updatedAt
-// }
+model OfficeHour2 {
+  id                    Int      @id @default(autoincrement())
+  isOpenMonday          Boolean
+  opentingTimeMonday    Int
+  closingTimeMonday     Int
+  isOpenTuesday         Boolean
+  opentingTimeTuesday   Int
+  closingTimeTuesday    Int
+  isOpenWednesday       Boolean
+  opentingTimeWednesday Int
+  closingTimeWednesday  Int
+  isOpenThursday        Boolean
+  opentingTimeThursday  Int
+  closingTimeThursday   Int
+  isOpenFriday          Boolean
+  opentingTimeFriday    Int
+  closingTimeFriday     Int
+  isOpenSaturday        Boolean
+  opentingTimeSaturday  Int
+  closingTimeSaturday   Int
+  isOpenSunday          Boolean
+  opentingTimeSunday    Int
+  closingTimeSunday     Int
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model Booking {
+  id            Int      @id @default(autoincrement())
+  startDatetime DateTime
+  endDatetime   DateTime
+  room          Room?    @relation(fields: [roomId], references: [id])
+  roomId        Int
+  user          User?    @relation(fields: [userId], references: [id])
+  userId        Int      @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
