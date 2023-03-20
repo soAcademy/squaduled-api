@@ -24,7 +24,7 @@ model Room {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   facilities  Facility[]
-  Booking     Booking[]
+  booking     Booking[]
 }
 
 model User {
@@ -32,14 +32,14 @@ model User {
   officerId String   @unique
   firstName String
   lastName  String
-  phone     String
-  email     String
-  userName  String
+  phone     String   @unique
+  email     String   @unique
+  userName  String   @unique
   password  String
   roll      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Booking   Booking?
+  booking   Booking[]
 }
 
 model OfficeHour1 {
