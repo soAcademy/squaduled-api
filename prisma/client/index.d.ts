@@ -59,7 +59,7 @@ export type User = {
   email: string
   userName: string
   password: string
-  roll: string
+  role: string
   createdAt: Date
   updatedAt: Date
 }
@@ -4161,7 +4161,7 @@ export namespace Prisma {
     email: string | null
     userName: string | null
     password: string | null
-    roll: string | null
+    role: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4175,7 +4175,7 @@ export namespace Prisma {
     email: string | null
     userName: string | null
     password: string | null
-    roll: string | null
+    role: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4189,7 +4189,7 @@ export namespace Prisma {
     email: number
     userName: number
     password: number
-    roll: number
+    role: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4213,7 +4213,7 @@ export namespace Prisma {
     email?: true
     userName?: true
     password?: true
-    roll?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4227,7 +4227,7 @@ export namespace Prisma {
     email?: true
     userName?: true
     password?: true
-    roll?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4241,7 +4241,7 @@ export namespace Prisma {
     email?: true
     userName?: true
     password?: true
-    roll?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4343,7 +4343,7 @@ export namespace Prisma {
     email: string
     userName: string
     password: string
-    roll: string
+    role: string
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -4376,7 +4376,7 @@ export namespace Prisma {
     email?: boolean
     userName?: boolean
     password?: boolean
-    roll?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     booking?: boolean | User$bookingArgs
@@ -8359,7 +8359,7 @@ export namespace Prisma {
     email: 'email',
     userName: 'userName',
     password: 'password',
-    roll: 'roll',
+    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -8538,7 +8538,7 @@ export namespace Prisma {
     email?: StringFilter | string
     userName?: StringFilter | string
     password?: StringFilter | string
-    roll?: StringFilter | string
+    role?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     booking?: BookingListRelationFilter
@@ -8553,7 +8553,7 @@ export namespace Prisma {
     email?: SortOrder
     userName?: SortOrder
     password?: SortOrder
-    roll?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     booking?: BookingOrderByRelationAggregateInput
@@ -8576,7 +8576,7 @@ export namespace Prisma {
     email?: SortOrder
     userName?: SortOrder
     password?: SortOrder
-    roll?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -8598,7 +8598,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter | string
     userName?: StringWithAggregatesFilter | string
     password?: StringWithAggregatesFilter | string
-    roll?: StringWithAggregatesFilter | string
+    role?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -8628,6 +8628,7 @@ export namespace Prisma {
 
   export type OfficeHour1WhereUniqueInput = {
     id?: number
+    day?: string
   }
 
   export type OfficeHour1OrderByWithAggregationInput = {
@@ -9023,7 +9024,7 @@ export namespace Prisma {
     email: string
     userName: string
     password: string
-    roll: string
+    role: string
     createdAt?: Date | string
     updatedAt?: Date | string
     booking?: BookingCreateNestedManyWithoutUserInput
@@ -9038,7 +9039,7 @@ export namespace Prisma {
     email: string
     userName: string
     password: string
-    roll: string
+    role: string
     createdAt?: Date | string
     updatedAt?: Date | string
     booking?: BookingUncheckedCreateNestedManyWithoutUserInput
@@ -9052,7 +9053,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    roll?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     booking?: BookingUpdateManyWithoutUserNestedInput
@@ -9067,7 +9068,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    roll?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     booking?: BookingUncheckedUpdateManyWithoutUserNestedInput
@@ -9082,7 +9083,7 @@ export namespace Prisma {
     email: string
     userName: string
     password: string
-    roll: string
+    role: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9095,7 +9096,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    roll?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9109,7 +9110,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    roll?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9659,7 +9660,7 @@ export namespace Prisma {
     email?: SortOrder
     userName?: SortOrder
     password?: SortOrder
-    roll?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9677,7 +9678,7 @@ export namespace Prisma {
     email?: SortOrder
     userName?: SortOrder
     password?: SortOrder
-    roll?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9691,7 +9692,7 @@ export namespace Prisma {
     email?: SortOrder
     userName?: SortOrder
     password?: SortOrder
-    roll?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10616,7 +10617,7 @@ export namespace Prisma {
     email: string
     userName: string
     password: string
-    roll: string
+    role: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10630,7 +10631,7 @@ export namespace Prisma {
     email: string
     userName: string
     password: string
-    roll: string
+    role: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10679,7 +10680,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    roll?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10693,7 +10694,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    roll?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

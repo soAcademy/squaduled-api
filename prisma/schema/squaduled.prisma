@@ -28,23 +28,23 @@ model Room {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  officerId String   @unique
+  id        Int       @id @default(autoincrement())
+  officerId String    @unique
   firstName String
   lastName  String
-  phone     String   @unique
-  email     String   @unique
-  userName  String   @unique
+  phone     String    @unique
+  email     String    @unique
+  userName  String    @unique
   password  String
-  roll      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   booking   Booking[]
 }
 
 model OfficeHour1 {
   id        Int      @id @default(autoincrement())
-  day       String
+  day       String   @unique
   isOpen    Boolean
   openTime  Int
   closeTime Int
