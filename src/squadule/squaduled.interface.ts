@@ -6,6 +6,12 @@ export const CreateBuildingCodec = t.type({
 });
 
 export interface ICreateBuilding extends t.TypeOf<typeof CreateBuildingCodec> {}
+//+++++++++++++++++++++++++
+// export const DeleteBuildingCodec = t.type({
+//   id: t.number,
+// });
+
+// export interface IDeleteBuilding extends t.TypeOf<typeof DeleteBuildingCodec> {}
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const CreateFacilityCodec = t.type({
   name: t.string,
@@ -35,18 +41,16 @@ export const CreateRoomCodec = t.type({
   floor: t.string,
   capacity: t.number,
   buildingId: t.number,
-  facilities: t.array(t.type({ id: t.number })),
+  facilities: t.array(t.type({ facilityId: t.number })),
 });
 
 export interface ICreateRoom extends t.TypeOf<typeof CreateRoomCodec> {}
 //+++++++++++++++++++++++++
 export const UpdateRoomCodec = t.type({
   id: t.number,
-  name: optional(t.string),
-  floor: optional(t.string),
-  capacity: optional(t.number),
-  buildingId: optional(t.number),
-  facilities: t.array(t.type({ id: optional(t.number) })),
+  name: t.string,
+  capacity: t.number,
+  facilities: t.array(t.type({ facilityId: t.number })),
 });
 
 export interface IUpdateRoom extends t.TypeOf<typeof UpdateRoomCodec> {}
@@ -62,8 +66,8 @@ export const UpdateOfficeHour1Codec = t.type({
   id: t.number,
   day: t.string,
   open: t.boolean,
-  openTime: t.number,
-  closeTime: t.number,
+  openTime: t.string,
+  closeTime: t.string,
 });
 
 export interface IUpdateOfficeHour1
@@ -72,26 +76,26 @@ export interface IUpdateOfficeHour1
 export const UpdateOfficeHour2Codec = t.type({
   id: t.number,
   isOpenMonday: optional(t.boolean),
-  openingTimeMonday: optional(t.number),
-  closingTimeMonday: optional(t.number),
+  openingTimeMonday: optional(t.string),
+  closingTimeMonday: optional(t.string),
   isOpenTuesday: optional(t.boolean),
-  openingTimeTuesday: optional(t.number),
-  closingTimeTuesday: optional(t.number),
+  openingTimeTuesday: optional(t.string),
+  closingTimeTuesday: optional(t.string),
   isOpenWednesday: optional(t.boolean),
-  openingTimeWednesday: optional(t.number),
-  closingTimeWednesday: optional(t.number),
+  openingTimeWednesday: optional(t.string),
+  closingTimeWednesday: optional(t.string),
   isOpenThursday: optional(t.boolean),
-  openingTimeThursday: optional(t.number),
-  closingTimeThursday: optional(t.number),
+  openingTimeThursday: optional(t.string),
+  closingTimeThursday: optional(t.string),
   isOpenFriday: optional(t.boolean),
-  openingTimeFriday: optional(t.number),
-  closingTimeFriday: optional(t.number),
+  openingTimeFriday: optional(t.string),
+  closingTimeFriday: optional(t.string),
   isOpenSaturday: optional(t.boolean),
-  openingTimeSaturday: optional(t.number),
-  closingTimeSaturday: optional(t.number),
+  openingTimeSaturday: optional(t.string),
+  closingTimeSaturday: optional(t.string),
   isOpenSunday: optional(t.boolean),
-  openingTimeSunday: optional(t.number),
-  closingTimeSunday: optional(t.number),
+  openingTimeSunday: optional(t.string),
+  closingTimeSunday: optional(t.string),
 });
 
 export interface IUpdateOfficeHour2
@@ -122,7 +126,7 @@ export const DeleteBookingCodec = t.type({
 export interface IDeleteBooking extends t.TypeOf<typeof DeleteBookingCodec> {}
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const CreateUserCodec = t.type({
-  officerId: t.number,
+  officerId: t.string,
   firstName: t.string,
   lastName: t.string,
   phone: t.string,

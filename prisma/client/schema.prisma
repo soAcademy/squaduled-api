@@ -20,30 +20,40 @@ model Facility {
   name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Room      Room[]
+
+  roomToFacility roomToFacility[]
 }
 
 model Room {
-  id          Int        @id @default(autoincrement())
-  name        String     @unique
-  building    Building?  @relation(fields: [buildingId], references: [id])
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  building    Building? @relation(fields: [buildingId], references: [id])
   buildingId  Int
   floor       String
   capacityMax Int
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  facilities  Facility[]
-  booking     Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  booking        Booking[]
+  roomToFacility roomToFacility[]
+}
+
+model roomToFacility {
+  id         Int      @id @default(autoincrement())
+  room       Room     @relation(fields: [roomId], references: [id])
+  roomId     Int
+  facility   Facility @relation(fields: [facilityId], references: [id])
+  facilityId Int
 }
 
 model User {
   id        Int       @id @default(autoincrement())
-  officerId Int       @unique
+  officerId String    
   firstName String
   lastName  String
-  phone     String    @unique
-  email     String    @unique
-  userName  String    @unique
+  phone     String    
+  email     String    
+  userName  String    
   password  String
   role      String
   createdAt DateTime  @default(now())
@@ -55,8 +65,8 @@ model OfficeHour1 {
   id        Int      @id @default(autoincrement())
   day       String   @unique
   isOpen    Boolean
-  openTime  Int
-  closeTime Int
+  openTime  String
+  closeTime String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -64,26 +74,26 @@ model OfficeHour1 {
 model OfficeHour2 {
   id                   Int      @id @default(autoincrement())
   isOpenMonday         Boolean
-  openingTimeMonday    Int
-  closingTimeMonday    Int
+  openingTimeMonday    String
+  closingTimeMonday    String
   isOpenTuesday        Boolean
-  openingTimeTuesday   Int
-  closingTimeTuesday   Int
+  openingTimeTuesday   String
+  closingTimeTuesday   String
   isOpenWednesday      Boolean
-  openingTimeWednesday Int
-  closingTimeWednesday Int
+  openingTimeWednesday String
+  closingTimeWednesday String
   isOpenThursday       Boolean
-  openingTimeThursday  Int
-  closingTimeThursday  Int
+  openingTimeThursday  String
+  closingTimeThursday  String
   isOpenFriday         Boolean
-  openingTimeFriday    Int
-  closingTimeFriday    Int
+  openingTimeFriday    String
+  closingTimeFriday    String
   isOpenSaturday       Boolean
-  openingTimeSaturday  Int
-  closingTimeSaturday  Int
+  openingTimeSaturday  String
+  closingTimeSaturday  String
   isOpenSunday         Boolean
-  openingTimeSunday    Int
-  closingTimeSunday    Int
+  openingTimeSunday    String
+  closingTimeSunday    String
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }

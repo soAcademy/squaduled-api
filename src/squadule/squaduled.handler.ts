@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import {
+  CreateBookingCodec,
   CreateBuildingCodec,
   CreateFacilityCodec,
   CreateRoomCodec,
+  CreateUserCodec,
   DeleteFacilityCodec,
   DeleteRoomCodec,
   getRoomByBuildingIdCodec,
@@ -27,7 +29,10 @@ import {
   updateFacility,
   updateRoom,
   checkIsOfficeHour,
-  hello
+  hello,
+  createUser,
+  updateOfficeHour2,
+  // deleteBuilding
 } from "./squaduled.resolver";
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createBuildingHandler = async (req: Request, res: Response) => {
@@ -54,7 +59,23 @@ export const getAllBuildingHandler = async (req: Request, res: Response) => {
       error: String(e),
     });
   }
-}; //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+}; 
+// export const deleteBuildingHandler = async (req: Request, res: Response) => {
+//   const body = req?.body;
+//   try {
+//     if (DeleteFacilityCodec.decode(body)._tag === "Right") {
+//       const result = await deleteBuilding(body);
+//       res.status(200).json(result);
+//     } else {
+//       res.status(404).json({ error: String("Error invalid codec") });
+//     }
+//   } catch (e) {
+//     res.status(500).json({
+//       error: String(e),
+//     });
+//   }
+// };
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const createFacilityHandler = async (req: Request, res: Response) => {
   const body = req?.body;
@@ -240,11 +261,37 @@ export const getAllOfficeHour2Handler = async (req: Request, res: Response) => {
 export const updateOfficeHour2Handler = async (
   req: Request,
   res: Response
-) => {};
+) => { const body = req?.body;
+  try {
+    if (DeleteRoomCodec.decode(body)._tag === "Right") {
+      const result = await updateOfficeHour2(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }};
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-export const createBookingHandler = async (req: Request, res: Response) => {};
+export const createBookingHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (CreateBookingCodec.decode(body)._tag === "Right") {
+      const result = await createRoom(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
 export const getAllBookingHandler = async (req: Request, res: Response) => {
   try {
     const result = await getAllBooking();
@@ -257,6 +304,21 @@ export const getAllBookingHandler = async (req: Request, res: Response) => {
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const createUserHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (CreateUserCodec.decode(body)._tag === "Right") {
+      const result = await createUser(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
 
 export const getAllUserHandler = async (req: Request, res: Response) => {
   try {
@@ -383,4 +445,4 @@ export const helloHandler = async (req: Request, res: Response) => {
       error: String(e),
     });
   }
-};
+};   

@@ -165,6 +165,12 @@ exports.Prisma.RoomScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.RoomToFacilityScalarFieldEnum = makeEnum({
+  id: 'id',
+  roomId: 'roomId',
+  facilityId: 'facilityId'
+});
+
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
@@ -196,6 +202,7 @@ exports.Prisma.ModelName = makeEnum({
   Building: 'Building',
   Facility: 'Facility',
   Room: 'Room',
+  roomToFacility: 'roomToFacility',
   User: 'User',
   OfficeHour1: 'OfficeHour1',
   OfficeHour2: 'OfficeHour2',

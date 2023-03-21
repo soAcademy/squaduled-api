@@ -47,12 +47,22 @@ export type Room = {
 }
 
 /**
+ * Model roomToFacility
+ * 
+ */
+export type roomToFacility = {
+  id: number
+  roomId: number
+  facilityId: number
+}
+
+/**
  * Model User
  * 
  */
 export type User = {
   id: number
-  officerId: number
+  officerId: string
   firstName: string
   lastName: string
   phone: string
@@ -72,8 +82,8 @@ export type OfficeHour1 = {
   id: number
   day: string
   isOpen: boolean
-  openTime: number
-  closeTime: number
+  openTime: string
+  closeTime: string
   createdAt: Date
   updatedAt: Date
 }
@@ -85,26 +95,26 @@ export type OfficeHour1 = {
 export type OfficeHour2 = {
   id: number
   isOpenMonday: boolean
-  openingTimeMonday: number
-  closingTimeMonday: number
+  openingTimeMonday: string
+  closingTimeMonday: string
   isOpenTuesday: boolean
-  openingTimeTuesday: number
-  closingTimeTuesday: number
+  openingTimeTuesday: string
+  closingTimeTuesday: string
   isOpenWednesday: boolean
-  openingTimeWednesday: number
-  closingTimeWednesday: number
+  openingTimeWednesday: string
+  closingTimeWednesday: string
   isOpenThursday: boolean
-  openingTimeThursday: number
-  closingTimeThursday: number
+  openingTimeThursday: string
+  closingTimeThursday: string
   isOpenFriday: boolean
-  openingTimeFriday: number
-  closingTimeFriday: number
+  openingTimeFriday: string
+  closingTimeFriday: string
   isOpenSaturday: boolean
-  openingTimeSaturday: number
-  closingTimeSaturday: number
+  openingTimeSaturday: string
+  closingTimeSaturday: string
   isOpenSunday: boolean
-  openingTimeSunday: number
-  closingTimeSunday: number
+  openingTimeSunday: string
+  closingTimeSunday: string
   createdAt: Date
   updatedAt: Date
 }
@@ -270,6 +280,16 @@ export class PrismaClient<
     * ```
     */
   get room(): Prisma.RoomDelegate<GlobalReject>;
+
+  /**
+   * `prisma.roomToFacility`: Exposes CRUD operations for the **roomToFacility** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RoomToFacilities
+    * const roomToFacilities = await prisma.roomToFacility.findMany()
+    * ```
+    */
+  get roomToFacility(): Prisma.roomToFacilityDelegate<GlobalReject>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -782,6 +802,7 @@ export namespace Prisma {
     Building: 'Building',
     Facility: 'Facility',
     Room: 'Room',
+    roomToFacility: 'roomToFacility',
     User: 'User',
     OfficeHour1: 'OfficeHour1',
     OfficeHour2: 'OfficeHour2',
@@ -995,11 +1016,11 @@ export namespace Prisma {
 
 
   export type FacilityCountOutputType = {
-    Room: number
+    roomToFacility: number
   }
 
   export type FacilityCountOutputTypeSelect = {
-    Room?: boolean
+    roomToFacility?: boolean
   }
 
   export type FacilityCountOutputTypeGetPayload<S extends boolean | null | undefined | FacilityCountOutputTypeArgs> =
@@ -1038,13 +1059,13 @@ export namespace Prisma {
 
 
   export type RoomCountOutputType = {
-    facilities: number
     booking: number
+    roomToFacility: number
   }
 
   export type RoomCountOutputTypeSelect = {
-    facilities?: boolean
     booking?: boolean
+    roomToFacility?: boolean
   }
 
   export type RoomCountOutputTypeGetPayload<S extends boolean | null | undefined | RoomCountOutputTypeArgs> =
@@ -2298,13 +2319,13 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    Room?: boolean | Facility$RoomArgs
+    roomToFacility?: boolean | Facility$roomToFacilityArgs
     _count?: boolean | FacilityCountOutputTypeArgs
   }
 
 
   export type FacilityInclude = {
-    Room?: boolean | Facility$RoomArgs
+    roomToFacility?: boolean | Facility$roomToFacilityArgs
     _count?: boolean | FacilityCountOutputTypeArgs
   }
 
@@ -2315,13 +2336,13 @@ export namespace Prisma {
     S extends { include: any } & (FacilityArgs | FacilityFindManyArgs)
     ? Facility  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'Room' ? Array < RoomGetPayload<S['include'][P]>>  :
+        P extends 'roomToFacility' ? Array < roomToFacilityGetPayload<S['include'][P]>>  :
         P extends '_count' ? FacilityCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (FacilityArgs | FacilityFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'Room' ? Array < RoomGetPayload<S['select'][P]>>  :
+        P extends 'roomToFacility' ? Array < roomToFacilityGetPayload<S['select'][P]>>  :
         P extends '_count' ? FacilityCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Facility ? Facility[P] : never
   } 
       : Facility
@@ -2694,7 +2715,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    Room<T extends Facility$RoomArgs= {}>(args?: Subset<T, Facility$RoomArgs>): Prisma.PrismaPromise<Array<RoomGetPayload<T>>| Null>;
+    roomToFacility<T extends Facility$roomToFacilityArgs= {}>(args?: Subset<T, Facility$roomToFacilityArgs>): Prisma.PrismaPromise<Array<roomToFacilityGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -3052,23 +3073,23 @@ export namespace Prisma {
 
 
   /**
-   * Facility.Room
+   * Facility.roomToFacility
    */
-  export type Facility$RoomArgs = {
+  export type Facility$roomToFacilityArgs = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the roomToFacility
      */
-    select?: RoomSelect | null
+    select?: roomToFacilitySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoomInclude | null
-    where?: RoomWhereInput
-    orderBy?: Enumerable<RoomOrderByWithRelationInput>
-    cursor?: RoomWhereUniqueInput
+    include?: roomToFacilityInclude | null
+    where?: roomToFacilityWhereInput
+    orderBy?: Enumerable<roomToFacilityOrderByWithRelationInput>
+    cursor?: roomToFacilityWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<RoomScalarFieldEnum>
+    distinct?: Enumerable<RoomToFacilityScalarFieldEnum>
   }
 
 
@@ -3313,16 +3334,16 @@ export namespace Prisma {
     capacityMax?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    facilities?: boolean | Room$facilitiesArgs
     booking?: boolean | Room$bookingArgs
+    roomToFacility?: boolean | Room$roomToFacilityArgs
     _count?: boolean | RoomCountOutputTypeArgs
   }
 
 
   export type RoomInclude = {
     building?: boolean | BuildingArgs
-    facilities?: boolean | Room$facilitiesArgs
     booking?: boolean | Room$bookingArgs
+    roomToFacility?: boolean | Room$roomToFacilityArgs
     _count?: boolean | RoomCountOutputTypeArgs
   }
 
@@ -3334,16 +3355,16 @@ export namespace Prisma {
     ? Room  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'building' ? BuildingGetPayload<S['include'][P]> | null :
-        P extends 'facilities' ? Array < FacilityGetPayload<S['include'][P]>>  :
         P extends 'booking' ? Array < BookingGetPayload<S['include'][P]>>  :
+        P extends 'roomToFacility' ? Array < roomToFacilityGetPayload<S['include'][P]>>  :
         P extends '_count' ? RoomCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (RoomArgs | RoomFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'building' ? BuildingGetPayload<S['select'][P]> | null :
-        P extends 'facilities' ? Array < FacilityGetPayload<S['select'][P]>>  :
         P extends 'booking' ? Array < BookingGetPayload<S['select'][P]>>  :
+        P extends 'roomToFacility' ? Array < roomToFacilityGetPayload<S['select'][P]>>  :
         P extends '_count' ? RoomCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Room ? Room[P] : never
   } 
       : Room
@@ -3718,9 +3739,9 @@ export namespace Prisma {
 
     building<T extends BuildingArgs= {}>(args?: Subset<T, BuildingArgs>): Prisma__BuildingClient<BuildingGetPayload<T> | Null>;
 
-    facilities<T extends Room$facilitiesArgs= {}>(args?: Subset<T, Room$facilitiesArgs>): Prisma.PrismaPromise<Array<FacilityGetPayload<T>>| Null>;
-
     booking<T extends Room$bookingArgs= {}>(args?: Subset<T, Room$bookingArgs>): Prisma.PrismaPromise<Array<BookingGetPayload<T>>| Null>;
+
+    roomToFacility<T extends Room$roomToFacilityArgs= {}>(args?: Subset<T, Room$roomToFacilityArgs>): Prisma.PrismaPromise<Array<roomToFacilityGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -4078,27 +4099,6 @@ export namespace Prisma {
 
 
   /**
-   * Room.facilities
-   */
-  export type Room$facilitiesArgs = {
-    /**
-     * Select specific fields to fetch from the Facility
-     */
-    select?: FacilitySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FacilityInclude | null
-    where?: FacilityWhereInput
-    orderBy?: Enumerable<FacilityOrderByWithRelationInput>
-    cursor?: FacilityWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<FacilityScalarFieldEnum>
-  }
-
-
-  /**
    * Room.booking
    */
   export type Room$bookingArgs = {
@@ -4120,6 +4120,27 @@ export namespace Prisma {
 
 
   /**
+   * Room.roomToFacility
+   */
+  export type Room$roomToFacilityArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    where?: roomToFacilityWhereInput
+    orderBy?: Enumerable<roomToFacilityOrderByWithRelationInput>
+    cursor?: roomToFacilityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoomToFacilityScalarFieldEnum>
+  }
+
+
+  /**
    * Room without action
    */
   export type RoomArgs = {
@@ -4131,6 +4152,969 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: RoomInclude | null
+  }
+
+
+
+  /**
+   * Model roomToFacility
+   */
+
+
+  export type AggregateRoomToFacility = {
+    _count: RoomToFacilityCountAggregateOutputType | null
+    _avg: RoomToFacilityAvgAggregateOutputType | null
+    _sum: RoomToFacilitySumAggregateOutputType | null
+    _min: RoomToFacilityMinAggregateOutputType | null
+    _max: RoomToFacilityMaxAggregateOutputType | null
+  }
+
+  export type RoomToFacilityAvgAggregateOutputType = {
+    id: number | null
+    roomId: number | null
+    facilityId: number | null
+  }
+
+  export type RoomToFacilitySumAggregateOutputType = {
+    id: number | null
+    roomId: number | null
+    facilityId: number | null
+  }
+
+  export type RoomToFacilityMinAggregateOutputType = {
+    id: number | null
+    roomId: number | null
+    facilityId: number | null
+  }
+
+  export type RoomToFacilityMaxAggregateOutputType = {
+    id: number | null
+    roomId: number | null
+    facilityId: number | null
+  }
+
+  export type RoomToFacilityCountAggregateOutputType = {
+    id: number
+    roomId: number
+    facilityId: number
+    _all: number
+  }
+
+
+  export type RoomToFacilityAvgAggregateInputType = {
+    id?: true
+    roomId?: true
+    facilityId?: true
+  }
+
+  export type RoomToFacilitySumAggregateInputType = {
+    id?: true
+    roomId?: true
+    facilityId?: true
+  }
+
+  export type RoomToFacilityMinAggregateInputType = {
+    id?: true
+    roomId?: true
+    facilityId?: true
+  }
+
+  export type RoomToFacilityMaxAggregateInputType = {
+    id?: true
+    roomId?: true
+    facilityId?: true
+  }
+
+  export type RoomToFacilityCountAggregateInputType = {
+    id?: true
+    roomId?: true
+    facilityId?: true
+    _all?: true
+  }
+
+  export type RoomToFacilityAggregateArgs = {
+    /**
+     * Filter which roomToFacility to aggregate.
+     */
+    where?: roomToFacilityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of roomToFacilities to fetch.
+     */
+    orderBy?: Enumerable<roomToFacilityOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: roomToFacilityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` roomToFacilities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` roomToFacilities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned roomToFacilities
+    **/
+    _count?: true | RoomToFacilityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RoomToFacilityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RoomToFacilitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RoomToFacilityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RoomToFacilityMaxAggregateInputType
+  }
+
+  export type GetRoomToFacilityAggregateType<T extends RoomToFacilityAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoomToFacility]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRoomToFacility[P]>
+      : GetScalarType<T[P], AggregateRoomToFacility[P]>
+  }
+
+
+
+
+  export type RoomToFacilityGroupByArgs = {
+    where?: roomToFacilityWhereInput
+    orderBy?: Enumerable<roomToFacilityOrderByWithAggregationInput>
+    by: RoomToFacilityScalarFieldEnum[]
+    having?: roomToFacilityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RoomToFacilityCountAggregateInputType | true
+    _avg?: RoomToFacilityAvgAggregateInputType
+    _sum?: RoomToFacilitySumAggregateInputType
+    _min?: RoomToFacilityMinAggregateInputType
+    _max?: RoomToFacilityMaxAggregateInputType
+  }
+
+
+  export type RoomToFacilityGroupByOutputType = {
+    id: number
+    roomId: number
+    facilityId: number
+    _count: RoomToFacilityCountAggregateOutputType | null
+    _avg: RoomToFacilityAvgAggregateOutputType | null
+    _sum: RoomToFacilitySumAggregateOutputType | null
+    _min: RoomToFacilityMinAggregateOutputType | null
+    _max: RoomToFacilityMaxAggregateOutputType | null
+  }
+
+  type GetRoomToFacilityGroupByPayload<T extends RoomToFacilityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<RoomToFacilityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RoomToFacilityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RoomToFacilityGroupByOutputType[P]>
+            : GetScalarType<T[P], RoomToFacilityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type roomToFacilitySelect = {
+    id?: boolean
+    room?: boolean | RoomArgs
+    roomId?: boolean
+    facility?: boolean | FacilityArgs
+    facilityId?: boolean
+  }
+
+
+  export type roomToFacilityInclude = {
+    room?: boolean | RoomArgs
+    facility?: boolean | FacilityArgs
+  }
+
+  export type roomToFacilityGetPayload<S extends boolean | null | undefined | roomToFacilityArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? roomToFacility :
+    S extends undefined ? never :
+    S extends { include: any } & (roomToFacilityArgs | roomToFacilityFindManyArgs)
+    ? roomToFacility  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'room' ? RoomGetPayload<S['include'][P]> :
+        P extends 'facility' ? FacilityGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (roomToFacilityArgs | roomToFacilityFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'room' ? RoomGetPayload<S['select'][P]> :
+        P extends 'facility' ? FacilityGetPayload<S['select'][P]> :  P extends keyof roomToFacility ? roomToFacility[P] : never
+  } 
+      : roomToFacility
+
+
+  type roomToFacilityCountArgs = 
+    Omit<roomToFacilityFindManyArgs, 'select' | 'include'> & {
+      select?: RoomToFacilityCountAggregateInputType | true
+    }
+
+  export interface roomToFacilityDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one RoomToFacility that matches the filter.
+     * @param {roomToFacilityFindUniqueArgs} args - Arguments to find a RoomToFacility
+     * @example
+     * // Get one RoomToFacility
+     * const roomToFacility = await prisma.roomToFacility.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends roomToFacilityFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, roomToFacilityFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'roomToFacility'> extends True ? Prisma__roomToFacilityClient<roomToFacilityGetPayload<T>> : Prisma__roomToFacilityClient<roomToFacilityGetPayload<T> | null, null>
+
+    /**
+     * Find one RoomToFacility that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {roomToFacilityFindUniqueOrThrowArgs} args - Arguments to find a RoomToFacility
+     * @example
+     * // Get one RoomToFacility
+     * const roomToFacility = await prisma.roomToFacility.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends roomToFacilityFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, roomToFacilityFindUniqueOrThrowArgs>
+    ): Prisma__roomToFacilityClient<roomToFacilityGetPayload<T>>
+
+    /**
+     * Find the first RoomToFacility that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {roomToFacilityFindFirstArgs} args - Arguments to find a RoomToFacility
+     * @example
+     * // Get one RoomToFacility
+     * const roomToFacility = await prisma.roomToFacility.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends roomToFacilityFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, roomToFacilityFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'roomToFacility'> extends True ? Prisma__roomToFacilityClient<roomToFacilityGetPayload<T>> : Prisma__roomToFacilityClient<roomToFacilityGetPayload<T> | null, null>
+
+    /**
+     * Find the first RoomToFacility that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {roomToFacilityFindFirstOrThrowArgs} args - Arguments to find a RoomToFacility
+     * @example
+     * // Get one RoomToFacility
+     * const roomToFacility = await prisma.roomToFacility.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends roomToFacilityFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, roomToFacilityFindFirstOrThrowArgs>
+    ): Prisma__roomToFacilityClient<roomToFacilityGetPayload<T>>
+
+    /**
+     * Find zero or more RoomToFacilities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {roomToFacilityFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RoomToFacilities
+     * const roomToFacilities = await prisma.roomToFacility.findMany()
+     * 
+     * // Get first 10 RoomToFacilities
+     * const roomToFacilities = await prisma.roomToFacility.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const roomToFacilityWithIdOnly = await prisma.roomToFacility.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends roomToFacilityFindManyArgs>(
+      args?: SelectSubset<T, roomToFacilityFindManyArgs>
+    ): Prisma.PrismaPromise<Array<roomToFacilityGetPayload<T>>>
+
+    /**
+     * Create a RoomToFacility.
+     * @param {roomToFacilityCreateArgs} args - Arguments to create a RoomToFacility.
+     * @example
+     * // Create one RoomToFacility
+     * const RoomToFacility = await prisma.roomToFacility.create({
+     *   data: {
+     *     // ... data to create a RoomToFacility
+     *   }
+     * })
+     * 
+    **/
+    create<T extends roomToFacilityCreateArgs>(
+      args: SelectSubset<T, roomToFacilityCreateArgs>
+    ): Prisma__roomToFacilityClient<roomToFacilityGetPayload<T>>
+
+    /**
+     * Create many RoomToFacilities.
+     *     @param {roomToFacilityCreateManyArgs} args - Arguments to create many RoomToFacilities.
+     *     @example
+     *     // Create many RoomToFacilities
+     *     const roomToFacility = await prisma.roomToFacility.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends roomToFacilityCreateManyArgs>(
+      args?: SelectSubset<T, roomToFacilityCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a RoomToFacility.
+     * @param {roomToFacilityDeleteArgs} args - Arguments to delete one RoomToFacility.
+     * @example
+     * // Delete one RoomToFacility
+     * const RoomToFacility = await prisma.roomToFacility.delete({
+     *   where: {
+     *     // ... filter to delete one RoomToFacility
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends roomToFacilityDeleteArgs>(
+      args: SelectSubset<T, roomToFacilityDeleteArgs>
+    ): Prisma__roomToFacilityClient<roomToFacilityGetPayload<T>>
+
+    /**
+     * Update one RoomToFacility.
+     * @param {roomToFacilityUpdateArgs} args - Arguments to update one RoomToFacility.
+     * @example
+     * // Update one RoomToFacility
+     * const roomToFacility = await prisma.roomToFacility.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends roomToFacilityUpdateArgs>(
+      args: SelectSubset<T, roomToFacilityUpdateArgs>
+    ): Prisma__roomToFacilityClient<roomToFacilityGetPayload<T>>
+
+    /**
+     * Delete zero or more RoomToFacilities.
+     * @param {roomToFacilityDeleteManyArgs} args - Arguments to filter RoomToFacilities to delete.
+     * @example
+     * // Delete a few RoomToFacilities
+     * const { count } = await prisma.roomToFacility.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends roomToFacilityDeleteManyArgs>(
+      args?: SelectSubset<T, roomToFacilityDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RoomToFacilities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {roomToFacilityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RoomToFacilities
+     * const roomToFacility = await prisma.roomToFacility.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends roomToFacilityUpdateManyArgs>(
+      args: SelectSubset<T, roomToFacilityUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RoomToFacility.
+     * @param {roomToFacilityUpsertArgs} args - Arguments to update or create a RoomToFacility.
+     * @example
+     * // Update or create a RoomToFacility
+     * const roomToFacility = await prisma.roomToFacility.upsert({
+     *   create: {
+     *     // ... data to create a RoomToFacility
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RoomToFacility we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends roomToFacilityUpsertArgs>(
+      args: SelectSubset<T, roomToFacilityUpsertArgs>
+    ): Prisma__roomToFacilityClient<roomToFacilityGetPayload<T>>
+
+    /**
+     * Count the number of RoomToFacilities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {roomToFacilityCountArgs} args - Arguments to filter RoomToFacilities to count.
+     * @example
+     * // Count the number of RoomToFacilities
+     * const count = await prisma.roomToFacility.count({
+     *   where: {
+     *     // ... the filter for the RoomToFacilities we want to count
+     *   }
+     * })
+    **/
+    count<T extends roomToFacilityCountArgs>(
+      args?: Subset<T, roomToFacilityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RoomToFacilityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RoomToFacility.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoomToFacilityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RoomToFacilityAggregateArgs>(args: Subset<T, RoomToFacilityAggregateArgs>): Prisma.PrismaPromise<GetRoomToFacilityAggregateType<T>>
+
+    /**
+     * Group by RoomToFacility.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoomToFacilityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RoomToFacilityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RoomToFacilityGroupByArgs['orderBy'] }
+        : { orderBy?: RoomToFacilityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RoomToFacilityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoomToFacilityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for roomToFacility.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__roomToFacilityClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    room<T extends RoomArgs= {}>(args?: Subset<T, RoomArgs>): Prisma__RoomClient<RoomGetPayload<T> | Null>;
+
+    facility<T extends FacilityArgs= {}>(args?: Subset<T, FacilityArgs>): Prisma__FacilityClient<FacilityGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * roomToFacility base type for findUnique actions
+   */
+  export type roomToFacilityFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * Filter, which roomToFacility to fetch.
+     */
+    where: roomToFacilityWhereUniqueInput
+  }
+
+  /**
+   * roomToFacility findUnique
+   */
+  export interface roomToFacilityFindUniqueArgs extends roomToFacilityFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * roomToFacility findUniqueOrThrow
+   */
+  export type roomToFacilityFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * Filter, which roomToFacility to fetch.
+     */
+    where: roomToFacilityWhereUniqueInput
+  }
+
+
+  /**
+   * roomToFacility base type for findFirst actions
+   */
+  export type roomToFacilityFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * Filter, which roomToFacility to fetch.
+     */
+    where?: roomToFacilityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of roomToFacilities to fetch.
+     */
+    orderBy?: Enumerable<roomToFacilityOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for roomToFacilities.
+     */
+    cursor?: roomToFacilityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` roomToFacilities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` roomToFacilities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of roomToFacilities.
+     */
+    distinct?: Enumerable<RoomToFacilityScalarFieldEnum>
+  }
+
+  /**
+   * roomToFacility findFirst
+   */
+  export interface roomToFacilityFindFirstArgs extends roomToFacilityFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * roomToFacility findFirstOrThrow
+   */
+  export type roomToFacilityFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * Filter, which roomToFacility to fetch.
+     */
+    where?: roomToFacilityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of roomToFacilities to fetch.
+     */
+    orderBy?: Enumerable<roomToFacilityOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for roomToFacilities.
+     */
+    cursor?: roomToFacilityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` roomToFacilities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` roomToFacilities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of roomToFacilities.
+     */
+    distinct?: Enumerable<RoomToFacilityScalarFieldEnum>
+  }
+
+
+  /**
+   * roomToFacility findMany
+   */
+  export type roomToFacilityFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * Filter, which roomToFacilities to fetch.
+     */
+    where?: roomToFacilityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of roomToFacilities to fetch.
+     */
+    orderBy?: Enumerable<roomToFacilityOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing roomToFacilities.
+     */
+    cursor?: roomToFacilityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` roomToFacilities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` roomToFacilities.
+     */
+    skip?: number
+    distinct?: Enumerable<RoomToFacilityScalarFieldEnum>
+  }
+
+
+  /**
+   * roomToFacility create
+   */
+  export type roomToFacilityCreateArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * The data needed to create a roomToFacility.
+     */
+    data: XOR<roomToFacilityCreateInput, roomToFacilityUncheckedCreateInput>
+  }
+
+
+  /**
+   * roomToFacility createMany
+   */
+  export type roomToFacilityCreateManyArgs = {
+    /**
+     * The data used to create many roomToFacilities.
+     */
+    data: Enumerable<roomToFacilityCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * roomToFacility update
+   */
+  export type roomToFacilityUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * The data needed to update a roomToFacility.
+     */
+    data: XOR<roomToFacilityUpdateInput, roomToFacilityUncheckedUpdateInput>
+    /**
+     * Choose, which roomToFacility to update.
+     */
+    where: roomToFacilityWhereUniqueInput
+  }
+
+
+  /**
+   * roomToFacility updateMany
+   */
+  export type roomToFacilityUpdateManyArgs = {
+    /**
+     * The data used to update roomToFacilities.
+     */
+    data: XOR<roomToFacilityUpdateManyMutationInput, roomToFacilityUncheckedUpdateManyInput>
+    /**
+     * Filter which roomToFacilities to update
+     */
+    where?: roomToFacilityWhereInput
+  }
+
+
+  /**
+   * roomToFacility upsert
+   */
+  export type roomToFacilityUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * The filter to search for the roomToFacility to update in case it exists.
+     */
+    where: roomToFacilityWhereUniqueInput
+    /**
+     * In case the roomToFacility found by the `where` argument doesn't exist, create a new roomToFacility with this data.
+     */
+    create: XOR<roomToFacilityCreateInput, roomToFacilityUncheckedCreateInput>
+    /**
+     * In case the roomToFacility was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<roomToFacilityUpdateInput, roomToFacilityUncheckedUpdateInput>
+  }
+
+
+  /**
+   * roomToFacility delete
+   */
+  export type roomToFacilityDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
+    /**
+     * Filter which roomToFacility to delete.
+     */
+    where: roomToFacilityWhereUniqueInput
+  }
+
+
+  /**
+   * roomToFacility deleteMany
+   */
+  export type roomToFacilityDeleteManyArgs = {
+    /**
+     * Filter which roomToFacilities to delete
+     */
+    where?: roomToFacilityWhereInput
+  }
+
+
+  /**
+   * roomToFacility without action
+   */
+  export type roomToFacilityArgs = {
+    /**
+     * Select specific fields to fetch from the roomToFacility
+     */
+    select?: roomToFacilitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: roomToFacilityInclude | null
   }
 
 
@@ -4150,17 +5134,15 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     id: number | null
-    officerId: number | null
   }
 
   export type UserSumAggregateOutputType = {
     id: number | null
-    officerId: number | null
   }
 
   export type UserMinAggregateOutputType = {
     id: number | null
-    officerId: number | null
+    officerId: string | null
     firstName: string | null
     lastName: string | null
     phone: string | null
@@ -4174,7 +5156,7 @@ export namespace Prisma {
 
   export type UserMaxAggregateOutputType = {
     id: number | null
-    officerId: number | null
+    officerId: string | null
     firstName: string | null
     lastName: string | null
     phone: string | null
@@ -4204,12 +5186,10 @@ export namespace Prisma {
 
   export type UserAvgAggregateInputType = {
     id?: true
-    officerId?: true
   }
 
   export type UserSumAggregateInputType = {
     id?: true
-    officerId?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -4344,7 +5324,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: number
-    officerId: number
+    officerId: string
     firstName: string
     lastName: string
     phone: string
@@ -5192,22 +6172,18 @@ export namespace Prisma {
 
   export type OfficeHour1AvgAggregateOutputType = {
     id: number | null
-    openTime: number | null
-    closeTime: number | null
   }
 
   export type OfficeHour1SumAggregateOutputType = {
     id: number | null
-    openTime: number | null
-    closeTime: number | null
   }
 
   export type OfficeHour1MinAggregateOutputType = {
     id: number | null
     day: string | null
     isOpen: boolean | null
-    openTime: number | null
-    closeTime: number | null
+    openTime: string | null
+    closeTime: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5216,8 +6192,8 @@ export namespace Prisma {
     id: number | null
     day: string | null
     isOpen: boolean | null
-    openTime: number | null
-    closeTime: number | null
+    openTime: string | null
+    closeTime: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5236,14 +6212,10 @@ export namespace Prisma {
 
   export type OfficeHour1AvgAggregateInputType = {
     id?: true
-    openTime?: true
-    closeTime?: true
   }
 
   export type OfficeHour1SumAggregateInputType = {
     id?: true
-    openTime?: true
-    closeTime?: true
   }
 
   export type OfficeHour1MinAggregateInputType = {
@@ -5368,8 +6340,8 @@ export namespace Prisma {
     id: number
     day: string
     isOpen: boolean
-    openTime: number
-    closeTime: number
+    openTime: string
+    closeTime: string
     createdAt: Date
     updatedAt: Date
     _count: OfficeHour1CountAggregateOutputType | null
@@ -6132,63 +7104,35 @@ export namespace Prisma {
 
   export type OfficeHour2AvgAggregateOutputType = {
     id: number | null
-    openingTimeMonday: number | null
-    closingTimeMonday: number | null
-    openingTimeTuesday: number | null
-    closingTimeTuesday: number | null
-    openingTimeWednesday: number | null
-    closingTimeWednesday: number | null
-    openingTimeThursday: number | null
-    closingTimeThursday: number | null
-    openingTimeFriday: number | null
-    closingTimeFriday: number | null
-    openingTimeSaturday: number | null
-    closingTimeSaturday: number | null
-    openingTimeSunday: number | null
-    closingTimeSunday: number | null
   }
 
   export type OfficeHour2SumAggregateOutputType = {
     id: number | null
-    openingTimeMonday: number | null
-    closingTimeMonday: number | null
-    openingTimeTuesday: number | null
-    closingTimeTuesday: number | null
-    openingTimeWednesday: number | null
-    closingTimeWednesday: number | null
-    openingTimeThursday: number | null
-    closingTimeThursday: number | null
-    openingTimeFriday: number | null
-    closingTimeFriday: number | null
-    openingTimeSaturday: number | null
-    closingTimeSaturday: number | null
-    openingTimeSunday: number | null
-    closingTimeSunday: number | null
   }
 
   export type OfficeHour2MinAggregateOutputType = {
     id: number | null
     isOpenMonday: boolean | null
-    openingTimeMonday: number | null
-    closingTimeMonday: number | null
+    openingTimeMonday: string | null
+    closingTimeMonday: string | null
     isOpenTuesday: boolean | null
-    openingTimeTuesday: number | null
-    closingTimeTuesday: number | null
+    openingTimeTuesday: string | null
+    closingTimeTuesday: string | null
     isOpenWednesday: boolean | null
-    openingTimeWednesday: number | null
-    closingTimeWednesday: number | null
+    openingTimeWednesday: string | null
+    closingTimeWednesday: string | null
     isOpenThursday: boolean | null
-    openingTimeThursday: number | null
-    closingTimeThursday: number | null
+    openingTimeThursday: string | null
+    closingTimeThursday: string | null
     isOpenFriday: boolean | null
-    openingTimeFriday: number | null
-    closingTimeFriday: number | null
+    openingTimeFriday: string | null
+    closingTimeFriday: string | null
     isOpenSaturday: boolean | null
-    openingTimeSaturday: number | null
-    closingTimeSaturday: number | null
+    openingTimeSaturday: string | null
+    closingTimeSaturday: string | null
     isOpenSunday: boolean | null
-    openingTimeSunday: number | null
-    closingTimeSunday: number | null
+    openingTimeSunday: string | null
+    closingTimeSunday: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6196,26 +7140,26 @@ export namespace Prisma {
   export type OfficeHour2MaxAggregateOutputType = {
     id: number | null
     isOpenMonday: boolean | null
-    openingTimeMonday: number | null
-    closingTimeMonday: number | null
+    openingTimeMonday: string | null
+    closingTimeMonday: string | null
     isOpenTuesday: boolean | null
-    openingTimeTuesday: number | null
-    closingTimeTuesday: number | null
+    openingTimeTuesday: string | null
+    closingTimeTuesday: string | null
     isOpenWednesday: boolean | null
-    openingTimeWednesday: number | null
-    closingTimeWednesday: number | null
+    openingTimeWednesday: string | null
+    closingTimeWednesday: string | null
     isOpenThursday: boolean | null
-    openingTimeThursday: number | null
-    closingTimeThursday: number | null
+    openingTimeThursday: string | null
+    closingTimeThursday: string | null
     isOpenFriday: boolean | null
-    openingTimeFriday: number | null
-    closingTimeFriday: number | null
+    openingTimeFriday: string | null
+    closingTimeFriday: string | null
     isOpenSaturday: boolean | null
-    openingTimeSaturday: number | null
-    closingTimeSaturday: number | null
+    openingTimeSaturday: string | null
+    closingTimeSaturday: string | null
     isOpenSunday: boolean | null
-    openingTimeSunday: number | null
-    closingTimeSunday: number | null
+    openingTimeSunday: string | null
+    closingTimeSunday: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6251,38 +7195,10 @@ export namespace Prisma {
 
   export type OfficeHour2AvgAggregateInputType = {
     id?: true
-    openingTimeMonday?: true
-    closingTimeMonday?: true
-    openingTimeTuesday?: true
-    closingTimeTuesday?: true
-    openingTimeWednesday?: true
-    closingTimeWednesday?: true
-    openingTimeThursday?: true
-    closingTimeThursday?: true
-    openingTimeFriday?: true
-    closingTimeFriday?: true
-    openingTimeSaturday?: true
-    closingTimeSaturday?: true
-    openingTimeSunday?: true
-    closingTimeSunday?: true
   }
 
   export type OfficeHour2SumAggregateInputType = {
     id?: true
-    openingTimeMonday?: true
-    closingTimeMonday?: true
-    openingTimeTuesday?: true
-    closingTimeTuesday?: true
-    openingTimeWednesday?: true
-    closingTimeWednesday?: true
-    openingTimeThursday?: true
-    closingTimeThursday?: true
-    openingTimeFriday?: true
-    closingTimeFriday?: true
-    openingTimeSaturday?: true
-    closingTimeSaturday?: true
-    openingTimeSunday?: true
-    closingTimeSunday?: true
   }
 
   export type OfficeHour2MinAggregateInputType = {
@@ -6457,26 +7373,26 @@ export namespace Prisma {
   export type OfficeHour2GroupByOutputType = {
     id: number
     isOpenMonday: boolean
-    openingTimeMonday: number
-    closingTimeMonday: number
+    openingTimeMonday: string
+    closingTimeMonday: string
     isOpenTuesday: boolean
-    openingTimeTuesday: number
-    closingTimeTuesday: number
+    openingTimeTuesday: string
+    closingTimeTuesday: string
     isOpenWednesday: boolean
-    openingTimeWednesday: number
-    closingTimeWednesday: number
+    openingTimeWednesday: string
+    closingTimeWednesday: string
     isOpenThursday: boolean
-    openingTimeThursday: number
-    closingTimeThursday: number
+    openingTimeThursday: string
+    closingTimeThursday: string
     isOpenFriday: boolean
-    openingTimeFriday: number
-    closingTimeFriday: number
+    openingTimeFriday: string
+    closingTimeFriday: string
     isOpenSaturday: boolean
-    openingTimeSaturday: number
-    closingTimeSaturday: number
+    openingTimeSaturday: string
+    closingTimeSaturday: string
     isOpenSunday: boolean
-    openingTimeSunday: number
-    closingTimeSunday: number
+    openingTimeSunday: string
+    closingTimeSunday: string
     createdAt: Date
     updatedAt: Date
     _count: OfficeHour2CountAggregateOutputType | null
@@ -8340,6 +9256,15 @@ export namespace Prisma {
   export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
 
 
+  export const RoomToFacilityScalarFieldEnum: {
+    id: 'id',
+    roomId: 'roomId',
+    facilityId: 'facilityId'
+  };
+
+  export type RoomToFacilityScalarFieldEnum = (typeof RoomToFacilityScalarFieldEnum)[keyof typeof RoomToFacilityScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -8434,7 +9359,7 @@ export namespace Prisma {
     name?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    Room?: RoomListRelationFilter
+    roomToFacility?: RoomToFacilityListRelationFilter
   }
 
   export type FacilityOrderByWithRelationInput = {
@@ -8442,7 +9367,7 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    Room?: RoomOrderByRelationAggregateInput
+    roomToFacility?: roomToFacilityOrderByRelationAggregateInput
   }
 
   export type FacilityWhereUniqueInput = {
@@ -8484,8 +9409,8 @@ export namespace Prisma {
     capacityMax?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    facilities?: FacilityListRelationFilter
     booking?: BookingListRelationFilter
+    roomToFacility?: RoomToFacilityListRelationFilter
   }
 
   export type RoomOrderByWithRelationInput = {
@@ -8497,8 +9422,8 @@ export namespace Prisma {
     capacityMax?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    facilities?: FacilityOrderByRelationAggregateInput
     booking?: BookingOrderByRelationAggregateInput
+    roomToFacility?: roomToFacilityOrderByRelationAggregateInput
   }
 
   export type RoomWhereUniqueInput = {
@@ -8534,12 +9459,55 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
+  export type roomToFacilityWhereInput = {
+    AND?: Enumerable<roomToFacilityWhereInput>
+    OR?: Enumerable<roomToFacilityWhereInput>
+    NOT?: Enumerable<roomToFacilityWhereInput>
+    id?: IntFilter | number
+    room?: XOR<RoomRelationFilter, RoomWhereInput>
+    roomId?: IntFilter | number
+    facility?: XOR<FacilityRelationFilter, FacilityWhereInput>
+    facilityId?: IntFilter | number
+  }
+
+  export type roomToFacilityOrderByWithRelationInput = {
+    id?: SortOrder
+    room?: RoomOrderByWithRelationInput
+    roomId?: SortOrder
+    facility?: FacilityOrderByWithRelationInput
+    facilityId?: SortOrder
+  }
+
+  export type roomToFacilityWhereUniqueInput = {
+    id?: number
+  }
+
+  export type roomToFacilityOrderByWithAggregationInput = {
+    id?: SortOrder
+    roomId?: SortOrder
+    facilityId?: SortOrder
+    _count?: roomToFacilityCountOrderByAggregateInput
+    _avg?: roomToFacilityAvgOrderByAggregateInput
+    _max?: roomToFacilityMaxOrderByAggregateInput
+    _min?: roomToFacilityMinOrderByAggregateInput
+    _sum?: roomToFacilitySumOrderByAggregateInput
+  }
+
+  export type roomToFacilityScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<roomToFacilityScalarWhereWithAggregatesInput>
+    OR?: Enumerable<roomToFacilityScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<roomToFacilityScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    roomId?: IntWithAggregatesFilter | number
+    facilityId?: IntWithAggregatesFilter | number
+  }
+
   export type UserWhereInput = {
     AND?: Enumerable<UserWhereInput>
     OR?: Enumerable<UserWhereInput>
     NOT?: Enumerable<UserWhereInput>
     id?: IntFilter | number
-    officerId?: IntFilter | number
+    officerId?: StringFilter | string
     firstName?: StringFilter | string
     lastName?: StringFilter | string
     phone?: StringFilter | string
@@ -8569,10 +9537,6 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = {
     id?: number
-    officerId?: number
-    phone?: string
-    email?: string
-    userName?: string
   }
 
   export type UserOrderByWithAggregationInput = {
@@ -8599,7 +9563,7 @@ export namespace Prisma {
     OR?: Enumerable<UserScalarWhereWithAggregatesInput>
     NOT?: Enumerable<UserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    officerId?: IntWithAggregatesFilter | number
+    officerId?: StringWithAggregatesFilter | string
     firstName?: StringWithAggregatesFilter | string
     lastName?: StringWithAggregatesFilter | string
     phone?: StringWithAggregatesFilter | string
@@ -8618,8 +9582,8 @@ export namespace Prisma {
     id?: IntFilter | number
     day?: StringFilter | string
     isOpen?: BoolFilter | boolean
-    openTime?: IntFilter | number
-    closeTime?: IntFilter | number
+    openTime?: StringFilter | string
+    closeTime?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -8661,8 +9625,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     day?: StringWithAggregatesFilter | string
     isOpen?: BoolWithAggregatesFilter | boolean
-    openTime?: IntWithAggregatesFilter | number
-    closeTime?: IntWithAggregatesFilter | number
+    openTime?: StringWithAggregatesFilter | string
+    closeTime?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -8673,26 +9637,26 @@ export namespace Prisma {
     NOT?: Enumerable<OfficeHour2WhereInput>
     id?: IntFilter | number
     isOpenMonday?: BoolFilter | boolean
-    openingTimeMonday?: IntFilter | number
-    closingTimeMonday?: IntFilter | number
+    openingTimeMonday?: StringFilter | string
+    closingTimeMonday?: StringFilter | string
     isOpenTuesday?: BoolFilter | boolean
-    openingTimeTuesday?: IntFilter | number
-    closingTimeTuesday?: IntFilter | number
+    openingTimeTuesday?: StringFilter | string
+    closingTimeTuesday?: StringFilter | string
     isOpenWednesday?: BoolFilter | boolean
-    openingTimeWednesday?: IntFilter | number
-    closingTimeWednesday?: IntFilter | number
+    openingTimeWednesday?: StringFilter | string
+    closingTimeWednesday?: StringFilter | string
     isOpenThursday?: BoolFilter | boolean
-    openingTimeThursday?: IntFilter | number
-    closingTimeThursday?: IntFilter | number
+    openingTimeThursday?: StringFilter | string
+    closingTimeThursday?: StringFilter | string
     isOpenFriday?: BoolFilter | boolean
-    openingTimeFriday?: IntFilter | number
-    closingTimeFriday?: IntFilter | number
+    openingTimeFriday?: StringFilter | string
+    closingTimeFriday?: StringFilter | string
     isOpenSaturday?: BoolFilter | boolean
-    openingTimeSaturday?: IntFilter | number
-    closingTimeSaturday?: IntFilter | number
+    openingTimeSaturday?: StringFilter | string
+    closingTimeSaturday?: StringFilter | string
     isOpenSunday?: BoolFilter | boolean
-    openingTimeSunday?: IntFilter | number
-    closingTimeSunday?: IntFilter | number
+    openingTimeSunday?: StringFilter | string
+    closingTimeSunday?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -8766,26 +9730,26 @@ export namespace Prisma {
     NOT?: Enumerable<OfficeHour2ScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     isOpenMonday?: BoolWithAggregatesFilter | boolean
-    openingTimeMonday?: IntWithAggregatesFilter | number
-    closingTimeMonday?: IntWithAggregatesFilter | number
+    openingTimeMonday?: StringWithAggregatesFilter | string
+    closingTimeMonday?: StringWithAggregatesFilter | string
     isOpenTuesday?: BoolWithAggregatesFilter | boolean
-    openingTimeTuesday?: IntWithAggregatesFilter | number
-    closingTimeTuesday?: IntWithAggregatesFilter | number
+    openingTimeTuesday?: StringWithAggregatesFilter | string
+    closingTimeTuesday?: StringWithAggregatesFilter | string
     isOpenWednesday?: BoolWithAggregatesFilter | boolean
-    openingTimeWednesday?: IntWithAggregatesFilter | number
-    closingTimeWednesday?: IntWithAggregatesFilter | number
+    openingTimeWednesday?: StringWithAggregatesFilter | string
+    closingTimeWednesday?: StringWithAggregatesFilter | string
     isOpenThursday?: BoolWithAggregatesFilter | boolean
-    openingTimeThursday?: IntWithAggregatesFilter | number
-    closingTimeThursday?: IntWithAggregatesFilter | number
+    openingTimeThursday?: StringWithAggregatesFilter | string
+    closingTimeThursday?: StringWithAggregatesFilter | string
     isOpenFriday?: BoolWithAggregatesFilter | boolean
-    openingTimeFriday?: IntWithAggregatesFilter | number
-    closingTimeFriday?: IntWithAggregatesFilter | number
+    openingTimeFriday?: StringWithAggregatesFilter | string
+    closingTimeFriday?: StringWithAggregatesFilter | string
     isOpenSaturday?: BoolWithAggregatesFilter | boolean
-    openingTimeSaturday?: IntWithAggregatesFilter | number
-    closingTimeSaturday?: IntWithAggregatesFilter | number
+    openingTimeSaturday?: StringWithAggregatesFilter | string
+    closingTimeSaturday?: StringWithAggregatesFilter | string
     isOpenSunday?: BoolWithAggregatesFilter | boolean
-    openingTimeSunday?: IntWithAggregatesFilter | number
-    closingTimeSunday?: IntWithAggregatesFilter | number
+    openingTimeSunday?: StringWithAggregatesFilter | string
+    closingTimeSunday?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -8904,7 +9868,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    Room?: RoomCreateNestedManyWithoutFacilitiesInput
+    roomToFacility?: roomToFacilityCreateNestedManyWithoutFacilityInput
   }
 
   export type FacilityUncheckedCreateInput = {
@@ -8912,14 +9876,14 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    Room?: RoomUncheckedCreateNestedManyWithoutFacilitiesInput
+    roomToFacility?: roomToFacilityUncheckedCreateNestedManyWithoutFacilityInput
   }
 
   export type FacilityUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Room?: RoomUpdateManyWithoutFacilitiesNestedInput
+    roomToFacility?: roomToFacilityUpdateManyWithoutFacilityNestedInput
   }
 
   export type FacilityUncheckedUpdateInput = {
@@ -8927,7 +9891,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Room?: RoomUncheckedUpdateManyWithoutFacilitiesNestedInput
+    roomToFacility?: roomToFacilityUncheckedUpdateManyWithoutFacilityNestedInput
   }
 
   export type FacilityCreateManyInput = {
@@ -8957,8 +9921,8 @@ export namespace Prisma {
     capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    facilities?: FacilityCreateNestedManyWithoutRoomInput
     booking?: BookingCreateNestedManyWithoutRoomInput
+    roomToFacility?: roomToFacilityCreateNestedManyWithoutRoomInput
   }
 
   export type RoomUncheckedCreateInput = {
@@ -8969,8 +9933,8 @@ export namespace Prisma {
     capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    facilities?: FacilityUncheckedCreateNestedManyWithoutRoomInput
     booking?: BookingUncheckedCreateNestedManyWithoutRoomInput
+    roomToFacility?: roomToFacilityUncheckedCreateNestedManyWithoutRoomInput
   }
 
   export type RoomUpdateInput = {
@@ -8980,8 +9944,8 @@ export namespace Prisma {
     capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    facilities?: FacilityUpdateManyWithoutRoomNestedInput
     booking?: BookingUpdateManyWithoutRoomNestedInput
+    roomToFacility?: roomToFacilityUpdateManyWithoutRoomNestedInput
   }
 
   export type RoomUncheckedUpdateInput = {
@@ -8992,8 +9956,8 @@ export namespace Prisma {
     capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    facilities?: FacilityUncheckedUpdateManyWithoutRoomNestedInput
     booking?: BookingUncheckedUpdateManyWithoutRoomNestedInput
+    roomToFacility?: roomToFacilityUncheckedUpdateManyWithoutRoomNestedInput
   }
 
   export type RoomCreateManyInput = {
@@ -9024,8 +9988,46 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type roomToFacilityCreateInput = {
+    room: RoomCreateNestedOneWithoutRoomToFacilityInput
+    facility: FacilityCreateNestedOneWithoutRoomToFacilityInput
+  }
+
+  export type roomToFacilityUncheckedCreateInput = {
+    id?: number
+    roomId: number
+    facilityId: number
+  }
+
+  export type roomToFacilityUpdateInput = {
+    room?: RoomUpdateOneRequiredWithoutRoomToFacilityNestedInput
+    facility?: FacilityUpdateOneRequiredWithoutRoomToFacilityNestedInput
+  }
+
+  export type roomToFacilityUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roomId?: IntFieldUpdateOperationsInput | number
+    facilityId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type roomToFacilityCreateManyInput = {
+    id?: number
+    roomId: number
+    facilityId: number
+  }
+
+  export type roomToFacilityUpdateManyMutationInput = {
+
+  }
+
+  export type roomToFacilityUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roomId?: IntFieldUpdateOperationsInput | number
+    facilityId?: IntFieldUpdateOperationsInput | number
+  }
+
   export type UserCreateInput = {
-    officerId: number
+    officerId: string
     firstName: string
     lastName: string
     phone: string
@@ -9040,7 +10042,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: number
-    officerId: number
+    officerId: string
     firstName: string
     lastName: string
     phone: string
@@ -9054,7 +10056,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateInput = {
-    officerId?: IntFieldUpdateOperationsInput | number
+    officerId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9069,7 +10071,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    officerId?: IntFieldUpdateOperationsInput | number
+    officerId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9084,7 +10086,7 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: number
-    officerId: number
+    officerId: string
     firstName: string
     lastName: string
     phone: string
@@ -9097,7 +10099,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateManyMutationInput = {
-    officerId?: IntFieldUpdateOperationsInput | number
+    officerId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9111,7 +10113,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    officerId?: IntFieldUpdateOperationsInput | number
+    officerId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9126,8 +10128,8 @@ export namespace Prisma {
   export type OfficeHour1CreateInput = {
     day: string
     isOpen: boolean
-    openTime: number
-    closeTime: number
+    openTime: string
+    closeTime: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9136,8 +10138,8 @@ export namespace Prisma {
     id?: number
     day: string
     isOpen: boolean
-    openTime: number
-    closeTime: number
+    openTime: string
+    closeTime: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9145,8 +10147,8 @@ export namespace Prisma {
   export type OfficeHour1UpdateInput = {
     day?: StringFieldUpdateOperationsInput | string
     isOpen?: BoolFieldUpdateOperationsInput | boolean
-    openTime?: IntFieldUpdateOperationsInput | number
-    closeTime?: IntFieldUpdateOperationsInput | number
+    openTime?: StringFieldUpdateOperationsInput | string
+    closeTime?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9155,8 +10157,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     day?: StringFieldUpdateOperationsInput | string
     isOpen?: BoolFieldUpdateOperationsInput | boolean
-    openTime?: IntFieldUpdateOperationsInput | number
-    closeTime?: IntFieldUpdateOperationsInput | number
+    openTime?: StringFieldUpdateOperationsInput | string
+    closeTime?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9165,8 +10167,8 @@ export namespace Prisma {
     id?: number
     day: string
     isOpen: boolean
-    openTime: number
-    closeTime: number
+    openTime: string
+    closeTime: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9174,8 +10176,8 @@ export namespace Prisma {
   export type OfficeHour1UpdateManyMutationInput = {
     day?: StringFieldUpdateOperationsInput | string
     isOpen?: BoolFieldUpdateOperationsInput | boolean
-    openTime?: IntFieldUpdateOperationsInput | number
-    closeTime?: IntFieldUpdateOperationsInput | number
+    openTime?: StringFieldUpdateOperationsInput | string
+    closeTime?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9184,34 +10186,34 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     day?: StringFieldUpdateOperationsInput | string
     isOpen?: BoolFieldUpdateOperationsInput | boolean
-    openTime?: IntFieldUpdateOperationsInput | number
-    closeTime?: IntFieldUpdateOperationsInput | number
+    openTime?: StringFieldUpdateOperationsInput | string
+    closeTime?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OfficeHour2CreateInput = {
     isOpenMonday: boolean
-    openingTimeMonday: number
-    closingTimeMonday: number
+    openingTimeMonday: string
+    closingTimeMonday: string
     isOpenTuesday: boolean
-    openingTimeTuesday: number
-    closingTimeTuesday: number
+    openingTimeTuesday: string
+    closingTimeTuesday: string
     isOpenWednesday: boolean
-    openingTimeWednesday: number
-    closingTimeWednesday: number
+    openingTimeWednesday: string
+    closingTimeWednesday: string
     isOpenThursday: boolean
-    openingTimeThursday: number
-    closingTimeThursday: number
+    openingTimeThursday: string
+    closingTimeThursday: string
     isOpenFriday: boolean
-    openingTimeFriday: number
-    closingTimeFriday: number
+    openingTimeFriday: string
+    closingTimeFriday: string
     isOpenSaturday: boolean
-    openingTimeSaturday: number
-    closingTimeSaturday: number
+    openingTimeSaturday: string
+    closingTimeSaturday: string
     isOpenSunday: boolean
-    openingTimeSunday: number
-    closingTimeSunday: number
+    openingTimeSunday: string
+    closingTimeSunday: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9219,52 +10221,52 @@ export namespace Prisma {
   export type OfficeHour2UncheckedCreateInput = {
     id?: number
     isOpenMonday: boolean
-    openingTimeMonday: number
-    closingTimeMonday: number
+    openingTimeMonday: string
+    closingTimeMonday: string
     isOpenTuesday: boolean
-    openingTimeTuesday: number
-    closingTimeTuesday: number
+    openingTimeTuesday: string
+    closingTimeTuesday: string
     isOpenWednesday: boolean
-    openingTimeWednesday: number
-    closingTimeWednesday: number
+    openingTimeWednesday: string
+    closingTimeWednesday: string
     isOpenThursday: boolean
-    openingTimeThursday: number
-    closingTimeThursday: number
+    openingTimeThursday: string
+    closingTimeThursday: string
     isOpenFriday: boolean
-    openingTimeFriday: number
-    closingTimeFriday: number
+    openingTimeFriday: string
+    closingTimeFriday: string
     isOpenSaturday: boolean
-    openingTimeSaturday: number
-    closingTimeSaturday: number
+    openingTimeSaturday: string
+    closingTimeSaturday: string
     isOpenSunday: boolean
-    openingTimeSunday: number
-    closingTimeSunday: number
+    openingTimeSunday: string
+    closingTimeSunday: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type OfficeHour2UpdateInput = {
     isOpenMonday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeMonday?: IntFieldUpdateOperationsInput | number
-    closingTimeMonday?: IntFieldUpdateOperationsInput | number
+    openingTimeMonday?: StringFieldUpdateOperationsInput | string
+    closingTimeMonday?: StringFieldUpdateOperationsInput | string
     isOpenTuesday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeTuesday?: IntFieldUpdateOperationsInput | number
-    closingTimeTuesday?: IntFieldUpdateOperationsInput | number
+    openingTimeTuesday?: StringFieldUpdateOperationsInput | string
+    closingTimeTuesday?: StringFieldUpdateOperationsInput | string
     isOpenWednesday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeWednesday?: IntFieldUpdateOperationsInput | number
-    closingTimeWednesday?: IntFieldUpdateOperationsInput | number
+    openingTimeWednesday?: StringFieldUpdateOperationsInput | string
+    closingTimeWednesday?: StringFieldUpdateOperationsInput | string
     isOpenThursday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeThursday?: IntFieldUpdateOperationsInput | number
-    closingTimeThursday?: IntFieldUpdateOperationsInput | number
+    openingTimeThursday?: StringFieldUpdateOperationsInput | string
+    closingTimeThursday?: StringFieldUpdateOperationsInput | string
     isOpenFriday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeFriday?: IntFieldUpdateOperationsInput | number
-    closingTimeFriday?: IntFieldUpdateOperationsInput | number
+    openingTimeFriday?: StringFieldUpdateOperationsInput | string
+    closingTimeFriday?: StringFieldUpdateOperationsInput | string
     isOpenSaturday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeSaturday?: IntFieldUpdateOperationsInput | number
-    closingTimeSaturday?: IntFieldUpdateOperationsInput | number
+    openingTimeSaturday?: StringFieldUpdateOperationsInput | string
+    closingTimeSaturday?: StringFieldUpdateOperationsInput | string
     isOpenSunday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeSunday?: IntFieldUpdateOperationsInput | number
-    closingTimeSunday?: IntFieldUpdateOperationsInput | number
+    openingTimeSunday?: StringFieldUpdateOperationsInput | string
+    closingTimeSunday?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9272,26 +10274,26 @@ export namespace Prisma {
   export type OfficeHour2UncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     isOpenMonday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeMonday?: IntFieldUpdateOperationsInput | number
-    closingTimeMonday?: IntFieldUpdateOperationsInput | number
+    openingTimeMonday?: StringFieldUpdateOperationsInput | string
+    closingTimeMonday?: StringFieldUpdateOperationsInput | string
     isOpenTuesday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeTuesday?: IntFieldUpdateOperationsInput | number
-    closingTimeTuesday?: IntFieldUpdateOperationsInput | number
+    openingTimeTuesday?: StringFieldUpdateOperationsInput | string
+    closingTimeTuesday?: StringFieldUpdateOperationsInput | string
     isOpenWednesday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeWednesday?: IntFieldUpdateOperationsInput | number
-    closingTimeWednesday?: IntFieldUpdateOperationsInput | number
+    openingTimeWednesday?: StringFieldUpdateOperationsInput | string
+    closingTimeWednesday?: StringFieldUpdateOperationsInput | string
     isOpenThursday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeThursday?: IntFieldUpdateOperationsInput | number
-    closingTimeThursday?: IntFieldUpdateOperationsInput | number
+    openingTimeThursday?: StringFieldUpdateOperationsInput | string
+    closingTimeThursday?: StringFieldUpdateOperationsInput | string
     isOpenFriday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeFriday?: IntFieldUpdateOperationsInput | number
-    closingTimeFriday?: IntFieldUpdateOperationsInput | number
+    openingTimeFriday?: StringFieldUpdateOperationsInput | string
+    closingTimeFriday?: StringFieldUpdateOperationsInput | string
     isOpenSaturday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeSaturday?: IntFieldUpdateOperationsInput | number
-    closingTimeSaturday?: IntFieldUpdateOperationsInput | number
+    openingTimeSaturday?: StringFieldUpdateOperationsInput | string
+    closingTimeSaturday?: StringFieldUpdateOperationsInput | string
     isOpenSunday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeSunday?: IntFieldUpdateOperationsInput | number
-    closingTimeSunday?: IntFieldUpdateOperationsInput | number
+    openingTimeSunday?: StringFieldUpdateOperationsInput | string
+    closingTimeSunday?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9299,52 +10301,52 @@ export namespace Prisma {
   export type OfficeHour2CreateManyInput = {
     id?: number
     isOpenMonday: boolean
-    openingTimeMonday: number
-    closingTimeMonday: number
+    openingTimeMonday: string
+    closingTimeMonday: string
     isOpenTuesday: boolean
-    openingTimeTuesday: number
-    closingTimeTuesday: number
+    openingTimeTuesday: string
+    closingTimeTuesday: string
     isOpenWednesday: boolean
-    openingTimeWednesday: number
-    closingTimeWednesday: number
+    openingTimeWednesday: string
+    closingTimeWednesday: string
     isOpenThursday: boolean
-    openingTimeThursday: number
-    closingTimeThursday: number
+    openingTimeThursday: string
+    closingTimeThursday: string
     isOpenFriday: boolean
-    openingTimeFriday: number
-    closingTimeFriday: number
+    openingTimeFriday: string
+    closingTimeFriday: string
     isOpenSaturday: boolean
-    openingTimeSaturday: number
-    closingTimeSaturday: number
+    openingTimeSaturday: string
+    closingTimeSaturday: string
     isOpenSunday: boolean
-    openingTimeSunday: number
-    closingTimeSunday: number
+    openingTimeSunday: string
+    closingTimeSunday: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type OfficeHour2UpdateManyMutationInput = {
     isOpenMonday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeMonday?: IntFieldUpdateOperationsInput | number
-    closingTimeMonday?: IntFieldUpdateOperationsInput | number
+    openingTimeMonday?: StringFieldUpdateOperationsInput | string
+    closingTimeMonday?: StringFieldUpdateOperationsInput | string
     isOpenTuesday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeTuesday?: IntFieldUpdateOperationsInput | number
-    closingTimeTuesday?: IntFieldUpdateOperationsInput | number
+    openingTimeTuesday?: StringFieldUpdateOperationsInput | string
+    closingTimeTuesday?: StringFieldUpdateOperationsInput | string
     isOpenWednesday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeWednesday?: IntFieldUpdateOperationsInput | number
-    closingTimeWednesday?: IntFieldUpdateOperationsInput | number
+    openingTimeWednesday?: StringFieldUpdateOperationsInput | string
+    closingTimeWednesday?: StringFieldUpdateOperationsInput | string
     isOpenThursday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeThursday?: IntFieldUpdateOperationsInput | number
-    closingTimeThursday?: IntFieldUpdateOperationsInput | number
+    openingTimeThursday?: StringFieldUpdateOperationsInput | string
+    closingTimeThursday?: StringFieldUpdateOperationsInput | string
     isOpenFriday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeFriday?: IntFieldUpdateOperationsInput | number
-    closingTimeFriday?: IntFieldUpdateOperationsInput | number
+    openingTimeFriday?: StringFieldUpdateOperationsInput | string
+    closingTimeFriday?: StringFieldUpdateOperationsInput | string
     isOpenSaturday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeSaturday?: IntFieldUpdateOperationsInput | number
-    closingTimeSaturday?: IntFieldUpdateOperationsInput | number
+    openingTimeSaturday?: StringFieldUpdateOperationsInput | string
+    closingTimeSaturday?: StringFieldUpdateOperationsInput | string
     isOpenSunday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeSunday?: IntFieldUpdateOperationsInput | number
-    closingTimeSunday?: IntFieldUpdateOperationsInput | number
+    openingTimeSunday?: StringFieldUpdateOperationsInput | string
+    closingTimeSunday?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9352,26 +10354,26 @@ export namespace Prisma {
   export type OfficeHour2UncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     isOpenMonday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeMonday?: IntFieldUpdateOperationsInput | number
-    closingTimeMonday?: IntFieldUpdateOperationsInput | number
+    openingTimeMonday?: StringFieldUpdateOperationsInput | string
+    closingTimeMonday?: StringFieldUpdateOperationsInput | string
     isOpenTuesday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeTuesday?: IntFieldUpdateOperationsInput | number
-    closingTimeTuesday?: IntFieldUpdateOperationsInput | number
+    openingTimeTuesday?: StringFieldUpdateOperationsInput | string
+    closingTimeTuesday?: StringFieldUpdateOperationsInput | string
     isOpenWednesday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeWednesday?: IntFieldUpdateOperationsInput | number
-    closingTimeWednesday?: IntFieldUpdateOperationsInput | number
+    openingTimeWednesday?: StringFieldUpdateOperationsInput | string
+    closingTimeWednesday?: StringFieldUpdateOperationsInput | string
     isOpenThursday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeThursday?: IntFieldUpdateOperationsInput | number
-    closingTimeThursday?: IntFieldUpdateOperationsInput | number
+    openingTimeThursday?: StringFieldUpdateOperationsInput | string
+    closingTimeThursday?: StringFieldUpdateOperationsInput | string
     isOpenFriday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeFriday?: IntFieldUpdateOperationsInput | number
-    closingTimeFriday?: IntFieldUpdateOperationsInput | number
+    openingTimeFriday?: StringFieldUpdateOperationsInput | string
+    closingTimeFriday?: StringFieldUpdateOperationsInput | string
     isOpenSaturday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeSaturday?: IntFieldUpdateOperationsInput | number
-    closingTimeSaturday?: IntFieldUpdateOperationsInput | number
+    openingTimeSaturday?: StringFieldUpdateOperationsInput | string
+    closingTimeSaturday?: StringFieldUpdateOperationsInput | string
     isOpenSunday?: BoolFieldUpdateOperationsInput | boolean
-    openingTimeSunday?: IntFieldUpdateOperationsInput | number
-    closingTimeSunday?: IntFieldUpdateOperationsInput | number
+    openingTimeSunday?: StringFieldUpdateOperationsInput | string
+    closingTimeSunday?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9565,6 +10567,16 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
+  export type RoomToFacilityListRelationFilter = {
+    every?: roomToFacilityWhereInput
+    some?: roomToFacilityWhereInput
+    none?: roomToFacilityWhereInput
+  }
+
+  export type roomToFacilityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type FacilityCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -9599,20 +10611,10 @@ export namespace Prisma {
     isNot?: BuildingWhereInput | null
   }
 
-  export type FacilityListRelationFilter = {
-    every?: FacilityWhereInput
-    some?: FacilityWhereInput
-    none?: FacilityWhereInput
-  }
-
   export type BookingListRelationFilter = {
     every?: BookingWhereInput
     some?: BookingWhereInput
     none?: BookingWhereInput
-  }
-
-  export type FacilityOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type BookingOrderByRelationAggregateInput = {
@@ -9661,6 +10663,46 @@ export namespace Prisma {
     capacityMax?: SortOrder
   }
 
+  export type RoomRelationFilter = {
+    is?: RoomWhereInput | null
+    isNot?: RoomWhereInput | null
+  }
+
+  export type FacilityRelationFilter = {
+    is?: FacilityWhereInput
+    isNot?: FacilityWhereInput
+  }
+
+  export type roomToFacilityCountOrderByAggregateInput = {
+    id?: SortOrder
+    roomId?: SortOrder
+    facilityId?: SortOrder
+  }
+
+  export type roomToFacilityAvgOrderByAggregateInput = {
+    id?: SortOrder
+    roomId?: SortOrder
+    facilityId?: SortOrder
+  }
+
+  export type roomToFacilityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    roomId?: SortOrder
+    facilityId?: SortOrder
+  }
+
+  export type roomToFacilityMinOrderByAggregateInput = {
+    id?: SortOrder
+    roomId?: SortOrder
+    facilityId?: SortOrder
+  }
+
+  export type roomToFacilitySumOrderByAggregateInput = {
+    id?: SortOrder
+    roomId?: SortOrder
+    facilityId?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     officerId?: SortOrder
@@ -9677,7 +10719,6 @@ export namespace Prisma {
 
   export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
-    officerId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -9710,7 +10751,6 @@ export namespace Prisma {
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
-    officerId?: SortOrder
   }
 
   export type BoolFilter = {
@@ -9730,8 +10770,6 @@ export namespace Prisma {
 
   export type OfficeHour1AvgOrderByAggregateInput = {
     id?: SortOrder
-    openTime?: SortOrder
-    closeTime?: SortOrder
   }
 
   export type OfficeHour1MaxOrderByAggregateInput = {
@@ -9756,8 +10794,6 @@ export namespace Prisma {
 
   export type OfficeHour1SumOrderByAggregateInput = {
     id?: SortOrder
-    openTime?: SortOrder
-    closeTime?: SortOrder
   }
 
   export type BoolWithAggregatesFilter = {
@@ -9797,20 +10833,6 @@ export namespace Prisma {
 
   export type OfficeHour2AvgOrderByAggregateInput = {
     id?: SortOrder
-    openingTimeMonday?: SortOrder
-    closingTimeMonday?: SortOrder
-    openingTimeTuesday?: SortOrder
-    closingTimeTuesday?: SortOrder
-    openingTimeWednesday?: SortOrder
-    closingTimeWednesday?: SortOrder
-    openingTimeThursday?: SortOrder
-    closingTimeThursday?: SortOrder
-    openingTimeFriday?: SortOrder
-    closingTimeFriday?: SortOrder
-    openingTimeSaturday?: SortOrder
-    closingTimeSaturday?: SortOrder
-    openingTimeSunday?: SortOrder
-    closingTimeSunday?: SortOrder
   }
 
   export type OfficeHour2MaxOrderByAggregateInput = {
@@ -9869,25 +10891,6 @@ export namespace Prisma {
 
   export type OfficeHour2SumOrderByAggregateInput = {
     id?: SortOrder
-    openingTimeMonday?: SortOrder
-    closingTimeMonday?: SortOrder
-    openingTimeTuesday?: SortOrder
-    closingTimeTuesday?: SortOrder
-    openingTimeWednesday?: SortOrder
-    closingTimeWednesday?: SortOrder
-    openingTimeThursday?: SortOrder
-    closingTimeThursday?: SortOrder
-    openingTimeFriday?: SortOrder
-    closingTimeFriday?: SortOrder
-    openingTimeSaturday?: SortOrder
-    closingTimeSaturday?: SortOrder
-    openingTimeSunday?: SortOrder
-    closingTimeSunday?: SortOrder
-  }
-
-  export type RoomRelationFilter = {
-    is?: RoomWhereInput | null
-    isNot?: RoomWhereInput | null
   }
 
   export type UserRelationFilter = {
@@ -9995,54 +10998,52 @@ export namespace Prisma {
     deleteMany?: Enumerable<RoomScalarWhereInput>
   }
 
-  export type RoomCreateNestedManyWithoutFacilitiesInput = {
-    create?: XOR<Enumerable<RoomCreateWithoutFacilitiesInput>, Enumerable<RoomUncheckedCreateWithoutFacilitiesInput>>
-    connectOrCreate?: Enumerable<RoomCreateOrConnectWithoutFacilitiesInput>
-    connect?: Enumerable<RoomWhereUniqueInput>
+  export type roomToFacilityCreateNestedManyWithoutFacilityInput = {
+    create?: XOR<Enumerable<roomToFacilityCreateWithoutFacilityInput>, Enumerable<roomToFacilityUncheckedCreateWithoutFacilityInput>>
+    connectOrCreate?: Enumerable<roomToFacilityCreateOrConnectWithoutFacilityInput>
+    createMany?: roomToFacilityCreateManyFacilityInputEnvelope
+    connect?: Enumerable<roomToFacilityWhereUniqueInput>
   }
 
-  export type RoomUncheckedCreateNestedManyWithoutFacilitiesInput = {
-    create?: XOR<Enumerable<RoomCreateWithoutFacilitiesInput>, Enumerable<RoomUncheckedCreateWithoutFacilitiesInput>>
-    connectOrCreate?: Enumerable<RoomCreateOrConnectWithoutFacilitiesInput>
-    connect?: Enumerable<RoomWhereUniqueInput>
+  export type roomToFacilityUncheckedCreateNestedManyWithoutFacilityInput = {
+    create?: XOR<Enumerable<roomToFacilityCreateWithoutFacilityInput>, Enumerable<roomToFacilityUncheckedCreateWithoutFacilityInput>>
+    connectOrCreate?: Enumerable<roomToFacilityCreateOrConnectWithoutFacilityInput>
+    createMany?: roomToFacilityCreateManyFacilityInputEnvelope
+    connect?: Enumerable<roomToFacilityWhereUniqueInput>
   }
 
-  export type RoomUpdateManyWithoutFacilitiesNestedInput = {
-    create?: XOR<Enumerable<RoomCreateWithoutFacilitiesInput>, Enumerable<RoomUncheckedCreateWithoutFacilitiesInput>>
-    connectOrCreate?: Enumerable<RoomCreateOrConnectWithoutFacilitiesInput>
-    upsert?: Enumerable<RoomUpsertWithWhereUniqueWithoutFacilitiesInput>
-    set?: Enumerable<RoomWhereUniqueInput>
-    disconnect?: Enumerable<RoomWhereUniqueInput>
-    delete?: Enumerable<RoomWhereUniqueInput>
-    connect?: Enumerable<RoomWhereUniqueInput>
-    update?: Enumerable<RoomUpdateWithWhereUniqueWithoutFacilitiesInput>
-    updateMany?: Enumerable<RoomUpdateManyWithWhereWithoutFacilitiesInput>
-    deleteMany?: Enumerable<RoomScalarWhereInput>
+  export type roomToFacilityUpdateManyWithoutFacilityNestedInput = {
+    create?: XOR<Enumerable<roomToFacilityCreateWithoutFacilityInput>, Enumerable<roomToFacilityUncheckedCreateWithoutFacilityInput>>
+    connectOrCreate?: Enumerable<roomToFacilityCreateOrConnectWithoutFacilityInput>
+    upsert?: Enumerable<roomToFacilityUpsertWithWhereUniqueWithoutFacilityInput>
+    createMany?: roomToFacilityCreateManyFacilityInputEnvelope
+    set?: Enumerable<roomToFacilityWhereUniqueInput>
+    disconnect?: Enumerable<roomToFacilityWhereUniqueInput>
+    delete?: Enumerable<roomToFacilityWhereUniqueInput>
+    connect?: Enumerable<roomToFacilityWhereUniqueInput>
+    update?: Enumerable<roomToFacilityUpdateWithWhereUniqueWithoutFacilityInput>
+    updateMany?: Enumerable<roomToFacilityUpdateManyWithWhereWithoutFacilityInput>
+    deleteMany?: Enumerable<roomToFacilityScalarWhereInput>
   }
 
-  export type RoomUncheckedUpdateManyWithoutFacilitiesNestedInput = {
-    create?: XOR<Enumerable<RoomCreateWithoutFacilitiesInput>, Enumerable<RoomUncheckedCreateWithoutFacilitiesInput>>
-    connectOrCreate?: Enumerable<RoomCreateOrConnectWithoutFacilitiesInput>
-    upsert?: Enumerable<RoomUpsertWithWhereUniqueWithoutFacilitiesInput>
-    set?: Enumerable<RoomWhereUniqueInput>
-    disconnect?: Enumerable<RoomWhereUniqueInput>
-    delete?: Enumerable<RoomWhereUniqueInput>
-    connect?: Enumerable<RoomWhereUniqueInput>
-    update?: Enumerable<RoomUpdateWithWhereUniqueWithoutFacilitiesInput>
-    updateMany?: Enumerable<RoomUpdateManyWithWhereWithoutFacilitiesInput>
-    deleteMany?: Enumerable<RoomScalarWhereInput>
+  export type roomToFacilityUncheckedUpdateManyWithoutFacilityNestedInput = {
+    create?: XOR<Enumerable<roomToFacilityCreateWithoutFacilityInput>, Enumerable<roomToFacilityUncheckedCreateWithoutFacilityInput>>
+    connectOrCreate?: Enumerable<roomToFacilityCreateOrConnectWithoutFacilityInput>
+    upsert?: Enumerable<roomToFacilityUpsertWithWhereUniqueWithoutFacilityInput>
+    createMany?: roomToFacilityCreateManyFacilityInputEnvelope
+    set?: Enumerable<roomToFacilityWhereUniqueInput>
+    disconnect?: Enumerable<roomToFacilityWhereUniqueInput>
+    delete?: Enumerable<roomToFacilityWhereUniqueInput>
+    connect?: Enumerable<roomToFacilityWhereUniqueInput>
+    update?: Enumerable<roomToFacilityUpdateWithWhereUniqueWithoutFacilityInput>
+    updateMany?: Enumerable<roomToFacilityUpdateManyWithWhereWithoutFacilityInput>
+    deleteMany?: Enumerable<roomToFacilityScalarWhereInput>
   }
 
   export type BuildingCreateNestedOneWithoutRoomInput = {
     create?: XOR<BuildingCreateWithoutRoomInput, BuildingUncheckedCreateWithoutRoomInput>
     connectOrCreate?: BuildingCreateOrConnectWithoutRoomInput
     connect?: BuildingWhereUniqueInput
-  }
-
-  export type FacilityCreateNestedManyWithoutRoomInput = {
-    create?: XOR<Enumerable<FacilityCreateWithoutRoomInput>, Enumerable<FacilityUncheckedCreateWithoutRoomInput>>
-    connectOrCreate?: Enumerable<FacilityCreateOrConnectWithoutRoomInput>
-    connect?: Enumerable<FacilityWhereUniqueInput>
   }
 
   export type BookingCreateNestedManyWithoutRoomInput = {
@@ -10052,10 +11053,11 @@ export namespace Prisma {
     connect?: Enumerable<BookingWhereUniqueInput>
   }
 
-  export type FacilityUncheckedCreateNestedManyWithoutRoomInput = {
-    create?: XOR<Enumerable<FacilityCreateWithoutRoomInput>, Enumerable<FacilityUncheckedCreateWithoutRoomInput>>
-    connectOrCreate?: Enumerable<FacilityCreateOrConnectWithoutRoomInput>
-    connect?: Enumerable<FacilityWhereUniqueInput>
+  export type roomToFacilityCreateNestedManyWithoutRoomInput = {
+    create?: XOR<Enumerable<roomToFacilityCreateWithoutRoomInput>, Enumerable<roomToFacilityUncheckedCreateWithoutRoomInput>>
+    connectOrCreate?: Enumerable<roomToFacilityCreateOrConnectWithoutRoomInput>
+    createMany?: roomToFacilityCreateManyRoomInputEnvelope
+    connect?: Enumerable<roomToFacilityWhereUniqueInput>
   }
 
   export type BookingUncheckedCreateNestedManyWithoutRoomInput = {
@@ -10063,6 +11065,13 @@ export namespace Prisma {
     connectOrCreate?: Enumerable<BookingCreateOrConnectWithoutRoomInput>
     createMany?: BookingCreateManyRoomInputEnvelope
     connect?: Enumerable<BookingWhereUniqueInput>
+  }
+
+  export type roomToFacilityUncheckedCreateNestedManyWithoutRoomInput = {
+    create?: XOR<Enumerable<roomToFacilityCreateWithoutRoomInput>, Enumerable<roomToFacilityUncheckedCreateWithoutRoomInput>>
+    connectOrCreate?: Enumerable<roomToFacilityCreateOrConnectWithoutRoomInput>
+    createMany?: roomToFacilityCreateManyRoomInputEnvelope
+    connect?: Enumerable<roomToFacilityWhereUniqueInput>
   }
 
   export type BuildingUpdateOneWithoutRoomNestedInput = {
@@ -10073,19 +11082,6 @@ export namespace Prisma {
     delete?: boolean
     connect?: BuildingWhereUniqueInput
     update?: XOR<BuildingUpdateWithoutRoomInput, BuildingUncheckedUpdateWithoutRoomInput>
-  }
-
-  export type FacilityUpdateManyWithoutRoomNestedInput = {
-    create?: XOR<Enumerable<FacilityCreateWithoutRoomInput>, Enumerable<FacilityUncheckedCreateWithoutRoomInput>>
-    connectOrCreate?: Enumerable<FacilityCreateOrConnectWithoutRoomInput>
-    upsert?: Enumerable<FacilityUpsertWithWhereUniqueWithoutRoomInput>
-    set?: Enumerable<FacilityWhereUniqueInput>
-    disconnect?: Enumerable<FacilityWhereUniqueInput>
-    delete?: Enumerable<FacilityWhereUniqueInput>
-    connect?: Enumerable<FacilityWhereUniqueInput>
-    update?: Enumerable<FacilityUpdateWithWhereUniqueWithoutRoomInput>
-    updateMany?: Enumerable<FacilityUpdateManyWithWhereWithoutRoomInput>
-    deleteMany?: Enumerable<FacilityScalarWhereInput>
   }
 
   export type BookingUpdateManyWithoutRoomNestedInput = {
@@ -10102,17 +11098,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<BookingScalarWhereInput>
   }
 
-  export type FacilityUncheckedUpdateManyWithoutRoomNestedInput = {
-    create?: XOR<Enumerable<FacilityCreateWithoutRoomInput>, Enumerable<FacilityUncheckedCreateWithoutRoomInput>>
-    connectOrCreate?: Enumerable<FacilityCreateOrConnectWithoutRoomInput>
-    upsert?: Enumerable<FacilityUpsertWithWhereUniqueWithoutRoomInput>
-    set?: Enumerable<FacilityWhereUniqueInput>
-    disconnect?: Enumerable<FacilityWhereUniqueInput>
-    delete?: Enumerable<FacilityWhereUniqueInput>
-    connect?: Enumerable<FacilityWhereUniqueInput>
-    update?: Enumerable<FacilityUpdateWithWhereUniqueWithoutRoomInput>
-    updateMany?: Enumerable<FacilityUpdateManyWithWhereWithoutRoomInput>
-    deleteMany?: Enumerable<FacilityScalarWhereInput>
+  export type roomToFacilityUpdateManyWithoutRoomNestedInput = {
+    create?: XOR<Enumerable<roomToFacilityCreateWithoutRoomInput>, Enumerable<roomToFacilityUncheckedCreateWithoutRoomInput>>
+    connectOrCreate?: Enumerable<roomToFacilityCreateOrConnectWithoutRoomInput>
+    upsert?: Enumerable<roomToFacilityUpsertWithWhereUniqueWithoutRoomInput>
+    createMany?: roomToFacilityCreateManyRoomInputEnvelope
+    set?: Enumerable<roomToFacilityWhereUniqueInput>
+    disconnect?: Enumerable<roomToFacilityWhereUniqueInput>
+    delete?: Enumerable<roomToFacilityWhereUniqueInput>
+    connect?: Enumerable<roomToFacilityWhereUniqueInput>
+    update?: Enumerable<roomToFacilityUpdateWithWhereUniqueWithoutRoomInput>
+    updateMany?: Enumerable<roomToFacilityUpdateManyWithWhereWithoutRoomInput>
+    deleteMany?: Enumerable<roomToFacilityScalarWhereInput>
   }
 
   export type BookingUncheckedUpdateManyWithoutRoomNestedInput = {
@@ -10127,6 +11124,48 @@ export namespace Prisma {
     update?: Enumerable<BookingUpdateWithWhereUniqueWithoutRoomInput>
     updateMany?: Enumerable<BookingUpdateManyWithWhereWithoutRoomInput>
     deleteMany?: Enumerable<BookingScalarWhereInput>
+  }
+
+  export type roomToFacilityUncheckedUpdateManyWithoutRoomNestedInput = {
+    create?: XOR<Enumerable<roomToFacilityCreateWithoutRoomInput>, Enumerable<roomToFacilityUncheckedCreateWithoutRoomInput>>
+    connectOrCreate?: Enumerable<roomToFacilityCreateOrConnectWithoutRoomInput>
+    upsert?: Enumerable<roomToFacilityUpsertWithWhereUniqueWithoutRoomInput>
+    createMany?: roomToFacilityCreateManyRoomInputEnvelope
+    set?: Enumerable<roomToFacilityWhereUniqueInput>
+    disconnect?: Enumerable<roomToFacilityWhereUniqueInput>
+    delete?: Enumerable<roomToFacilityWhereUniqueInput>
+    connect?: Enumerable<roomToFacilityWhereUniqueInput>
+    update?: Enumerable<roomToFacilityUpdateWithWhereUniqueWithoutRoomInput>
+    updateMany?: Enumerable<roomToFacilityUpdateManyWithWhereWithoutRoomInput>
+    deleteMany?: Enumerable<roomToFacilityScalarWhereInput>
+  }
+
+  export type RoomCreateNestedOneWithoutRoomToFacilityInput = {
+    create?: XOR<RoomCreateWithoutRoomToFacilityInput, RoomUncheckedCreateWithoutRoomToFacilityInput>
+    connectOrCreate?: RoomCreateOrConnectWithoutRoomToFacilityInput
+    connect?: RoomWhereUniqueInput
+  }
+
+  export type FacilityCreateNestedOneWithoutRoomToFacilityInput = {
+    create?: XOR<FacilityCreateWithoutRoomToFacilityInput, FacilityUncheckedCreateWithoutRoomToFacilityInput>
+    connectOrCreate?: FacilityCreateOrConnectWithoutRoomToFacilityInput
+    connect?: FacilityWhereUniqueInput
+  }
+
+  export type RoomUpdateOneRequiredWithoutRoomToFacilityNestedInput = {
+    create?: XOR<RoomCreateWithoutRoomToFacilityInput, RoomUncheckedCreateWithoutRoomToFacilityInput>
+    connectOrCreate?: RoomCreateOrConnectWithoutRoomToFacilityInput
+    upsert?: RoomUpsertWithoutRoomToFacilityInput
+    connect?: RoomWhereUniqueInput
+    update?: XOR<RoomUpdateWithoutRoomToFacilityInput, RoomUncheckedUpdateWithoutRoomToFacilityInput>
+  }
+
+  export type FacilityUpdateOneRequiredWithoutRoomToFacilityNestedInput = {
+    create?: XOR<FacilityCreateWithoutRoomToFacilityInput, FacilityUncheckedCreateWithoutRoomToFacilityInput>
+    connectOrCreate?: FacilityCreateOrConnectWithoutRoomToFacilityInput
+    upsert?: FacilityUpsertWithoutRoomToFacilityInput
+    connect?: FacilityWhereUniqueInput
+    update?: XOR<FacilityUpdateWithoutRoomToFacilityInput, FacilityUncheckedUpdateWithoutRoomToFacilityInput>
   }
 
   export type BookingCreateNestedManyWithoutUserInput = {
@@ -10320,8 +11359,8 @@ export namespace Prisma {
     capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    facilities?: FacilityCreateNestedManyWithoutRoomInput
     booking?: BookingCreateNestedManyWithoutRoomInput
+    roomToFacility?: roomToFacilityCreateNestedManyWithoutRoomInput
   }
 
   export type RoomUncheckedCreateWithoutBuildingInput = {
@@ -10331,8 +11370,8 @@ export namespace Prisma {
     capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    facilities?: FacilityUncheckedCreateNestedManyWithoutRoomInput
     booking?: BookingUncheckedCreateNestedManyWithoutRoomInput
+    roomToFacility?: roomToFacilityUncheckedCreateNestedManyWithoutRoomInput
   }
 
   export type RoomCreateOrConnectWithoutBuildingInput = {
@@ -10374,46 +11413,48 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type RoomCreateWithoutFacilitiesInput = {
-    name: string
-    building?: BuildingCreateNestedOneWithoutRoomInput
-    floor: string
-    capacityMax: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    booking?: BookingCreateNestedManyWithoutRoomInput
+  export type roomToFacilityCreateWithoutFacilityInput = {
+    room: RoomCreateNestedOneWithoutRoomToFacilityInput
   }
 
-  export type RoomUncheckedCreateWithoutFacilitiesInput = {
+  export type roomToFacilityUncheckedCreateWithoutFacilityInput = {
     id?: number
-    name: string
-    buildingId: number
-    floor: string
-    capacityMax: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    booking?: BookingUncheckedCreateNestedManyWithoutRoomInput
+    roomId: number
   }
 
-  export type RoomCreateOrConnectWithoutFacilitiesInput = {
-    where: RoomWhereUniqueInput
-    create: XOR<RoomCreateWithoutFacilitiesInput, RoomUncheckedCreateWithoutFacilitiesInput>
+  export type roomToFacilityCreateOrConnectWithoutFacilityInput = {
+    where: roomToFacilityWhereUniqueInput
+    create: XOR<roomToFacilityCreateWithoutFacilityInput, roomToFacilityUncheckedCreateWithoutFacilityInput>
   }
 
-  export type RoomUpsertWithWhereUniqueWithoutFacilitiesInput = {
-    where: RoomWhereUniqueInput
-    update: XOR<RoomUpdateWithoutFacilitiesInput, RoomUncheckedUpdateWithoutFacilitiesInput>
-    create: XOR<RoomCreateWithoutFacilitiesInput, RoomUncheckedCreateWithoutFacilitiesInput>
+  export type roomToFacilityCreateManyFacilityInputEnvelope = {
+    data: Enumerable<roomToFacilityCreateManyFacilityInput>
+    skipDuplicates?: boolean
   }
 
-  export type RoomUpdateWithWhereUniqueWithoutFacilitiesInput = {
-    where: RoomWhereUniqueInput
-    data: XOR<RoomUpdateWithoutFacilitiesInput, RoomUncheckedUpdateWithoutFacilitiesInput>
+  export type roomToFacilityUpsertWithWhereUniqueWithoutFacilityInput = {
+    where: roomToFacilityWhereUniqueInput
+    update: XOR<roomToFacilityUpdateWithoutFacilityInput, roomToFacilityUncheckedUpdateWithoutFacilityInput>
+    create: XOR<roomToFacilityCreateWithoutFacilityInput, roomToFacilityUncheckedCreateWithoutFacilityInput>
   }
 
-  export type RoomUpdateManyWithWhereWithoutFacilitiesInput = {
-    where: RoomScalarWhereInput
-    data: XOR<RoomUpdateManyMutationInput, RoomUncheckedUpdateManyWithoutRoomInput>
+  export type roomToFacilityUpdateWithWhereUniqueWithoutFacilityInput = {
+    where: roomToFacilityWhereUniqueInput
+    data: XOR<roomToFacilityUpdateWithoutFacilityInput, roomToFacilityUncheckedUpdateWithoutFacilityInput>
+  }
+
+  export type roomToFacilityUpdateManyWithWhereWithoutFacilityInput = {
+    where: roomToFacilityScalarWhereInput
+    data: XOR<roomToFacilityUpdateManyMutationInput, roomToFacilityUncheckedUpdateManyWithoutRoomToFacilityInput>
+  }
+
+  export type roomToFacilityScalarWhereInput = {
+    AND?: Enumerable<roomToFacilityScalarWhereInput>
+    OR?: Enumerable<roomToFacilityScalarWhereInput>
+    NOT?: Enumerable<roomToFacilityScalarWhereInput>
+    id?: IntFilter | number
+    roomId?: IntFilter | number
+    facilityId?: IntFilter | number
   }
 
   export type BuildingCreateWithoutRoomInput = {
@@ -10432,24 +11473,6 @@ export namespace Prisma {
   export type BuildingCreateOrConnectWithoutRoomInput = {
     where: BuildingWhereUniqueInput
     create: XOR<BuildingCreateWithoutRoomInput, BuildingUncheckedCreateWithoutRoomInput>
-  }
-
-  export type FacilityCreateWithoutRoomInput = {
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type FacilityUncheckedCreateWithoutRoomInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type FacilityCreateOrConnectWithoutRoomInput = {
-    where: FacilityWhereUniqueInput
-    create: XOR<FacilityCreateWithoutRoomInput, FacilityUncheckedCreateWithoutRoomInput>
   }
 
   export type BookingCreateWithoutRoomInput = {
@@ -10479,6 +11502,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type roomToFacilityCreateWithoutRoomInput = {
+    facility: FacilityCreateNestedOneWithoutRoomToFacilityInput
+  }
+
+  export type roomToFacilityUncheckedCreateWithoutRoomInput = {
+    id?: number
+    facilityId: number
+  }
+
+  export type roomToFacilityCreateOrConnectWithoutRoomInput = {
+    where: roomToFacilityWhereUniqueInput
+    create: XOR<roomToFacilityCreateWithoutRoomInput, roomToFacilityUncheckedCreateWithoutRoomInput>
+  }
+
+  export type roomToFacilityCreateManyRoomInputEnvelope = {
+    data: Enumerable<roomToFacilityCreateManyRoomInput>
+    skipDuplicates?: boolean
+  }
+
   export type BuildingUpsertWithoutRoomInput = {
     update: XOR<BuildingUpdateWithoutRoomInput, BuildingUncheckedUpdateWithoutRoomInput>
     create: XOR<BuildingCreateWithoutRoomInput, BuildingUncheckedCreateWithoutRoomInput>
@@ -10495,32 +11537,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type FacilityUpsertWithWhereUniqueWithoutRoomInput = {
-    where: FacilityWhereUniqueInput
-    update: XOR<FacilityUpdateWithoutRoomInput, FacilityUncheckedUpdateWithoutRoomInput>
-    create: XOR<FacilityCreateWithoutRoomInput, FacilityUncheckedCreateWithoutRoomInput>
-  }
-
-  export type FacilityUpdateWithWhereUniqueWithoutRoomInput = {
-    where: FacilityWhereUniqueInput
-    data: XOR<FacilityUpdateWithoutRoomInput, FacilityUncheckedUpdateWithoutRoomInput>
-  }
-
-  export type FacilityUpdateManyWithWhereWithoutRoomInput = {
-    where: FacilityScalarWhereInput
-    data: XOR<FacilityUpdateManyMutationInput, FacilityUncheckedUpdateManyWithoutFacilitiesInput>
-  }
-
-  export type FacilityScalarWhereInput = {
-    AND?: Enumerable<FacilityScalarWhereInput>
-    OR?: Enumerable<FacilityScalarWhereInput>
-    NOT?: Enumerable<FacilityScalarWhereInput>
-    id?: IntFilter | number
-    name?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
   }
 
   export type BookingUpsertWithWhereUniqueWithoutRoomInput = {
@@ -10550,6 +11566,110 @@ export namespace Prisma {
     userId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type roomToFacilityUpsertWithWhereUniqueWithoutRoomInput = {
+    where: roomToFacilityWhereUniqueInput
+    update: XOR<roomToFacilityUpdateWithoutRoomInput, roomToFacilityUncheckedUpdateWithoutRoomInput>
+    create: XOR<roomToFacilityCreateWithoutRoomInput, roomToFacilityUncheckedCreateWithoutRoomInput>
+  }
+
+  export type roomToFacilityUpdateWithWhereUniqueWithoutRoomInput = {
+    where: roomToFacilityWhereUniqueInput
+    data: XOR<roomToFacilityUpdateWithoutRoomInput, roomToFacilityUncheckedUpdateWithoutRoomInput>
+  }
+
+  export type roomToFacilityUpdateManyWithWhereWithoutRoomInput = {
+    where: roomToFacilityScalarWhereInput
+    data: XOR<roomToFacilityUpdateManyMutationInput, roomToFacilityUncheckedUpdateManyWithoutRoomToFacilityInput>
+  }
+
+  export type RoomCreateWithoutRoomToFacilityInput = {
+    name: string
+    building?: BuildingCreateNestedOneWithoutRoomInput
+    floor: string
+    capacityMax: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    booking?: BookingCreateNestedManyWithoutRoomInput
+  }
+
+  export type RoomUncheckedCreateWithoutRoomToFacilityInput = {
+    id?: number
+    name: string
+    buildingId: number
+    floor: string
+    capacityMax: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    booking?: BookingUncheckedCreateNestedManyWithoutRoomInput
+  }
+
+  export type RoomCreateOrConnectWithoutRoomToFacilityInput = {
+    where: RoomWhereUniqueInput
+    create: XOR<RoomCreateWithoutRoomToFacilityInput, RoomUncheckedCreateWithoutRoomToFacilityInput>
+  }
+
+  export type FacilityCreateWithoutRoomToFacilityInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacilityUncheckedCreateWithoutRoomToFacilityInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacilityCreateOrConnectWithoutRoomToFacilityInput = {
+    where: FacilityWhereUniqueInput
+    create: XOR<FacilityCreateWithoutRoomToFacilityInput, FacilityUncheckedCreateWithoutRoomToFacilityInput>
+  }
+
+  export type RoomUpsertWithoutRoomToFacilityInput = {
+    update: XOR<RoomUpdateWithoutRoomToFacilityInput, RoomUncheckedUpdateWithoutRoomToFacilityInput>
+    create: XOR<RoomCreateWithoutRoomToFacilityInput, RoomUncheckedCreateWithoutRoomToFacilityInput>
+  }
+
+  export type RoomUpdateWithoutRoomToFacilityInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    building?: BuildingUpdateOneWithoutRoomNestedInput
+    floor?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    booking?: BookingUpdateManyWithoutRoomNestedInput
+  }
+
+  export type RoomUncheckedUpdateWithoutRoomToFacilityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    buildingId?: IntFieldUpdateOperationsInput | number
+    floor?: StringFieldUpdateOperationsInput | string
+    capacityMax?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    booking?: BookingUncheckedUpdateManyWithoutRoomNestedInput
+  }
+
+  export type FacilityUpsertWithoutRoomToFacilityInput = {
+    update: XOR<FacilityUpdateWithoutRoomToFacilityInput, FacilityUncheckedUpdateWithoutRoomToFacilityInput>
+    create: XOR<FacilityCreateWithoutRoomToFacilityInput, FacilityUncheckedCreateWithoutRoomToFacilityInput>
+  }
+
+  export type FacilityUpdateWithoutRoomToFacilityInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacilityUncheckedUpdateWithoutRoomToFacilityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BookingCreateWithoutUserInput = {
@@ -10602,7 +11722,7 @@ export namespace Prisma {
     capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    facilities?: FacilityCreateNestedManyWithoutRoomInput
+    roomToFacility?: roomToFacilityCreateNestedManyWithoutRoomInput
   }
 
   export type RoomUncheckedCreateWithoutBookingInput = {
@@ -10613,7 +11733,7 @@ export namespace Prisma {
     capacityMax: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    facilities?: FacilityUncheckedCreateNestedManyWithoutRoomInput
+    roomToFacility?: roomToFacilityUncheckedCreateNestedManyWithoutRoomInput
   }
 
   export type RoomCreateOrConnectWithoutBookingInput = {
@@ -10622,7 +11742,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutBookingInput = {
-    officerId: number
+    officerId: string
     firstName: string
     lastName: string
     phone: string
@@ -10636,7 +11756,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutBookingInput = {
     id?: number
-    officerId: number
+    officerId: string
     firstName: string
     lastName: string
     phone: string
@@ -10665,7 +11785,7 @@ export namespace Prisma {
     capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    facilities?: FacilityUpdateManyWithoutRoomNestedInput
+    roomToFacility?: roomToFacilityUpdateManyWithoutRoomNestedInput
   }
 
   export type RoomUncheckedUpdateWithoutBookingInput = {
@@ -10676,7 +11796,7 @@ export namespace Prisma {
     capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    facilities?: FacilityUncheckedUpdateManyWithoutRoomNestedInput
+    roomToFacility?: roomToFacilityUncheckedUpdateManyWithoutRoomNestedInput
   }
 
   export type UserUpsertWithoutBookingInput = {
@@ -10685,7 +11805,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutBookingInput = {
-    officerId?: IntFieldUpdateOperationsInput | number
+    officerId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -10699,7 +11819,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutBookingInput = {
     id?: IntFieldUpdateOperationsInput | number
-    officerId?: IntFieldUpdateOperationsInput | number
+    officerId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -10726,8 +11846,8 @@ export namespace Prisma {
     capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    facilities?: FacilityUpdateManyWithoutRoomNestedInput
     booking?: BookingUpdateManyWithoutRoomNestedInput
+    roomToFacility?: roomToFacilityUpdateManyWithoutRoomNestedInput
   }
 
   export type RoomUncheckedUpdateWithoutBuildingInput = {
@@ -10737,8 +11857,8 @@ export namespace Prisma {
     capacityMax?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    facilities?: FacilityUncheckedUpdateManyWithoutRoomNestedInput
     booking?: BookingUncheckedUpdateManyWithoutRoomNestedInput
+    roomToFacility?: roomToFacilityUncheckedUpdateManyWithoutRoomNestedInput
   }
 
   export type RoomUncheckedUpdateManyWithoutRoomInput = {
@@ -10750,25 +11870,23 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoomUpdateWithoutFacilitiesInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    building?: BuildingUpdateOneWithoutRoomNestedInput
-    floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    booking?: BookingUpdateManyWithoutRoomNestedInput
+  export type roomToFacilityCreateManyFacilityInput = {
+    id?: number
+    roomId: number
   }
 
-  export type RoomUncheckedUpdateWithoutFacilitiesInput = {
+  export type roomToFacilityUpdateWithoutFacilityInput = {
+    room?: RoomUpdateOneRequiredWithoutRoomToFacilityNestedInput
+  }
+
+  export type roomToFacilityUncheckedUpdateWithoutFacilityInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    buildingId?: IntFieldUpdateOperationsInput | number
-    floor?: StringFieldUpdateOperationsInput | string
-    capacityMax?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    booking?: BookingUncheckedUpdateManyWithoutRoomNestedInput
+    roomId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type roomToFacilityUncheckedUpdateManyWithoutRoomToFacilityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roomId?: IntFieldUpdateOperationsInput | number
   }
 
   export type BookingCreateManyRoomInput = {
@@ -10780,24 +11898,9 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type FacilityUpdateWithoutRoomInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type FacilityUncheckedUpdateWithoutRoomInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type FacilityUncheckedUpdateManyWithoutFacilitiesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type roomToFacilityCreateManyRoomInput = {
+    id?: number
+    facilityId: number
   }
 
   export type BookingUpdateWithoutRoomInput = {
@@ -10824,6 +11927,15 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type roomToFacilityUpdateWithoutRoomInput = {
+    facility?: FacilityUpdateOneRequiredWithoutRoomToFacilityNestedInput
+  }
+
+  export type roomToFacilityUncheckedUpdateWithoutRoomInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    facilityId?: IntFieldUpdateOperationsInput | number
   }
 
   export type BookingCreateManyUserInput = {

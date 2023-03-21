@@ -6,6 +6,7 @@ import {
   ICreateRoom,
   ICreateUser,
   IDeleteBooking,
+  // IDeleteBuilding,
   IDeleteFacility,
   IDeleteRoom,
   IHello,
@@ -27,9 +28,14 @@ export const createBuilding = (args: ICreateBuilding) =>
     },
   });
 
-
-
 export const getAllBuilding = () => prisma.building.findMany();
+
+// export const deleteBuilding = (args: IDeleteBuilding) =>
+//   prisma.building.delete({
+//     where: {
+//       id: args.id,
+//     },
+//   });
 
 // FACILITY +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createFacility = (args: ICreateFacility) =>
@@ -70,54 +76,94 @@ export const createRoom = (args: ICreateRoom) =>
           id: args.buildingId,
         },
       },
-      facilities: {
-        connect: args.facilities.map((facility) => {
-          return {
-            id: facility.id,
-          };
-        }),
+      roomToFacility: {
+        create:args.facilities,
       },
     },
     include: {
-      facilities: true,
+      roomToFacility: true,
+      building: true,
     },
   });
 
-export const getAllRoom = () => prisma.room.findMany();
-
-export const getRoomByBuildingId = (args: { buildingId: number }) =>
+export const getAllRoom = () =>
   prisma.room.findMany({
+    include: {
+      roomToFacility: {
+        include: {
+          facility: true,
+        },
+      },
+      building: true,
+    },
+  });
+
+export const getRoomByBuildingId = async (args: { buildingId: number }) => {
+  let result = await prisma.room.findMany({
     where: {
       buildingId: args.buildingId,
     },
+    include: {
+      roomToFacility: {
+        include: {
+          facility: true,
+        },
+      },
+      building: true,
+    },
   });
 
-export const updateRoom = (args: IUpdateRoom) =>
-  prisma.room.update({
+  //flat
+  let resultMap = result.map((result) => {
+    const roomToFacility = result.roomToFacility.map((facility) => {
+      return { facilityId: facility.id, facilityName: facility.facility.name };
+    });
+
+    return {
+      ...result,
+      facilities: roomToFacility,
+    };
+  });
+
+  return resultMap;
+};
+
+// todo resolve update room api
+export  const updateRoom = async(args: IUpdateRoom) => {
+
+  //clear roomToFacility
+  await prisma.roomToFacility.deleteMany({
+    where: { roomId: args.id}
+  })
+
+  //add roomToFacility
+  await prisma.roomToFacility.createMany({
+    data: args.facilities.map(facility => {
+      return {roomId: args.id, facilityId: facility.facilityId}
+    })
+  })
+
+  //update
+ return await prisma.room.update({
     where: {
       id: args.id,
     },
     data: {
-      name: args.name ?? undefined,
-      floor: args.floor ?? undefined,
-      capacityMax: args.capacity ?? undefined,
-      building: {
-        connect: {
-          id: args.buildingId ?? undefined,
-        },
-      },
-      facilities: {
-        connect: args.facilities.map((facility) => {
-          return {
-            id: facility.id ?? undefined,
-          };
-        }),
-      },
+      name: args.name,
+      capacityMax: args.capacity
     },
     include: {
-      facilities: true,
+      roomToFacility: {
+        include: {
+          facility: true,
+        },
+      },
+      building: true,
     },
   });
+}
+
+
 export const deleteRoom = (args: IDeleteRoom) =>
   prisma.room.delete({
     where: {
@@ -152,7 +198,7 @@ export const updateOfficeHour2 = (args: IUpdateOfficeHour2) =>
       id: args.id,
     },
     data: {
-      isOpenMonday: args.isOpenMonday ?? undefined,
+      isOpenMonday: args?.isOpenMonday ?? undefined,
       openingTimeMonday: args.openingTimeMonday ?? undefined,
       closingTimeMonday: args.closingTimeMonday ?? undefined,
       isOpenTuesday: args.isOpenTuesday ?? undefined,
@@ -193,6 +239,7 @@ export const createBooking = (args: ICreateBooking) =>
         },
       },
     },
+    include: { user: true, room: true },
   });
 
 export const getAllBooking = () => prisma.booking.findMany();
@@ -265,8 +312,6 @@ export const logIn = (args: IDeleteBooking) =>
     },
   });
 
-
-
 export const checkAvailableRoom = (args: IDeleteBooking) =>
   prisma.user.delete({
     where: {
@@ -274,31 +319,30 @@ export const checkAvailableRoom = (args: IDeleteBooking) =>
     },
   });
 
-  
-  export const checkIsOfficeHour = (args: {
-    day: string;
-    start: Date;
-    end: Date;
-  }) => {
-    //todo: check from database
-    let result = {
-      result: true,
-    };
-
-    return result;
+export const checkIsOfficeHour = (args: {
+  day: string;
+  start: Date;
+  end: Date;
+}) => {
+  //todo: check from database
+  let result = {
+    result: true,
   };
 
-  export  const hello = async (args: IHello) => {
-    let executed = new Date();
-    let id = new Date().getTime();
-    let result = {
-      id: id,
-      name: args.name,
-      executed: executed
-    }
+  return result;
+};
 
-    return result;
-  }
+export const hello = async (args: IHello) => {
+  let executed = new Date();
+  let id = new Date().getTime();
+  let result = {
+    id: id,
+    name: args.name,
+    executed: executed,
+  };
+
+  return result;
+};
 
 // QUIZ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
