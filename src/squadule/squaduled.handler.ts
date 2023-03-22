@@ -5,10 +5,12 @@ import {
   CreateFacilityCodec,
   CreateRoomCodec,
   CreateUserCodec,
+  DeleteBookingCodec,
   DeleteFacilityCodec,
   DeleteRoomCodec,
   getRoomByBuildingIdCodec,
   HelloCodec,
+  UpdateBookingCodec,
   UpdateFacilityCodec,
   UpdateRoomCodec,
 } from "./squaduled.interface";
@@ -32,6 +34,9 @@ import {
   hello,
   createUser,
   updateOfficeHour2,
+  createBooking,
+  deleteBooking,
+  updateBooking,
   // deleteBuilding
 } from "./squaduled.resolver";
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -281,7 +286,7 @@ export const createBookingHandler = async (req: Request, res: Response) => {
   const body = req?.body;
   try {
     if (CreateBookingCodec.decode(body)._tag === "Right") {
-      const result = await createRoom(body);
+      const result = await createBooking(body);
       res.status(200).json(result);
     } else {
       res.status(404).json({ error: String("Error invalid codec") });
@@ -296,6 +301,38 @@ export const getAllBookingHandler = async (req: Request, res: Response) => {
   try {
     const result = await getAllBooking();
     res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+export const updateBookingHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (UpdateBookingCodec.decode(body)._tag === "Right") {
+      const result = await updateBooking(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+export const deleteBookingHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (DeleteBookingCodec.decode(body)._tag === "Right") {
+      const result = await deleteBooking(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
   } catch (e) {
     res.status(500).json({
       error: String(e),

@@ -1,5 +1,6 @@
 import * as t from "io-ts";
 import { optional } from "io-ts-extra";
+import * as td from 'io-ts-types'
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const CreateBuildingCodec = t.type({
   name: t.string,
@@ -111,7 +112,7 @@ export const CreateBookingCodec = t.type({
 export interface ICreateBooking extends t.TypeOf<typeof CreateBookingCodec> {}
 //+++++++++++++++++++++++++
 export const UpdateBookingCodec = t.type({
-  userId: t.number,
+  id: t.number,
   startDatetime: optional(t.string),
   endDatetime: optional(t.string),
   roomId: optional(t.number),
@@ -157,5 +158,5 @@ export const GetResultsCodec = t.type({
 
 export interface IGetResults extends t.TypeOf<typeof GetResultsCodec> {}
 
-export const HelloCodec = t.type({name:t.string})
+export const HelloCodec = t.type({name:t.string,start:t.string})
 export interface IHello extends t.TypeOf<typeof HelloCodec> {}

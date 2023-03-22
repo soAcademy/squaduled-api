@@ -6,6 +6,7 @@ import {
   createFacilityHandler,
   createRoomHandler,
   createUserHandler,
+  deleteBookingHandler,
   // deleteBuildingHandler,
   deleteFacilityHandler,
   deleteRoomHandler,
@@ -19,6 +20,7 @@ import {
   getRoomByBuildingIdHandler,
   helloHandler,
   logInHandler,
+  updateBookingHandler,
   updateFacilityHandler,
   updateOfficeHour1Handler,
   updateOfficeHour2Handler,
@@ -116,6 +118,16 @@ export const AppRoutes = [
     path: "/squaduled/getAllBooking",
     method: "post",
     action: getAllBookingHandler,
+  },
+  {
+    path: "/squaduled/updateBooking",
+    method: "post",
+    action: updateBookingHandler,
+  },
+  {
+    path: "/squaduled/deleteBooking",
+    method: "post",
+    action: deleteBookingHandler,
   },
   {
     path: "/squaduled/createUser",

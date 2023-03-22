@@ -18,6 +18,12 @@ import {
   IUpdateUser,
 } from "./squaduled.interface";
 
+var localizedFormat = require("dayjs/plugin/localizedFormat");
+const dayjs = require("dayjs");
+dayjs.extend(localizedFormat);
+// import dayjs from 'dayjs' // ES 2015
+// dayjs.extend(LocalizedFormat)
+
 export const prisma = new PrismaClient();
 
 // BUILDING +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -77,7 +83,7 @@ export const createRoom = (args: ICreateRoom) =>
         },
       },
       roomToFacility: {
-        create:args.facilities,
+        create: args.facilities,
       },
     },
     include: {
@@ -128,29 +134,28 @@ export const getRoomByBuildingId = async (args: { buildingId: number }) => {
   return resultMap;
 };
 
-// todo resolve update room api
-export  const updateRoom = async(args: IUpdateRoom) => {
-
+// todo resolve update room api ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const updateRoom = async (args: IUpdateRoom) => {
   //clear roomToFacility
   await prisma.roomToFacility.deleteMany({
-    where: { roomId: args.id}
-  })
+    where: { roomId: args.id },
+  });
 
   //add roomToFacility
   await prisma.roomToFacility.createMany({
-    data: args.facilities.map(facility => {
-      return {roomId: args.id, facilityId: facility.facilityId}
-    })
-  })
+    data: args.facilities.map((facility) => {
+      return { roomId: args.id, facilityId: facility.facilityId };
+    }),
+  });
 
   //update
- return await prisma.room.update({
+  return await prisma.room.update({
     where: {
       id: args.id,
     },
     data: {
       name: args.name,
-      capacityMax: args.capacity
+      capacityMax: args.capacity,
     },
     include: {
       roomToFacility: {
@@ -161,8 +166,9 @@ export  const updateRoom = async(args: IUpdateRoom) => {
       building: true,
     },
   });
-}
+};
 
+//++++++++++++++++++++++++
 
 export const deleteRoom = (args: IDeleteRoom) =>
   prisma.room.delete({
@@ -223,11 +229,13 @@ export const updateOfficeHour2 = (args: IUpdateOfficeHour2) =>
   });
 
 // BOOKING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-export const createBooking = (args: ICreateBooking) =>
-  prisma.booking.create({
+export const createBooking = async (args: ICreateBooking) => {
+  let startDateFormat = dayjs(args.startDatetime).toDate();
+  let endDateFormat = dayjs(args.endDatetime).toDate();
+  return await prisma.booking.create({
     data: {
-      startDatetime: args.startDatetime,
-      endDatetime: args.endDatetime,
+      startDatetime: startDateFormat,
+      endDatetime: endDateFormat,
       room: {
         connect: {
           id: args.roomId,
@@ -241,13 +249,14 @@ export const createBooking = (args: ICreateBooking) =>
     },
     include: { user: true, room: true },
   });
+};
 
 export const getAllBooking = () => prisma.booking.findMany();
 
 export const updateBooking = (args: IUpdateBooking) =>
   prisma.booking.update({
     where: {
-      userId: args.userId,
+      id: args.id,
     },
     data: {
       startDatetime: args.startDatetime ?? undefined,
@@ -333,12 +342,27 @@ export const checkIsOfficeHour = (args: {
 };
 
 export const hello = async (args: IHello) => {
+  let myDayJs = dayjs().format("LLLL");
+  let myDayJSToDate = dayjs().toDate();
   let executed = new Date();
   let id = new Date().getTime();
+  let input = "2001-03-22";
+  let inputDayJsParsed = dayjs(input)
+    .set("hour", 5)
+    .set("minute", 55)
+    .set("second", 15);
+  let inputDayJsParsedXX = inputDayJsParsed.format("LLLL");
+  let startFormat = dayjs(args.start).format("LLLL");
+  let startToDate = dayjs(args.start).toDate();
   let result = {
     id: id,
     name: args.name,
+    startFormat,
+    startToDate,
     executed: executed,
+    myDayJs,
+    myDayJSToDate,
+    inputDayJsParsedXX,
   };
 
   return result;

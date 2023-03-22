@@ -9326,7 +9326,6 @@ export namespace Prisma {
 
   export type BuildingWhereUniqueInput = {
     id?: number
-    name?: string
   }
 
   export type BuildingOrderByWithAggregationInput = {
@@ -9372,7 +9371,6 @@ export namespace Prisma {
 
   export type FacilityWhereUniqueInput = {
     id?: number
-    name?: string
   }
 
   export type FacilityOrderByWithAggregationInput = {
@@ -9428,7 +9426,6 @@ export namespace Prisma {
 
   export type RoomWhereUniqueInput = {
     id?: number
-    name?: string
   }
 
   export type RoomOrderByWithAggregationInput = {
@@ -9600,7 +9597,6 @@ export namespace Prisma {
 
   export type OfficeHour1WhereUniqueInput = {
     id?: number
-    day?: string
   }
 
   export type OfficeHour1OrderByWithAggregationInput = {
@@ -9783,7 +9779,6 @@ export namespace Prisma {
 
   export type BookingWhereUniqueInput = {
     id?: number
-    userId?: number
   }
 
   export type BookingOrderByWithAggregationInput = {
