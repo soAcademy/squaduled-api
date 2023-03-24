@@ -416,27 +416,27 @@ export const checkIsOfficeHour = async (args: ICheckIsOfficeHour) => {
       isInputStartTimeOnAvailableTime && isInputEndTimeOnAvailableTime;
 
     // for debug
-    result = {
-      officeHours,
-      extractDate,
-      dayIsOpen,
-      dayOpenTimeHour,
-      dayOpenTimeMinute,
-      dayOpenTimeSecond,
-      dayCloseTimeHour,
-      dayCloseTimeMinute,
-      dayCloseTimeSecond,
-      inputStartDate,
-      inputEndDate,
-      officeDayOpen,
-      officeDayClose,
-      isInputStartTimeOnAvailableTime,
-      isInputEndTimeOnAvailableTime,
-      compareResult,
-    };
     // result = {
-    //   result: compareResult,
+    //   officeHours,
+    //   extractDate,
+    //   dayIsOpen,
+    //   dayOpenTimeHour,
+    //   dayOpenTimeMinute,
+    //   dayOpenTimeSecond,
+    //   dayCloseTimeHour,
+    //   dayCloseTimeMinute,
+    //   dayCloseTimeSecond,
+    //   inputStartDate,
+    //   inputEndDate,
+    //   officeDayOpen,
+    //   officeDayClose,
+    //   isInputStartTimeOnAvailableTime,
+    //   isInputEndTimeOnAvailableTime,
+    //   compareResult,
     // };
+    result = {
+      result: compareResult,
+    };
   } else {
     result = { result: false };
   }
