@@ -1,5 +1,7 @@
 import { PrismaClient } from "../../prisma/client";
 import {
+  ICheckAvailableRoom,
+  ICheckIsOfficeHour,
   ICreateBooking,
   ICreateBuilding,
   ICreateFacility,
@@ -17,7 +19,6 @@ import {
   IUpdateRoom,
   IUpdateUser,
 } from "./squaduled.interface";
-
 var localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
 dayjs.extend(localizedFormat);
@@ -134,7 +135,7 @@ export const getRoomByBuildingId = async (args: { buildingId: number }) => {
   return resultMap;
 };
 
-// todo resolve update room api ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// update room api ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const updateRoom = async (args: IUpdateRoom) => {
   //clear roomToFacility
   await prisma.roomToFacility.deleteMany({
@@ -321,22 +322,120 @@ export const logIn = (args: IDeleteBooking) =>
     },
   });
 
-export const checkAvailableRoom = (args: IDeleteBooking) =>
-  prisma.user.delete({
-    where: {
-      id: args.id,
-    },
-  });
+export const checkAvailableRoom = async (args: ICheckAvailableRoom) => {
+  const rooms = await prisma.room.findMany();
+  const bookings = await prisma.booking.findMany();
+  const roomFitToCapacity = rooms.filter(
+    (room) => room.capacityMax >= args.capacity
+  );
 
-export const checkIsOfficeHour = (args: {
-  day: string;
-  start: Date;
-  end: Date;
-}) => {
-  //todo: check from database
-  let result = {
-    result: true,
-  };
+  if (roomFitToCapacity.length === 0) {
+    
+    return false;
+  } else {
+    return true;
+  }
+
+};
+
+export const checkIsOfficeHour = async (args: ICheckIsOfficeHour) => {
+  const officeHours = await prisma.officeHour2.findMany();
+  const extractDate = dayjs(args.startDatetime).format("dddd");
+  const inputStartDate = dayjs(args.startDatetime);
+  const inputEndDate = dayjs(args.endDatetime);
+
+  let result;
+  let dayIsOpen = false;
+  let dayOpenTime = "00:00:00";
+  let dayCloseTime = "00:00:00";
+  switch (extractDate) {
+    case "Monday":
+      dayIsOpen = officeHours[0].isOpenMonday;
+      dayOpenTime = officeHours[0].openingTimeMonday;
+      dayCloseTime = officeHours[0].closingTimeMonday;
+      break;
+    case "Tuesday":
+      dayIsOpen = officeHours[0].isOpenTuesday;
+      dayOpenTime = officeHours[0].openingTimeTuesday;
+      dayCloseTime = officeHours[0].closingTimeTuesday;
+      break;
+    case "Wednesday":
+      dayIsOpen = officeHours[0].isOpenWednesday;
+      dayOpenTime = officeHours[0].openingTimeWednesday;
+      dayCloseTime = officeHours[0].closingTimeWednesday;
+      break;
+    case "Thursday":
+      dayIsOpen = officeHours[0].isOpenThursday;
+      dayOpenTime = officeHours[0].openingTimeThursday;
+      dayCloseTime = officeHours[0].closingTimeThursday;
+      break;
+    case "Friday":
+      dayIsOpen = officeHours[0].isOpenFriday;
+      dayOpenTime = officeHours[0].openingTimeFriday;
+      dayCloseTime = officeHours[0].closingTimeFriday;
+      break;
+    case "Saturday":
+      dayIsOpen = officeHours[0].isOpenSaturday;
+      dayOpenTime = officeHours[0].openingTimeSaturday;
+      dayCloseTime = officeHours[0].closingTimeSaturday;
+      break;
+    case "Sunday":
+      dayIsOpen = officeHours[0].isOpenSunday;
+      dayOpenTime = officeHours[0].openingTimeSunday;
+      dayCloseTime = officeHours[0].closingTimeSunday;
+      break;
+  }
+
+  if (dayIsOpen === true) {
+    const dayOpenTimeHour = +dayOpenTime.substring(0, 2);
+    const dayOpenTimeMinute = +dayOpenTime.substring(3, 5);
+    const dayOpenTimeSecond = +dayOpenTime.substring(6, 8);
+    const dayCloseTimeHour = +dayCloseTime.substring(0, 2);
+    const dayCloseTimeMinute = +dayCloseTime.substring(3, 5);
+    const dayCloseTimeSecond = +dayCloseTime.substring(6, 8);
+    const dayOpen = dayjs(inputStartDate)
+      .set("hour", dayOpenTimeHour)
+      .set("minute", dayOpenTimeMinute)
+      .set("second", dayOpenTimeSecond)
+      .toDate();
+    const dayClose = dayjs(inputStartDate)
+      .set("hour", dayCloseTimeHour)
+      .set("minute", dayCloseTimeMinute)
+      .set("second", dayCloseTimeSecond)
+      .toDate();
+
+    const isInputEndTimeOnAvailableTime =
+      dayClose >= inputEndDate.toDate() && inputEndDate.toDate() > dayOpen;
+    const isInputStartTimeOnAvailableTime =
+      dayClose > inputStartDate.toDate() && inputStartDate.toDate() >= dayOpen;
+
+    const compareResult =
+      isInputStartTimeOnAvailableTime && isInputEndTimeOnAvailableTime;
+
+    // for debug
+    // result = {
+    //   extractDate,
+    //   dayIsOpen,
+    //   dayOpenTimeHour,
+    //   dayOpenTimeMinute,
+    //   dayOpenTimeSecond,
+    //   dayCloseTimeHour,
+    //   dayCloseTimeMinute,
+    //   dayCloseTimeSecond,
+    //   inputStartDate,
+    //   inputEndDate,
+    //   dayOpen,
+    //   dayClose,
+    //   isInputStartTimeOnAvailableTime,
+    //   isInputEndTimeOnAvailableTime,
+    //   compareResult,
+    // };
+    result = {
+      result: compareResult,
+    };
+  } else {
+    result = { result: false };
+  }
 
   return result;
 };
@@ -354,6 +453,8 @@ export const hello = async (args: IHello) => {
   let inputDayJsParsedXX = inputDayJsParsed.format("LLLL");
   let startFormat = dayjs(args.start).format("LLLL");
   let startToDate = dayjs(args.start).toDate();
+  let extractDate = dayjs(args.start).format("dddd");
+  let extractStartTime = dayjs(args.start).format("HH:mm");
   let result = {
     id: id,
     name: args.name,
@@ -363,6 +464,8 @@ export const hello = async (args: IHello) => {
     myDayJs,
     myDayJSToDate,
     inputDayJsParsedXX,
+    extractDate,
+    extractStartTime,
   };
 
   return result;

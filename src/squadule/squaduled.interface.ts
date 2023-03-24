@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 import { optional } from "io-ts-extra";
-import * as td from 'io-ts-types'
+import * as td from "io-ts-types";
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const CreateBuildingCodec = t.type({
   name: t.string,
@@ -152,11 +152,22 @@ export const UpdateUserCodec = t.type({
 
 export interface IUpdateUser extends t.TypeOf<typeof UpdateUserCodec> {}
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-export const GetResultsCodec = t.type({
-  name: t.string,
+export const CheckAvailableRoomCodec = t.type({
+  capacity:t.number,
+  // startDatetime: t.string,
+  // endDatetime: t.string,
 });
 
-export interface IGetResults extends t.TypeOf<typeof GetResultsCodec> {}
+export interface ICheckAvailableRoom
+  extends t.TypeOf<typeof CheckAvailableRoomCodec> {}
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const CheckIsOfficeHourCodec = t.type({
+  startDatetime: t.string,
+  endDatetime: t.string,
+});
 
-export const HelloCodec = t.type({name:t.string,start:t.string})
+export interface ICheckIsOfficeHour
+  extends t.TypeOf<typeof CheckIsOfficeHourCodec> {}
+
+export const HelloCodec = t.type({ name: t.string, start: t.string });
 export interface IHello extends t.TypeOf<typeof HelloCodec> {}
