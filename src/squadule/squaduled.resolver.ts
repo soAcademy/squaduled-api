@@ -231,12 +231,17 @@ export const updateOfficeHour2 = (args: IUpdateOfficeHour2) =>
 
 // BOOKING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createBooking = async (args: ICreateBooking) => {
-  let startDateFormat = dayjs(args.startDatetime).toDate();
-  let endDateFormat = dayjs(args.endDatetime).toDate();
-  return await prisma.booking.create({
+  let reqStartTime = dayjs(args.startDatetime).toDate();
+  let reqEndTime = dayjs(args.endDatetime).toDate();
+  const bookingsByRoomId = await prisma.booking.findMany({
+    where: {
+      roomId: args.roomId,
+    },
+  });
+  const dataInput = {
     data: {
-      startDatetime: startDateFormat,
-      endDatetime: endDateFormat,
+      startDatetime: reqStartTime,
+      endDatetime: reqEndTime,
       room: {
         connect: {
           id: args.roomId,
@@ -249,7 +254,30 @@ export const createBooking = async (args: ICreateBooking) => {
       },
     },
     include: { user: true, room: true },
-  });
+  };
+  let result;
+  if (bookingsByRoomId.length !== 0) {
+    const unableBookingTime = bookingsByRoomId
+      .map((booking) => {
+        const bookStart = booking.startDatetime;
+        const bookEnd = booking.endDatetime;
+        const isTimeRequiredBefore =
+          reqStartTime < bookStart && bookStart >= reqEndTime;
+        const isTimeRequiredAfter =
+          reqEndTime > bookEnd && bookEnd <= reqStartTime;
+        const isAbleToBook = isTimeRequiredBefore || isTimeRequiredAfter;
+        return isAbleToBook;
+      })
+      .find((check) => check === false);
+
+    if (unableBookingTime === false) {
+      return (result = { result: false });
+    } else {
+      return await prisma.booking.create(dataInput);
+    }
+  } else {
+    return await prisma.booking.create(dataInput);
+  }
 };
 
 export const getAllBooking = () => prisma.booking.findMany();
@@ -313,7 +341,7 @@ export const deleteUser = (args: IDeleteBooking) =>
     },
   });
 
-// VALIDATE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ++++ ++++ ++++ LOG IN ++++ ++++ ++++
 
 export const logIn = (args: IDeleteBooking) =>
   prisma.user.delete({
@@ -321,19 +349,81 @@ export const logIn = (args: IDeleteBooking) =>
       id: args.id,
     },
   });
-
+// ++++ ++++ ++++ CHECK IS ROOM AVAILABLE ++++ ++++ ++++
 export const checkAvailableRoom = async (args: ICheckAvailableRoom) => {
-  const rooms = await prisma.room.findMany();
+  const rooms = await prisma.room.findMany({
+    include: {
+      roomToFacility: {
+        include: {
+          facility: true,
+        },
+      },
+      building: true,
+    },
+  });
   const bookings = await prisma.booking.findMany();
-  const roomFitToCapacity = rooms.filter(
-    (room) => room.capacityMax >= args.capacity
-  );
+  const reqStartTime = dayjs(args.startDatetime);
+  const reqEndTime = dayjs(args.endDatetime);
 
-  if (roomFitToCapacity.length === 0) {
-    return false;
+  // filter rooms by capacity
+  const filterRoomByCaps = rooms
+    .filter((room) => room.capacityMax >= args.capacity)
+    .map((room) => {
+      const roomFacilities = room.roomToFacility.map((facility) => {
+        return {
+          facilityId: facility.id,
+          facilityName: facility.facility.name,
+        };
+      });
+      return {
+        id: room.id,
+        name: room.name,
+        buildingId: room.buildingId,
+        buildingName: room.building?.name,
+        floor: room.floor,
+        capacityMax: room.capacityMax,
+        roomFacilities: roomFacilities,
+      };
+    });
+  let results;
+  if (filterRoomByCaps.length !== 0) {
+    // หาห้องที่ไม่สามารถจองได้ในช่วงเวลานั้น เพื่อเอาไปฟิลเตอร์ออกจาก filterRoomByCaps
+    const unableBookingRoomId = bookings
+      .map((booking) => {
+        const bookStart = booking.startDatetime;
+        const bookEnd = booking.endDatetime;
+        const isTimeRequiredBefore =
+          reqStartTime.toDate() < bookStart && bookStart >= reqEndTime.toDate();
+        const isTimeRequiredAfter =
+          reqEndTime.toDate() > bookEnd && bookEnd <= reqStartTime.toDate();
+        const isAbleToBook = isTimeRequiredBefore || isTimeRequiredAfter;
+        return {
+          ...booking,
+          bookStart,
+          bookEnd,
+          reqStartTime,
+          reqEndTime,
+          isAbleToBook,
+        };
+      })
+      .filter((check) => check.isAbleToBook === false)
+      .map((room) => room.roomId);
+
+    const AvailableRoom = filterRoomByCaps.filter(
+      (room) => !unableBookingRoomId.includes(room.id)
+    );
+
+    results =  AvailableRoom
+    
+    // results = {
+    //   filterRoomByCaps,
+    //   unableBookingRoomId,
+    //   AvailableRoom,
+    // };
   } else {
-    return true;
+    results = filterRoomByCaps;
   }
+  return results;
 };
 // ++++ ++++ ++++ CHECK IS OFFICE DAY AND OFFICE HOUR ++++ ++++ ++++
 export const checkIsOfficeHour = async (args: ICheckIsOfficeHour) => {
@@ -393,52 +483,51 @@ export const checkIsOfficeHour = async (args: ICheckIsOfficeHour) => {
     const dayCloseTimeHour = +dayCloseTime.substring(0, 2);
     const dayCloseTimeMinute = +dayCloseTime.substring(3, 5);
     const dayCloseTimeSecond = +dayCloseTime.substring(6, 8);
-    
-    const mockHours = new Date();
+
+    // const mockHours = new Date();
     // convert as dayjs format then convert to js dateTime by putting .toDate()
-    const officeDayOpen = dayjs(mockHours)
+    const officeDayOpen = dayjs(inputStartDate)
       .set("hour", dayOpenTimeHour)
       .set("minute", dayOpenTimeMinute)
       .set("second", dayOpenTimeSecond)
       .toDate();
-    const officeDayClose = dayjs(mockHours)
+    const officeDayClose = dayjs(inputStartDate)
       .set("hour", dayCloseTimeHour)
       .set("minute", dayCloseTimeMinute)
       .set("second", dayCloseTimeSecond)
       .toDate();
 
     const isInputEndTimeOnAvailableTime =
-    officeDayClose >= inputEndDate.toDate() && inputEndDate.toDate() > officeDayOpen;
+      officeDayClose >= inputEndDate.toDate() &&
+      inputEndDate.toDate() > officeDayOpen;
     const isInputStartTimeOnAvailableTime =
-    officeDayClose > inputStartDate.toDate() && inputStartDate.toDate() >= officeDayOpen;
+      officeDayClose > inputStartDate.toDate() &&
+      inputStartDate.toDate() >= officeDayOpen;
 
     const compareResult =
       isInputStartTimeOnAvailableTime && isInputEndTimeOnAvailableTime;
 
     // for debug
-    // result = {
-    //   officeHours,
-    //   extractDate,
-    //   dayIsOpen,
-    //   dayOpenTimeHour,
-    //   dayOpenTimeMinute,
-    //   dayOpenTimeSecond,
-    //   dayCloseTimeHour,
-    //   dayCloseTimeMinute,
-    //   dayCloseTimeSecond,
-    //   inputStartDate,
-    //   inputEndDate,
-    //   officeDayOpen,
-    //   officeDayClose,
-    //   isInputStartTimeOnAvailableTime,
-    //   isInputEndTimeOnAvailableTime,
-    //   compareResult,
-    // };
     result = {
+      officeHours,
+      // extractDate,
+      // dayIsOpen,
+      // dayOpenTimeHour,
+      // dayOpenTimeMinute,
+      // dayOpenTimeSecond,
+      // dayCloseTimeHour,
+      // dayCloseTimeMinute,
+      // dayCloseTimeSecond,
+      // inputStartDate,
+      // inputEndDate,
+      // officeDayOpen,
+      // officeDayClose,
+      // isInputStartTimeOnAvailableTime,
+      // isInputEndTimeOnAvailableTime,
       result: compareResult,
     };
   } else {
-    result = { result: false };
+    result = { officeHours, result: false };
   }
 
   return result;

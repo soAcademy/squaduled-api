@@ -154,8 +154,8 @@ export interface IUpdateUser extends t.TypeOf<typeof UpdateUserCodec> {}
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const CheckAvailableRoomCodec = t.type({
   capacity:t.number,
-  // startDatetime: t.string,
-  // endDatetime: t.string,
+  startDatetime: t.string,
+  endDatetime: t.string,
 });
 
 export interface ICheckAvailableRoom

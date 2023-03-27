@@ -6,8 +6,8 @@ dayjs.extend(localizedFormat);
 describe("Squaduled", () => {
   // test("AvailableDay", async () => {
   // const inputData = {
-  //   startDatetime: "2022-03-25 10:00:00.000",
-  //   endDatetime: "2022-03-25 12:00:00.000",
+  //   startDatetime: "2023-03-27 10:00:00.000",
+  //   endDatetime: "2023-03-27 12:00:00.000",
   // };
   // const startTimeExtractDate = dayjs(inputData.startDatetime).format("dddd");
   // const endTimeExtractDate = dayjs(inputData.endDatetime).format("dddd");
