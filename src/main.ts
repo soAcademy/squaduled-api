@@ -18,7 +18,7 @@ app.use(cors(corsOptions));
 // Structure : ต้องเพิ่มบรรทัดนี้เพื่อให้ POST method รับข้อมูลแบบ json ได้
 app.use(express.json());
 
-app.get("/", (req, res) => res.send("good health"));
+app.get("/", (req, res) => res.send("good health."));
 
 AppRoutes.map((route) => {
   app[route.method as keyof Application](
