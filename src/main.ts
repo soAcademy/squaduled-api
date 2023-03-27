@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 // allow cors origins
 import cors from "cors";
 const app: Application = express();
-const PORT = process.env.PORT || 3200;
+const PORT = process.env.PROD || 3200;
 const corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
