@@ -89,9 +89,86 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
+exports.Prisma.BookingScalarFieldEnum = makeEnum({
+  id: 'id',
+  startDatetime: 'startDatetime',
+  endDatetime: 'endDatetime',
+  roomId: 'roomId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.BuildingScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacilityScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.OfficeHour1ScalarFieldEnum = makeEnum({
+  id: 'id',
+  day: 'day',
+  isOpen: 'isOpen',
+  openTime: 'openTime',
+  closeTime: 'closeTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.OfficeHour2ScalarFieldEnum = makeEnum({
+  id: 'id',
+  isOpenMonday: 'isOpenMonday',
+  openingTimeMonday: 'openingTimeMonday',
+  closingTimeMonday: 'closingTimeMonday',
+  isOpenTuesday: 'isOpenTuesday',
+  openingTimeTuesday: 'openingTimeTuesday',
+  closingTimeTuesday: 'closingTimeTuesday',
+  isOpenWednesday: 'isOpenWednesday',
+  openingTimeWednesday: 'openingTimeWednesday',
+  closingTimeWednesday: 'closingTimeWednesday',
+  isOpenThursday: 'isOpenThursday',
+  openingTimeThursday: 'openingTimeThursday',
+  closingTimeThursday: 'closingTimeThursday',
+  isOpenFriday: 'isOpenFriday',
+  openingTimeFriday: 'openingTimeFriday',
+  closingTimeFriday: 'closingTimeFriday',
+  isOpenSaturday: 'isOpenSaturday',
+  openingTimeSaturday: 'openingTimeSaturday',
+  closingTimeSaturday: 'closingTimeSaturday',
+  isOpenSunday: 'isOpenSunday',
+  openingTimeSunday: 'openingTimeSunday',
+  closingTimeSunday: 'closingTimeSunday',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
+});
+
+exports.Prisma.RoomScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  buildingId: 'buildingId',
+  floor: 'floor',
+  capacityMax: 'capacityMax',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.RoomToFacilityScalarFieldEnum = makeEnum({
+  id: 'id',
+  roomId: 'roomId',
+  facilityId: 'facilityId'
 });
 
 exports.Prisma.SortOrder = makeEnum({
@@ -106,55 +183,30 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.TriviaCategoryScalarFieldEnum = makeEnum({
+exports.Prisma.UserScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.TriviaChoiceScalarFieldEnum = makeEnum({
-  id: 'id',
-  choice: 'choice',
-  quizId: 'quizId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.TriviaQuizScalarFieldEnum = makeEnum({
-  id: 'id',
-  quiz: 'quiz',
-  categoryName: 'categoryName',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  answerChoiceId: 'answerChoiceId'
-});
-
-exports.Prisma.TriviaRoundQuizScalarFieldEnum = makeEnum({
-  id: 'id',
-  roundId: 'roundId',
-  quizId: 'quizId',
-  userChoiceId: 'userChoiceId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.TriviaRoundScalarFieldEnum = makeEnum({
-  id: 'id',
-  user: 'user',
-  categoryName: 'categoryName',
-  score: 'score',
+  officerId: 'officerId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  phone: 'phone',
+  email: 'email',
+  userName: 'userName',
+  password: 'password',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
 
 
 exports.Prisma.ModelName = makeEnum({
-  TriviaCategory: 'TriviaCategory',
-  TriviaQuiz: 'TriviaQuiz',
-  TriviaChoice: 'TriviaChoice',
-  TriviaRound: 'TriviaRound',
-  TriviaRoundQuiz: 'TriviaRoundQuiz'
+  Building: 'Building',
+  Facility: 'Facility',
+  Room: 'Room',
+  roomToFacility: 'roomToFacility',
+  User: 'User',
+  OfficeHour1: 'OfficeHour1',
+  OfficeHour2: 'OfficeHour2',
+  Booking: 'Booking'
 });
 
 /**
