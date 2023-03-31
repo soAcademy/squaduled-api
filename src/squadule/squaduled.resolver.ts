@@ -135,7 +135,7 @@ export const getRoomByBuildingId = async (args: { buildingId: number }) => {
   return resultMap;
 };
 
-// update room api ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// todo resolve update room api ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const updateRoom = async (args: IUpdateRoom) => {
   //clear roomToFacility
   await prisma.roomToFacility.deleteMany({
@@ -280,12 +280,7 @@ export const createBooking = async (args: ICreateBooking) => {
   }
 };
 
-export const getAllBooking = () => prisma.booking.findMany({
-  include: {
-    room: true,
-    user: true,
-  },
-});
+export const getAllBooking = () => prisma.booking.findMany();
 
 export const updateBooking = (args: IUpdateBooking) =>
   prisma.booking.update({
