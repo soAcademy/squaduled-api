@@ -280,7 +280,12 @@ export const createBooking = async (args: ICreateBooking) => {
   }
 };
 
-export const getAllBooking = () => prisma.booking.findMany();
+export const getAllBooking = () => prisma.booking.findMany({
+  include: {
+    room:true,
+    user: true,
+  },
+});
 
 export const updateBooking = (args: IUpdateBooking) =>
   prisma.booking.update({
