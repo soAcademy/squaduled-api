@@ -376,7 +376,7 @@ export const checkAvailableRoom = async (args: ICheckAvailableRoom) => {
     .map((room) => {
       const roomFacilities = room.roomToFacility.map((facility) => {
         return {
-          facilityId: facility.id,
+          facilityId: facility.facility.id,
           facilityName: facility.facility.name,
         };
       });
