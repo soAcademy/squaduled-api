@@ -8,11 +8,18 @@ export const CreateBuildingCodec = t.type({
 
 export interface ICreateBuilding extends t.TypeOf<typeof CreateBuildingCodec> {}
 //+++++++++++++++++++++++++
-// export const DeleteBuildingCodec = t.type({
-//   id: t.number,
-// });
+export const UpdateBuildingCodec = t.type({
+  id: t.number,
+  name: t.string,
+});
 
-// export interface IDeleteBuilding extends t.TypeOf<typeof DeleteBuildingCodec> {}
+export interface IUpdateBuilding extends t.TypeOf<typeof UpdateBuildingCodec> {}
+//+++++++++++++++++++++++++
+export const DeleteBuildingCodec = t.type({
+  id: t.number,
+});
+
+export interface IDeleteBuilding extends t.TypeOf<typeof DeleteBuildingCodec> {}
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const CreateFacilityCodec = t.type({
   name: t.string,

@@ -8,11 +8,13 @@ import {
   CreateRoomCodec,
   CreateUserCodec,
   DeleteBookingCodec,
+  DeleteBuildingCodec,
   DeleteFacilityCodec,
   DeleteRoomCodec,
   getRoomByBuildingIdCodec,
   HelloCodec,
   UpdateBookingCodec,
+  UpdateBuildingCodec,
   UpdateFacilityCodec,
   UpdateRoomCodec,
 } from "./squaduled.interface";
@@ -40,7 +42,9 @@ import {
   deleteBooking,
   updateBooking,
   checkAvailableRoom,
-  // deleteBuilding
+  deleteBuilding,
+  updateBuilding,
+  getBuildingById
 } from "./squaduled.resolver";
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createBuildingHandler = async (req: Request, res: Response) => {
@@ -68,21 +72,54 @@ export const getAllBuildingHandler = async (req: Request, res: Response) => {
     });
   }
 };
-// export const deleteBuildingHandler = async (req: Request, res: Response) => {
-//   const body = req?.body;
-//   try {
-//     if (DeleteFacilityCodec.decode(body)._tag === "Right") {
-//       const result = await deleteBuilding(body);
-//       res.status(200).json(result);
-//     } else {
-//       res.status(404).json({ error: String("Error invalid codec") });
-//     }
-//   } catch (e) {
-//     res.status(500).json({
-//       error: String(e),
-//     });
-//   }
-// };
+
+export const getBuildingByIdHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (DeleteBuildingCodec.decode(body)._tag === "Right") {
+      const result = await getBuildingById(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+export const updateBuildingHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (UpdateBuildingCodec.decode(body)._tag === "Right") {
+      const result = await updateBuilding(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+export const deleteBuildingHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (DeleteFacilityCodec.decode(body)._tag === "Right") {
+      const result = await deleteBuilding(body);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const createFacilityHandler = async (req: Request, res: Response) => {

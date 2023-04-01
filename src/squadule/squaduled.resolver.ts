@@ -8,7 +8,7 @@ import {
   ICreateRoom,
   ICreateUser,
   IDeleteBooking,
-  // IDeleteBuilding,
+  IDeleteBuilding,
   IDeleteFacility,
   IDeleteRoom,
   IHello,
@@ -37,12 +37,26 @@ export const createBuilding = (args: ICreateBuilding) =>
 
 export const getAllBuilding = () => prisma.building.findMany();
 
-// export const deleteBuilding = (args: IDeleteBuilding) =>
-//   prisma.building.delete({
-//     where: {
-//       id: args.id,
-//     },
-//   });
+export const getBuildingById = (args: {id: number}) => prisma.building.findUnique(
+  {where: {id: args.id}}
+);
+
+export const updateBuilding = (args: { id: number; name: string }) =>
+  prisma.building.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      name: args.name,
+    },
+  });
+
+export const deleteBuilding = (args: IDeleteBuilding) =>
+  prisma.building.delete({
+    where: {
+      id: args.id,
+    },
+  });
 
 // FACILITY +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createFacility = (args: ICreateFacility) =>
@@ -280,12 +294,13 @@ export const createBooking = async (args: ICreateBooking) => {
   }
 };
 
-export const getAllBooking = () => prisma.booking.findMany({
-  include: {
-    room:true,
-    user: true,
-  },
-});
+export const getAllBooking = () =>
+  prisma.booking.findMany({
+    include: {
+      room: true,
+      user: true,
+    },
+  });
 
 export const updateBooking = (args: IUpdateBooking) =>
   prisma.booking.update({
@@ -418,8 +433,8 @@ export const checkAvailableRoom = async (args: ICheckAvailableRoom) => {
       (room) => !unableBookingRoomId.includes(room.id)
     );
 
-    results =  AvailableRoom
-    
+    results = AvailableRoom;
+
     // results = {
     //   filterRoomByCaps,
     //   unableBookingRoomId,

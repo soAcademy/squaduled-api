@@ -1,4 +1,4 @@
-import { checkAvailableRoom, checkIsOfficeHour } from "./squaduled.resolver";
+import { checkAvailableRoom, checkIsOfficeHour, updateBuilding } from "./squaduled.resolver";
 var localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
 dayjs.extend(localizedFormat);
@@ -33,4 +33,15 @@ describe("Squaduled", () => {
   //     'No rooms available for the given capacity.'
   //   )).toBe(true);
   // });
+
+    test("UpdateBuilding", async () => {
+    const inputData = {
+      id: 1,
+      name:'Building AA'
+    };
+    const result = await updateBuilding(inputData);
+    console.log("updateBuilding", result);
+
+    expect(result.name===inputData.name)
+  });
 });
