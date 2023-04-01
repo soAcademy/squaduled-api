@@ -285,7 +285,7 @@ export const createBooking = async (args: ICreateBooking) => {
       .find((check) => check === false);
 
     if (unableBookingTime === false) {
-      return (result = { result: false });
+      return (result = { result: false, error:'ช่วงเวลาหรือห้องที่เลือกมีการจองไปแล้ว' });
     } else {
       return await prisma.booking.create(dataInput);
     }
