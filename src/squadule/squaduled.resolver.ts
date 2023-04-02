@@ -37,9 +37,8 @@ export const createBuilding = (args: ICreateBuilding) =>
 
 export const getAllBuilding = () => prisma.building.findMany();
 
-export const getBuildingById = (args: {id: number}) => prisma.building.findUnique(
-  {where: {id: args.id}}
-);
+export const getBuildingById = (args: { id: number }) =>
+  prisma.building.findUnique({ where: { id: args.id } });
 
 export const updateBuilding = (args: { id: number; name: string }) =>
   prisma.building.update({
@@ -137,7 +136,10 @@ export const getRoomByBuildingId = async (args: { buildingId: number }) => {
   //flat
   let resultMap = result.map((result) => {
     const roomToFacility = result.roomToFacility.map((facility) => {
-      return { facilityId: facility.id, facilityName: facility.facility.name };
+      return {
+        facilityId: facility.facility.id,
+        facilityName: facility.facility.name,
+      };
     });
 
     return {
@@ -285,7 +287,10 @@ export const createBooking = async (args: ICreateBooking) => {
       .find((check) => check === false);
 
     if (unableBookingTime === false) {
-      return (result = { result: false, error:'ช่วงเวลาหรือห้องที่เลือกมีการจองไปแล้ว' });
+      return (result = {
+        result: false,
+        error: "ช่วงเวลาหรือห้องที่เลือกมีการจองไปแล้ว",
+      });
     } else {
       return await prisma.booking.create(dataInput);
     }
