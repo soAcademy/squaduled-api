@@ -419,7 +419,17 @@ export const logIn = async (args: ILogin) => {
       },
       secret
     );
-    return token;
+    return {
+      id: loginResult.id,
+      officerId: loginResult.officerId,
+      firstName: loginResult.firstName,
+      lastName: loginResult.lastName,
+      phone: loginResult.phone,
+      email: loginResult.email,
+      userName: loginResult.userName,
+      role: loginResult.role,
+      token: token,
+    };
   }
 };
 // ++++ ++++ ++++ CHECK IS ROOM AVAILABLE ++++ ++++ ++++
