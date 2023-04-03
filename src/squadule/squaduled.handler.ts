@@ -483,16 +483,6 @@ export const checkAvailableRoomHandler = async (
 export const checkIsOfficeHourHandler = async (req: Request, res: Response) => {
   if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
 
-  try {
-    const isLogin = jwt.verify(
-      req.header("authorization"),
-      process.env.SECRET_KEY
-    );
-    if (isLogin.role !== "admin") return res.status(401).json("Unauthorized");
-  } catch (error) {
-    return res.status(401).json(error);
-  }
-
   const body = req?.body;
   try {
     if (CheckIsOfficeHourCodec.decode(body)._tag === "Right") {
