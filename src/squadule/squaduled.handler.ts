@@ -13,6 +13,7 @@ import {
   DeleteRoomCodec,
   getRoomByBuildingIdCodec,
   HelloCodec,
+  LoginCodec,
   UpdateBookingCodec,
   UpdateBuildingCodec,
   UpdateFacilityCodec,
@@ -44,10 +45,31 @@ import {
   checkAvailableRoom,
   deleteBuilding,
   updateBuilding,
-  getBuildingById
+  getBuildingById,
+  logIn,
 } from "./squaduled.resolver";
+var jwt = require("jsonwebtoken");
+
+//---------------Validate token
+
+const isAuthorized = (req: Request, onlyAdmin: boolean) => {
+  try {
+    const isLogin = jwt.verify(
+      req.header("authorization"),
+      process.env.SECRET_KEY
+    );
+    if (onlyAdmin) {
+      if (isLogin.role !== "admin") return false;
+    }
+  } catch (error) {
+    return false;
+  }
+  return true;
+};
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createBuildingHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (CreateBuildingCodec.decode(body)._tag === "Right") {
@@ -63,6 +85,7 @@ export const createBuildingHandler = async (req: Request, res: Response) => {
   }
 };
 export const getAllBuildingHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   try {
     const result = await getAllBuilding();
     res.status(200).json(result);
@@ -74,6 +97,7 @@ export const getAllBuildingHandler = async (req: Request, res: Response) => {
 };
 
 export const getBuildingByIdHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (DeleteBuildingCodec.decode(body)._tag === "Right") {
@@ -90,6 +114,7 @@ export const getBuildingByIdHandler = async (req: Request, res: Response) => {
 };
 
 export const updateBuildingHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (UpdateBuildingCodec.decode(body)._tag === "Right") {
@@ -106,6 +131,7 @@ export const updateBuildingHandler = async (req: Request, res: Response) => {
 };
 
 export const deleteBuildingHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (DeleteFacilityCodec.decode(body)._tag === "Right") {
@@ -123,6 +149,7 @@ export const deleteBuildingHandler = async (req: Request, res: Response) => {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const createFacilityHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (CreateFacilityCodec.decode(body)._tag === "Right") {
@@ -139,6 +166,7 @@ export const createFacilityHandler = async (req: Request, res: Response) => {
 };
 
 export const getAllFacilityHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   try {
     const result = await getAllFacility();
     res.status(200).json(result);
@@ -149,6 +177,7 @@ export const getAllFacilityHandler = async (req: Request, res: Response) => {
   }
 };
 export const updateFacilityHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (UpdateFacilityCodec.decode(body)._tag === "Right") {
@@ -164,6 +193,7 @@ export const updateFacilityHandler = async (req: Request, res: Response) => {
   }
 };
 export const deleteFacilityHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (DeleteFacilityCodec.decode(body)._tag === "Right") {
@@ -182,6 +212,7 @@ export const deleteFacilityHandler = async (req: Request, res: Response) => {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const createRoomHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (CreateRoomCodec.decode(body)._tag === "Right") {
@@ -197,6 +228,7 @@ export const createRoomHandler = async (req: Request, res: Response) => {
   }
 };
 export const getAllRoomHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   try {
     const result = await getAllRoom();
     res.status(200).json(result);
@@ -211,6 +243,7 @@ export const getRoomByBuildingIdHandler = async (
   req: Request,
   res: Response
 ) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (getRoomByBuildingIdCodec.decode(body)._tag === "Right") {
@@ -227,6 +260,7 @@ export const getRoomByBuildingIdHandler = async (
 };
 
 export const updateRoomHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (UpdateRoomCodec.decode(body)._tag === "Right") {
@@ -242,6 +276,7 @@ export const updateRoomHandler = async (req: Request, res: Response) => {
   }
 };
 export const deleteRoomHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (DeleteRoomCodec.decode(body)._tag === "Right") {
@@ -260,6 +295,7 @@ export const deleteRoomHandler = async (req: Request, res: Response) => {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const getAllOfficeHour1Handler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   try {
     const result = await getAllOfficeHour1();
     res.status(200).json(result);
@@ -277,6 +313,7 @@ export const updateOfficeHour1Handler = async (
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const getAllOfficeHour2Handler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   try {
     const result = await getAllOfficeHour2();
     res.status(200).json(result);
@@ -287,6 +324,7 @@ export const getAllOfficeHour2Handler = async (req: Request, res: Response) => {
   }
 };
 export const updateOfficeHour2Handler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (DeleteRoomCodec.decode(body)._tag === "Right") {
@@ -305,6 +343,7 @@ export const updateOfficeHour2Handler = async (req: Request, res: Response) => {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const createBookingHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (CreateBookingCodec.decode(body)._tag === "Right") {
@@ -320,6 +359,7 @@ export const createBookingHandler = async (req: Request, res: Response) => {
   }
 };
 export const getAllBookingHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   try {
     const result = await getAllBooking();
     res.status(200).json(result);
@@ -331,6 +371,7 @@ export const getAllBookingHandler = async (req: Request, res: Response) => {
 };
 
 export const updateBookingHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (UpdateBookingCodec.decode(body)._tag === "Right") {
@@ -347,6 +388,7 @@ export const updateBookingHandler = async (req: Request, res: Response) => {
 };
 
 export const deleteBookingHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (DeleteBookingCodec.decode(body)._tag === "Right") {
@@ -364,6 +406,7 @@ export const deleteBookingHandler = async (req: Request, res: Response) => {
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const createUserHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (CreateUserCodec.decode(body)._tag === "Right") {
@@ -380,6 +423,7 @@ export const createUserHandler = async (req: Request, res: Response) => {
 };
 
 export const getAllUserHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
   try {
     const result = await getAllUser();
     res.status(200).json(result);
@@ -390,12 +434,29 @@ export const getAllUserHandler = async (req: Request, res: Response) => {
   }
 };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-export const logInHandler = async (req: Request, res: Response) => {};
+export const logInHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    if (LoginCodec.decode(body)._tag === "Right") {
+      //check is office hour
+      const result = await logIn(req.body);
+
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const checkAvailableRoomHandler = async (
   req: Request,
   res: Response
 ) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
   const body = req?.body;
   try {
     if (CheckAvailableRoomCodec.decode(body)._tag === "Right") {
@@ -415,6 +476,18 @@ export const checkAvailableRoomHandler = async (
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const checkIsOfficeHourHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, false)) return res.status(401).json("Unauthorized");
+
+  try {
+    const isLogin = jwt.verify(
+      req.header("authorization"),
+      process.env.SECRET_KEY
+    );
+    if (isLogin.role !== "admin") return res.status(401).json("Unauthorized");
+  } catch (error) {
+    return res.status(401).json(error);
+  }
+
   const body = req?.body;
   try {
     if (CheckIsOfficeHourCodec.decode(body)._tag === "Right") {
@@ -432,99 +505,9 @@ export const checkIsOfficeHourHandler = async (req: Request, res: Response) => {
   }
 };
 
-// import { Request, Response } from "express";
-// import { createCategory, createQuiz, getAllQuizes, getCategories, getQuizesByCategory, getResults, submitQuestion } from "./trivia.resolver";
-
-// export const createCategoryHandler = async (req: Request, res: Response) => {
-//   const args = req?.body;
-//   try {
-//     const result = await createCategory({
-//       name: args.name,
-//     });
-//     res.status(200).json(result);
-//   } catch (e) {
-//     res.status(500).json({
-//       error: String(e),
-//     });
-//   }
-// };
-
-// export const getCategoriesHandler = async (req: Request, res: Response) => {
-//   try {
-//     const result = await getCategories();
-//     res.status(200).json(result);
-//   } catch (e) {
-//     res.status(500).json({
-//       error: String(e),
-//     });
-//   }
-// };
-
-// export const createQuizHandler = async (req: Request, res: Response) => {
-//   const args = req?.body;
-//   try {
-//     const result = await createQuiz({
-//       quiz: args.quiz,
-//       answer: args.answer,
-//       categoryName: args.categoryName,
-//       choices: args.choices,
-//     });
-//     res.status(200).json(result);
-//   } catch (e) {
-//     res.status(500).json({
-//       error: String(e),
-//     });
-//   }
-// };
-
-// export const getAllQuizesHandler = async (req: Request, res: Response) => {
-//   try {
-//     const result = await getAllQuizes();
-//     res.status(200).json(result);
-//   } catch (e) {
-//     res.status(500).json({
-//       error: String(e),
-//     });
-//   }
-// };
-
-// export const getQuizesByCategoryHandler = async (req: Request, res: Response) => {
-//   const body = req?.body;
-//   try {
-//     const result = await getQuizesByCategory(body);
-//     res.status(200).json(result);
-//   } catch (e) {
-//     res.status(500).json({
-//       error: String(e),
-//     });
-//   }
-// };
-
-// export const submitQuestionHandler = async (req: Request, res: Response) => {
-//   const body = req?.body;
-//   try {
-//     const result = await submitQuestion(body);
-//     res.status(200).json(result);
-//   } catch (e) {
-//     res.status(500).json({
-//       error: String(e),
-//     });
-//   }
-// };
-
-// export const getResultsHandler = async (req: Request, res: Response) => {
-//   const body = req?.body;
-//   try {
-//     const result = await getResults(body);
-//     res.status(200).json(result);
-//   } catch (e) {
-//     res.status(500).json({
-//       error: String(e),
-//     });
-//   }
-// };
-
 export const helloHandler = async (req: Request, res: Response) => {
+  if (!isAuthorized(req, true)) return res.status(401).json("Unauthorized");
+
   const body = req?.body;
   try {
     if (HelloCodec.decode(body)._tag === "Right") {

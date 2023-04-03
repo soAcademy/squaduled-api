@@ -63,6 +63,14 @@ export const UpdateRoomCodec = t.type({
 
 export interface IUpdateRoom extends t.TypeOf<typeof UpdateRoomCodec> {}
 //+++++++++++++++++++++++++
+export const LoginCodec = t.type({
+  userName: t.string,
+  password: t.string
+});
+
+export interface ILogin extends t.TypeOf<typeof LoginCodec> {}
+
+//+++++++++++++++++++++++++
 export const DeleteRoomCodec = t.type({
   id: t.number,
 });

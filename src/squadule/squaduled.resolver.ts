@@ -12,6 +12,7 @@ import {
   IDeleteFacility,
   IDeleteRoom,
   IHello,
+  ILogin,
   IUpdateBooking,
   IUpdateFacility,
   IUpdateOfficeHour1,
@@ -19,6 +20,8 @@ import {
   IUpdateRoom,
   IUpdateUser,
 } from "./squaduled.interface";
+const md5 = require("md5");
+var jwt = require("jsonwebtoken");
 var localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
 dayjs.extend(localizedFormat);
@@ -299,13 +302,16 @@ export const createBooking = async (args: ICreateBooking) => {
   }
 };
 
-export const getAllBooking = () =>
-  prisma.booking.findMany({
+export const getAllBooking = async () => {
+  const allBookings = await prisma.booking.findMany({
     include: {
       room: true,
       user: true,
     },
   });
+  const result = allBookings.sort((a, b) => b.id - a.id);
+  return result;
+};
 
 export const updateBooking = (args: IUpdateBooking) =>
   prisma.booking.update({
@@ -327,8 +333,10 @@ export const deleteBooking = (args: IDeleteBooking) =>
   });
 
 // USER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-export const createUser = (args: ICreateUser) =>
-  prisma.user.create({
+export const createUser = (args: ICreateUser) => {
+  let passwordHashed = md5(args.password);
+
+  return prisma.user.create({
     data: {
       officerId: args.officerId,
       firstName: args.firstName,
@@ -336,12 +344,28 @@ export const createUser = (args: ICreateUser) =>
       phone: args.phone,
       email: args.email,
       userName: args.userName,
-      password: args.password,
+      password: passwordHashed,
       role: args.role,
     },
   });
+};
 
-export const getAllUser = () => prisma.user.findMany();
+export const getAllUser = async () => {
+  const allUser = await prisma.user.findMany();
+  const result = allUser.map((user) => {
+    return {
+      id: user.id,
+      officerId: user.officerId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phone: user.phone,
+      email: user.email,
+      userName: user.userName,
+      role: user.role,
+    };
+  });
+  return result;
+};
 
 export const updateUser = (args: IUpdateUser) =>
   prisma.user.update({
@@ -368,12 +392,36 @@ export const deleteUser = (args: IDeleteBooking) =>
 
 // ++++ ++++ ++++ LOG IN ++++ ++++ ++++
 
-export const logIn = (args: IDeleteBooking) =>
-  prisma.user.delete({
+export const logIn = async (args: ILogin) => {
+  let passwordHashed = md5(args.password);
+  let loginResult = await prisma.user.findFirst({
     where: {
-      id: args.id,
+      userName: args.userName,
+      password: passwordHashed,
     },
   });
+
+  if (!loginResult) {
+    return { error: "ข้อมูลไม่ถูกต้อง" };
+  } else {
+    //map object
+    let secret = process.env.SECRET_KEY;
+    let token = jwt.sign(
+      {
+        id: loginResult.id,
+        officerId: loginResult.officerId,
+        firstName: loginResult.firstName,
+        lastName: loginResult.lastName,
+        phone: loginResult.phone,
+        email: loginResult.email,
+        userName: loginResult.userName,
+        role: loginResult.role,
+      },
+      secret
+    );
+    return token;
+  }
+};
 // ++++ ++++ ++++ CHECK IS ROOM AVAILABLE ++++ ++++ ++++
 export const checkAvailableRoom = async (args: ICheckAvailableRoom) => {
   const rooms = await prisma.room.findMany({
