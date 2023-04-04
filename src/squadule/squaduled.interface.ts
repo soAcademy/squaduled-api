@@ -57,19 +57,12 @@ export interface ICreateRoom extends t.TypeOf<typeof CreateRoomCodec> {}
 export const UpdateRoomCodec = t.type({
   id: t.number,
   name: t.string,
+  floor: t.string,
   capacity: t.number,
   facilities: t.array(t.type({ facilityId: t.number })),
 });
 
 export interface IUpdateRoom extends t.TypeOf<typeof UpdateRoomCodec> {}
-//+++++++++++++++++++++++++
-export const LoginCodec = t.type({
-  userName: t.string,
-  password: t.string
-});
-
-export interface ILogin extends t.TypeOf<typeof LoginCodec> {}
-
 //+++++++++++++++++++++++++
 export const DeleteRoomCodec = t.type({
   id: t.number,
@@ -168,7 +161,7 @@ export const UpdateUserCodec = t.type({
 export interface IUpdateUser extends t.TypeOf<typeof UpdateUserCodec> {}
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const CheckAvailableRoomCodec = t.type({
-  capacity:t.number,
+  capacity: t.number,
   startDatetime: t.string,
   endDatetime: t.string,
 });
@@ -183,6 +176,13 @@ export const CheckIsOfficeHourCodec = t.type({
 
 export interface ICheckIsOfficeHour
   extends t.TypeOf<typeof CheckIsOfficeHourCodec> {}
+//+++++++++++++++++++++++++
+export const LoginCodec = t.type({
+  userName: t.string,
+  password: t.string,
+});
 
+export interface ILogin extends t.TypeOf<typeof LoginCodec> {}
+//+++++++++++++++++++++++++
 export const HelloCodec = t.type({ name: t.string, start: t.string });
 export interface IHello extends t.TypeOf<typeof HelloCodec> {}
