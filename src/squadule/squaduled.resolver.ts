@@ -175,6 +175,7 @@ export const updateRoom = async (args: IUpdateRoom) => {
     },
     data: {
       name: args.name,
+      floor: args.floor,
       capacityMax: args.capacity,
     },
     include: {
@@ -190,12 +191,17 @@ export const updateRoom = async (args: IUpdateRoom) => {
 
 //++++++++++++++++++++++++
 
-export const deleteRoom = (args: IDeleteRoom) =>
-  prisma.room.delete({
+export const deleteRoom = async (args: IDeleteRoom) => {
+  //clear roomToFacility
+  await prisma.roomToFacility.deleteMany({
+    where: { roomId: args.id },
+  });
+  return await prisma.room.delete({
     where: {
       id: args.id,
     },
   });
+};
 
 // OFFICE HOUR 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
