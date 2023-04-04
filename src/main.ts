@@ -9,7 +9,7 @@ import cors from "cors";
 const app: Application = express();
 const PORT = process.env.PROD || 3200;
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000","https://squaduled.web.app"],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 dotenv.config();
